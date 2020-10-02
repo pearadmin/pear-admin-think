@@ -38,9 +38,6 @@ class Index
             }
 			$res = self::createTables($db);
 			if(!$res) $this->jsonApi("数据表创建失败",201); 
-            $pass = set_password($data['password']);
-            Db::name('admin_admin')->where('id',1)->update(['username'=>$username,'nickname'=>$nickname,'password'=>$pass]);
-            $db = null;
             $db_str = "
             <?php
             return [
@@ -111,6 +108,20 @@ class Index
                 $this->jsonApi('数据库配置文件创建失败！',201);
             }
             @touch(public_path().'install.lock');
+            //验证
+            $validate = new \app\admin\validate\admin\Admin;
+            if(!$validate->scene('add')->check($data)) 
+            $this->jsonApi($validate->getError(),201);
+            try {
+                $admin = new \app\admin\model\admin\Admin;
+                $admin->create([
+                    'username' => $username,
+                    'nickname' => $nickname,
+                    'password' => $password,
+                ]);
+            }catch (\Exception $e){
+                $this->jsonApi('添加失败',201, $e->getMessage());
+            }
             $this->jsonApi('安装成功');
         }
         return View::fetch();
