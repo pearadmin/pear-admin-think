@@ -9,6 +9,8 @@ use think\facade\Db;
 use app\admin\model\admin\Photo;
 class Config  extends Base
 {
+    protected $middleware = ['AdminCheck','AdminPermission'];
+    
     public function index()
     {
         if (Request::isAjax()){
