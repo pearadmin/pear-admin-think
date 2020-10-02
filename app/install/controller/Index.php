@@ -15,7 +15,7 @@ class Index
             $data = Request::post();
             $username = $data['username'];
             $nickname = $data['nickname'];
-            $password = $data['password'];
+            $password = set_password($data['password']);
             if (!preg_match("/^[a-zA-Z]{1}([0-9a-zA-Z]|[._]){4,19}$/", $username)) $this->jsonApi('管理用户名：至少包含5个字符，需以字母开头',201);
             if (!preg_match("/^[\@A-Za-z0-9\!\#\$\%\^\&\*\.\~]{6,22}$/", $password)) $this->jsonApi('登录密码至少包含6个字符。可使用字母，数字和符号',201);
             $dbhost = $data['host'];
@@ -37,6 +37,8 @@ class Index
                 $this->jsonApi("数据库连接失败",201); 
             }
 			$res = self::createTables($db);
+            $sql = "insert into admin_admin  (username,nickname,password) values('$username','$nickname','$password')";
+            $db->query($sql);
 			if(!$res) $this->jsonApi("数据表创建失败",201); 
             $db_str = "
             <?php
@@ -108,20 +110,6 @@ class Index
                 $this->jsonApi('数据库配置文件创建失败！',201);
             }
             @touch(public_path().'install.lock');
-            //验证
-            $validate = new \app\admin\validate\admin\Admin;
-            if(!$validate->scene('add')->check($data)) 
-            $this->jsonApi($validate->getError(),201);
-            try {
-                $admin = new \app\admin\model\admin\Admin;
-                $admin->create([
-                    'username' => $username,
-                    'nickname' => $nickname,
-                    'password' => $password,
-                ]);
-            }catch (\Exception $e){
-                $this->jsonApi('添加失败',201, $e->getMessage());
-            }
             $this->jsonApi('安装成功');
         }
         return View::fetch();
