@@ -13,10 +13,7 @@ CREATE TABLE `admin_admin` (
   `update_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   `delete_time` timestamp NULL DEFAULT NULL COMMENT '删除时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 COMMENT='管理表';
-
-INSERT INTO `admin_admin` (`id`, `username`, `password`, `nickname`, `status`, `create_time`, `update_time`) VALUES
-(1, 'admin', 'adc3949ba59abbe56e057f20f8', '超级管理员', 1, '2020-02-27 11:26:23', '2020-03-06 10:38:38');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 COMMENT='管理表';
 
 DROP TABLE IF EXISTS `admin_admin_role`;
 CREATE TABLE `admin_admin_role` (
