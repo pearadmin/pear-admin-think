@@ -8,7 +8,8 @@ use app\admin\model\{{$multi}}\{{$multi_name_hump}} as {{$multi_name_hump}}Model
 use app\admin\validate\{{$multi}}\{{$multi_name_hump}} as {{$multi_name_hump}}Validate;
 class {{$multi_name_hump}} extends Base
 {
-
+    protected $middleware = ['AdminCheck','AdminPermission'];
+    
     /**
      * 列表
      */
