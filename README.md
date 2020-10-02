@@ -41,7 +41,7 @@
 </p>
 
 * 声明：仅供技术研究学习合法用途，请勿用于非法用途，否则后果作者概不负责
-* http://192.144.214.203:82/admin.php admin 123456  演示站有功能限制更新不及时，可自行下载研究
+* 演示站有功能限制更新不及时，可自行下载研究
 * 推荐配置lnmp环境
 * git clone https://gitee.com/down-home/Pear-Admin-Thinkphp
 * composer update
