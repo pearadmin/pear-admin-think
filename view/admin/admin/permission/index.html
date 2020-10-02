@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="__ADMIN__/pear/css/pear.css" />
+		<link id="layuicss-layer" rel="stylesheet" href="__ADMIN__/layui/css/modules/layer/default/layer.css?v=3.1.1" media="all">
+	</head>
+	<body class="pear-container">
+		<div class="layui-card">
+			<div class="layui-card-body">
+				<table id="power-table" lay-filter="power-table"></table>
+			</div>
+		</div>
+		
+		<script type="text/html" id="power-toolbar">
+			<button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+				<i class="layui-icon layui-icon-add-1"></i>
+				新增
+			</button>
+			<button class="pear-btn pear-btn-success pear-btn-md" lay-event="expandAll">
+				<i class="layui-icon layui-icon-spread-left"></i>
+				展开
+			</button>
+			<button class="pear-btn pear-btn-success pear-btn-md" lay-event="foldAll">
+				<i class="layui-icon layui-icon-shrink-right"></i>
+				折叠
+			</button>
+		</script>
+		
+		<script type="text/html" id="power-bar">
+			<button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i></button>
+			<button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i></button>
+		</script>
+		
+		<script type="text/html" id="power-type">
+			{{#if (d.type == '0') { }}
+			<span>目录</span>
+			{{# }else if(d.type == '1'){ }}
+			<span>菜单</span>
+			{{# } }}
+		</script>
+		<script type="text/html" id="status">
+			<input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="status" {{# if(d.status==1){ }} checked {{# } }}>
+		</script>
+		<script src="__ADMIN__/layui/layui.js"></script>
+        <script src="__ADMIN__/pear/pear.js"></script>
+        <script src="__ADMIN__/admin/permission/index.js"></script>
+	</body>
+</html>
