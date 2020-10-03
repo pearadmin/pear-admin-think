@@ -23,8 +23,9 @@
         <img src="https://img.shields.io/badge/Layui-2.5.6+-green.svg" alt="Layui Version">
     </a>
 </p>
-<br>
+
 #### 项目简介
+
 <p style="padding:10px;"  width="90%">
  <h1 align="center">
     Pear Admin Thinkphp 最 终 版
