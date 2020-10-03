@@ -9,6 +9,8 @@ use think\facade\Db;
 use app\admin\model\admin\Permission;
 class Crud extends Base
 {
+    protected $middleware = ['AdminCheck','AdminPermission'];
+    
     /**
      * 列表
      */
