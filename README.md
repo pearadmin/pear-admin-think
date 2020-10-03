@@ -6,10 +6,6 @@
   <h1 align="center">
     Pear Admin Thinkphp
   </h1>
-  <h4 align="center">
-     快 速 自 定 义 开 发 框 架
-  </h4> 
-
   [预 览](http://layui.pearadmin.com)   |   [官 网](http://www.pearadmin.com/)   |   [群聊](https://jq.qq.com/?_wv=1027&k=5OdSmve)   |   [社区](http://forum.pearadmin.com/)
 
 
@@ -27,16 +23,10 @@
     </a>
 </p>
 <br>
-<div align="center">
-  <img  width="92%" style="border-radius:10px;margin-top:20px;margin-bottom:20px;box-shadow: 2px 0 6px gray;" src="/public/static/admin/images/show.png" />
-</div>
-<br>
-
 #### 项目简介
-
 <p style="padding:10px;"  width="90%">
  <h1 align="center">
-    Pear Admin Thinkphp 全 新 改 版
+    Pear Admin Thinkphp 最 终 版
   </h1> 
 </p>
 
@@ -49,8 +39,8 @@
 * 访问install.php进行安装
 
 
-#### 代码一键生成CURD方法
->env APP_DEBUG = ture
+#### 代码一键生成CRUD方法
+>env APP_DEBUG = true
 
 * 第一步.创建多级
 * 第二步.根据多级创建对应前缀数据表。
@@ -59,10 +49,8 @@
 * 开源不易，如果对您有帮助。可以请作者喝杯咖啡！
 
 #### 完成项目
+* 整合RABC权限 OSS上传  邮件发送 系统设置 图片管理  代码生成  单点登录 一键安装
 
-* RABC权限 OSS上传  邮件发送
-* 系统设置 图片管理  代码生成  
-* 单点登录 一键安装
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/1002/182204_d99078d2_1302383.png "1.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/1002/182212_4ed0ec3f_1302383.png "2.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/1002/182218_41ee2978_1302383.png "3.png")
