@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
-            "version": "v2.4.0",
+            "version": "v2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aliyun/aliyun-oss-php-sdk.git",
-                "reference": "bd9c2bba3d167de821cbb33b5c03fe6e41e8e363"
+                "reference": "492866331b7bafaac09506cf42f351b7e9e63766"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aliyun/aliyun-oss-php-sdk/zipball/bd9c2bba3d167de821cbb33b5c03fe6e41e8e363",
-                "reference": "bd9c2bba3d167de821cbb33b5c03fe6e41e8e363",
+                "url": "https://api.github.com/repos/aliyun/aliyun-oss-php-sdk/zipball/492866331b7bafaac09506cf42f351b7e9e63766",
+                "reference": "492866331b7bafaac09506cf42f351b7e9e63766",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -51,7 +51,7 @@
             ],
             "description": "Aliyun OSS SDK for PHP",
             "homepage": "http://www.aliyun.com/product/oss/",
-            "time": "2020-08-31T08:39:59+00:00"
+            "time": "2020-09-29T06:23:57+00:00"
         },
         {
             "name": "league/flysystem",
@@ -613,7 +613,7 @@
                 "orm",
                 "thinkphp"
             ],
-            "time": "2020-09-28T07:30:22+00:00"
+            "time": "2020-09-29T02:19:59+00:00"
         },
         {
             "name": "topthink/think-captcha",

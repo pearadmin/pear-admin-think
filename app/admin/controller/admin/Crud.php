@@ -242,11 +242,21 @@ PRIMARY KEY (`id`)
         $search = '';
         foreach($this->search as $k=>$v){
             $i = explode('###',$v);
-            $search .= '    
-            //按'.$i[1].'查找
-            if ($'.$i[0].' = input("'.$i[0].'")) {
-                $where[] = ["'.$i[0].'", "like", "%" . $'.$i[0].' . "%"];
-            }';
+            if(strstr($i[0],"time")){
+                $search .= '    
+                //按'.$i[1].'查找
+                $start = input("get.'.$i[0].'-start");
+                $end = input("get.'.$i[0].'-end");
+                if ($start && $end) {
+                    $where[]=["'.$i[0].'","between",[$start,date("Y-m-d",strtotime("$end +1 day"))]];
+                 }';
+               }else{
+                $search .= '    
+                //按'.$i[1].'查找
+                if ($'.$i[0].' = input("'.$i[0].'")) {
+                    $where[] = ["'.$i[0].'", "like", "%" . $'.$i[0].' . "%"];
+                }';
+               }
         }
         $content = str_replace(['{{$multi}}', '{{$multi_name_hump}}','{{$list}}','{{$search}}'], [ $this->multi, $this->multi_name_hump,$list,$search], file_get_contents(root_path().'extend'. DS .'tpl'. DS .'controller.php.tpl'));
         return [$file, $content];
@@ -472,14 +482,27 @@ PRIMARY KEY (`id`)
                     <div class="layui-form-item">';
                 foreach($this->search as $p){
                     $_search= explode('###',$p);
-                    $searchs .= '   
-                    <div class="layui-form-item layui-inline">
-                        <label class="layui-form-label">'.$_search[1].'</label>
+                    if(strstr($_search[0],"time")){
+                        $searchs .= '   
+                        <div class="layui-form-item layui-inline">
+                            <label class="layui-form-label">'.$_search[1].'</label>
+                            <div class="layui-input-inline">
+                            <input type="text" class="layui-input" id="'.$_search[0].'-start" name="'.$_search[0].'-start" placeholder="开始时间" autocomplete="off">
+                        </div>
                         <div class="layui-input-inline">
-                            <input type="text" name="'.$_search[0].'" placeholder="" class="layui-input">
+                            <input type="text" class="layui-input" id="'.$_search[0].'-end" name="'.$_search[0].'-end" placeholder="结束时间" autocomplete="off">
                         </div>
                     </div>';
-                 }
+                       }else{
+                        $searchs .= '   
+                        <div class="layui-form-item layui-inline">
+                            <label class="layui-form-label">'.$_search[1].'</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="'.$_search[0].'" placeholder="" class="layui-input">
+                            </div>
+                        </div>';
+                       }
+                    }
                     $searchs .= '     
                     <div class="layui-form-item layui-inline">
                         <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="query">
@@ -513,7 +536,22 @@ PRIMARY KEY (`id`)
             }, ';
             }
         }
-        $content = str_replace(['{{$multi_name}}', '{{$multi}}', '{{$columns}}','{{$cname}}'], [$this->multi_name, $this->multi,$columns,$this->cname], file_get_contents(root_path().'extend'. DS .'tpl'. DS .'multi.index.js.tpl'));
+        $searchs = '';
+        if(!empty($this->search)){
+            foreach($this->search as $p){
+                $_search= explode('###',$p);
+                if(strstr($_search[0],"time")){
+                    $searchs .= ' 
+                    laydate.render({
+                        elem: "#'.$_search[0].'-start"
+                    });
+                    laydate.render({
+                        elem: "#'.$_search[0].'-end"
+                    })';
+                }
+            }
+        }
+        $content = str_replace(['{{$multi_name}}', '{{$multi}}', '{{$columns}}','{{$cname}}','{{$searchs}}'], [$this->multi_name, $this->multi,$columns,$this->cname,$searchs], file_get_contents(root_path().'extend'. DS .'tpl'. DS .'multi.index.js.tpl'));
         return [$file, $content];
     }
 
@@ -528,6 +566,18 @@ PRIMARY KEY (`id`)
                     <div class="layui-form-item">';
                 foreach($this->search as $p){
                     $_search= explode('###',$p);
+                    if(strstr($_search[0],"time")){
+                    $searchs .= '   
+                    <div class="layui-form-item layui-inline">
+                        <label class="layui-form-label">'.$_search[1].'</label>
+                        <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="'.$_search[0].'-start" name="'.$_search[0].'-start" placeholder="开始时间" autocomplete="off">
+                    </div>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="'.$_search[0].'-end" name="'.$_search[0].'-end" placeholder="结束时间" autocomplete="off">
+                    </div>
+                </div>';
+                    }else{
                     $searchs .= '   
                     <div class="layui-form-item layui-inline">
                         <label class="layui-form-label">'.$_search[1].'</label>
@@ -535,7 +585,8 @@ PRIMARY KEY (`id`)
                             <input type="text" name="'.$_search[0].'" placeholder="" class="layui-input">
                         </div>
                     </div>';
-                 }
+                    }
+                    }
                     $searchs .= '     
                     <div class="layui-form-item layui-inline">
                         <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="query">
@@ -569,7 +620,20 @@ PRIMARY KEY (`id`)
             }, ';
             }
         }
-        $content = str_replace(['{{$multi_name}}', '{{$multi}}', '{{$columns}}','{{$cname}}'], [$this->multi_name, $this->multi,$columns,$this->cname], file_get_contents(root_path().'extend'. DS .'tpl'. DS .'multi.recycle.js.tpl'));
+        $searchs = '';
+        foreach($this->search as $p){
+            $_search= explode('###',$p);
+            if(strstr($_search[0],"time")){
+                $searchs .= ' 
+                laydate.render({
+                    elem: "#'.$_search[0].'-start"
+                });
+                laydate.render({
+                    elem: "#'.$_search[0].'-end"
+                })';
+            }
+        }
+        $content = str_replace(['{{$multi_name}}', '{{$multi}}', '{{$columns}}','{{$cname}}','{{$searchs}}'], [$this->multi_name, $this->multi,$columns,$this->cname,$searchs], file_get_contents(root_path().'extend'. DS .'tpl'. DS .'multi.recycle.js.tpl'));
         return [$file, $content];
     }
 

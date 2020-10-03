@@ -66,7 +66,7 @@
                         </label>
                         <div class="layui-input-block">
                             {volist name="$info" id="v"}
-                                {if condition="!in_array($v['name'], ['create_time', 'update_time','delete_time'])"}
+                                {if condition="!in_array($v['name'], ['delete_time'])"}
                                     <input type="checkbox" name="sql-search[]" value="{$v.name}###{$v.desc}###{$v.null}" title="{$v.name}" >
                                 {/if}
                             {/volist}

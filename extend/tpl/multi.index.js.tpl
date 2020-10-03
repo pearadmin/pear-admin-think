@@ -1,7 +1,9 @@
-layui.use(['table', 'form', 'jquery'], function() {
+layui.use(['table', 'form', 'jquery','laydate'], function() {
     let table = layui.table;
     let form = layui.form;
     let $ = layui.jquery;
+    let laydate = layui.laydate;
+    {{$searchs}}
     let cols = [
         [{
             type: 'checkbox'
@@ -50,6 +52,7 @@ layui.use(['table', 'form', 'jquery'], function() {
             where: data.field,
             page:{curr: 1}
         })
+        {{$searchs}}
         return false;
     });
     if (typeof width !== 'number' || width === 0) {
