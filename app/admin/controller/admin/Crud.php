@@ -18,7 +18,7 @@ class Crud extends Base
     {
         if (Request::isAjax()) {
             $name = input('get.name');
-            $list = Db::query('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_NAME NOT IN ("admin_admin","admin_admin_role","admin_admin_log","admin_multi","admin_role","admin_permission","admin_config","admin_photo") AND TABLE_NAME LIKE "' . $name . '%"');
+            $list = Db::query('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_NAME NOT IN ("admin_admin","admin_admin_role","admin_admin_log","admin_multi","admin_role","admin_permission","admin_config","admin_photo","USER_PRIVILEGES") AND TABLE_NAME LIKE "' . $name . '%"');
             $this->jsonApi('', 0, $list);
         }
         return View::fetch('',[
