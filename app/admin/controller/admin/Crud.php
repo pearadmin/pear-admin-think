@@ -365,7 +365,7 @@ PRIMARY KEY (`id`)
                     </div>';
 
                 }elseif(in_array($k['name'], $_edit)) {
-            $columns .= '<textarea id="' .$k['name'] . '" name="' . $k['name'] . '" type="text/plain" style="width:100%;margin-bottom:20px;"/></textarea>';
+            $columns .= '<textarea id="' .$k['name'] . '" name="' . $k['name'] . '" type="text/plain" style="width:100%;margin-bottom:20px;"></textarea>';
             $contentjs .=  '   
             var '.$k['name'].'  = layedit.build("'.$k['name'].'", {
             height: 400 //设置编辑器的高度
@@ -446,7 +446,7 @@ PRIMARY KEY (`id`)
                </div>';
 
                }elseif (in_array($k['name'], $_edit)) {
-                $columns .= '<textarea id="' .$k['name'] . '" name="' . $k['name'] . '" type="text/plain" style="width:100%;margin-bottom:20px;"/>{$data[\'' . $k['name'] . '\']}</textarea>';
+                $columns .= '<textarea id="' .$k['name'] . '" name="' . $k['name'] . '" type="text/plain" style="width:100%;margin-bottom:20px;">{$data[\'' . $k['name'] . '\']}</textarea>';
                 $contentjs .=  '   
                 var '.$k['name'].'  = layedit.build("'.$k['name'].'", {
                 height: 400 //设置编辑器的高度
