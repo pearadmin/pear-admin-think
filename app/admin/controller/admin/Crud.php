@@ -375,7 +375,7 @@ PRIMARY KEY (`id`)
             ';
                 }else{
                     if($k['null'] === 'NO') {
-                        $lay_verify = ' lay-verify="required"';
+                        $lay_verify = ' lay-verify="required ';
                         if (in_array($k['type'], ['int', 'decimal', 'float', 'double'])) {
                             $lay_verify .= '|number';
                         }
@@ -456,7 +456,7 @@ PRIMARY KEY (`id`)
                 ';
                }else{
                     if($k['null'] === 'NO') {
-                        $lay_verify = ' lay-verify="required"';
+                        $lay_verify = ' lay-verify="required ';
                         if (in_array($k['type'], ['int', 'decimal', 'float', 'double'])) {
                             $lay_verify .= '|number';
                         }
