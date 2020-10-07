@@ -144,7 +144,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 	
 	function getData(url){
 	    var defer = $.Deferred();
-		$.get(url+"?fresh=" + Math.random(), function(result) {
+		$.get(url, function(result) {
 			 defer.resolve(result)
 		});
 	    return defer.promise();
