@@ -66,7 +66,7 @@ layui.use(['table', 'form', 'jquery','laydate'], function() {
             type: 2,
             title: '新增{{$cname}}',
             shade: 0.1,
-            area: [width/2 + 'px', height/2 + 'px'],
+            area: [width + 'px', height + 'px'],
             content:'add'
         });
     }
@@ -76,7 +76,7 @@ layui.use(['table', 'form', 'jquery','laydate'], function() {
             type: 2,
             title: '修改{{$cname}}',
             shade: 0.1,
-            area: [width/2  + 'px', height/2 + 'px'],
+            area: [width  + 'px', height + 'px'],
             content:'edit?id='+obj.data['id']
         });
     }
