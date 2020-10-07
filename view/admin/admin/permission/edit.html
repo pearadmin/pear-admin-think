@@ -33,7 +33,7 @@
             <div class="layui-input-block">
                 <select lay-verify="required" name="multi">
                     {foreach $multi as $k=>$v}
-                    {if $k == $model['multi']}
+                    {if $v == $model['multi']}
                     <option selected="selected" value="{$v}">{$v}</option>
                     {else}
                     <option value="{$v}">{$v}</option>
