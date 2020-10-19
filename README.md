@@ -24,6 +24,10 @@
     </a>
 </p>
 
+<div align="center">
+  <img  width="92%" style="border-radius:10px;margin-top:20px;margin-bottom:20px;box-shadow: 2px 0 6px gray;" src="https://images.gitee.com/uploads/images/2020/1019/104805_042b888c_4835367.png" />
+</div>
+
 #### 项目简介
 
 <p style="padding:10px;"  width="90%">
