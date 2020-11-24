@@ -4,10 +4,10 @@
 <br/>
 <img src="/public/static/admin/images/logo.png" width="90px" style="margin-top:30px;"/>
   <h1 align="center">
-    Pear Admin Thinkphp
+    Pear Admin Think
   </h1>
 
-  [预 览](http://layui.pearadmin.com)   |   [官 网](http://www.pearadmin.com/)   |   [群聊](https://jq.qq.com/?_wv=1027&k=5OdSmve)   |   [社区](http://forum.pearadmin.com/)
+  [预 览](http://192.144.214.203/admin.php)   |   [官 网](http://www.pearadmin.com/)   |   [群聊](https://jq.qq.com/?_wv=1027&k=5OdSmve)   |   [社区](http://forum.pearadmin.com/)
 
 
 </div>
@@ -30,19 +30,13 @@
 
 #### 项目简介
 
-<p style="padding:10px;"  width="90%">
- <h1 align="center">
-    Pear Admin Thinkphp 最 终 版
-  </h1> 
-</p>
+* 账户：test 密码：123456
 
-* 声明：仅供技术研究学习合法用途，请勿用于非法用途，否则后果作者概不负责
-* http://192.144.214.203/admin.php test 123456 演示站有功能限制更新不及时，可自行下载研究
-* 推荐配置lnmp环境
-* git clone https://gitee.com/down-home/Pear-Admin-Thinkphp
-* composer update
-* 定义应用运行目录public
-* 访问install.php进行安装
+* 1.推荐配Lnmp环境
+* 2.git clone https://gitee.com/down-home/Pear-Admin-Thinkphp
+* 3.composer update
+* 4.定义应用运行目录public
+* 6.访问Install.php进行安装
 
 
 #### 代码一键生成CRUD方法
@@ -60,14 +54,5 @@
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/1002/182204_d99078d2_1302383.png "1.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/1002/182212_4ed0ec3f_1302383.png "2.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/1002/182218_41ee2978_1302383.png "3.png")
-### 基于 Pear Admin Layui 的项目应用
-
-Pear-Admin-Boot : [开源地址](https://gitee.com/Jmysy/Pear-Admin-Boot) :+1: 
-
-### 特别感谢
-
-ThinkPHP：https://github.com/top-think/framework
-
-Pear-Admin-Layui:https://gitee.com/Jmysy/Pear-Admin-Layui
 
 本框架为开源框架，Apache 开源协议，支持商用，学习
