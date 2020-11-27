@@ -26,7 +26,9 @@ layui.use(['admin', 'jquery', 'layer','element'], function() {
             }
         },
         "theme": {
-            "defaultColor": "3",
+            "defaultColor": "2",
+            "defaultMenu": "dark-theme",
+            "allowCustom": true
         },
         "colors": [{
                 "id": "1",
@@ -61,6 +63,11 @@ layui.use(['admin', 'jquery', 'layer','element'], function() {
                 "icon": "layui-icon layui-icon-fonts-code",
                 "title": "开源地址",
                 "href": "https://gitee.com/Jmysy/Pear-Admin-Layui"
+            },
+            {
+                "icon": "layui-icon layui-icon-survey",
+                "title": "问答社区",
+                "href": "http://forum.pearadmin.com/"
             }
         ],
         "other": {
@@ -90,6 +97,7 @@ layui.use(['admin', 'jquery', 'layer','element'], function() {
         }else if ($(elem).hasClass('password')) {
             layer.open({
                 type: 2,
+                maxmin: true,
                 title: '修改密码',
                 shade: 0.1,
                 area: ['300px', '300px'],

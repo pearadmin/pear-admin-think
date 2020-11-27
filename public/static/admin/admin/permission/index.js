@@ -51,6 +51,7 @@ layui.use(['table','form','treetable', 'jquery'],function () {
         if(obj.event === 'add'){
             layer.open({
                 type: 2,
+                maxmin: true,
                 title: '新增菜单',
                 shade: 0.1,
                 area: [width + 'px', height + 'px'],
@@ -65,6 +66,7 @@ layui.use(['table','form','treetable', 'jquery'],function () {
     window.edit = function(obj){
         layer.open({
             type: 2,
+            maxmin: true,
             title: '修改菜单',
             shade: 0.1,
             area: [width + 'px', height + 'px'],

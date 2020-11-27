@@ -84,6 +84,7 @@ layui.use(['table', 'form', 'jquery'], function() {
     window.add = function() {
         layer.open({
             type: 2,
+            maxmin: true,
             title: '新增角色',
             shade: 0.1,
             area: [width + 'px', height + 'px'],
@@ -94,6 +95,7 @@ layui.use(['table', 'form', 'jquery'], function() {
     window.edit = function(obj) {
         layer.open({
             type: 2,
+            maxmin: true,
             title: '修改角色',
             shade: 0.1,
             area: [width + 'px', height + 'px'],
@@ -104,6 +106,7 @@ layui.use(['table', 'form', 'jquery'], function() {
     window.permission = function(obj) {
         layer.open({
             type: 2,
+            maxmin: true,
             title: '分配直接权限',
             shade: 0.1,
             area: [width + 'px', height + 'px'],
@@ -153,6 +156,7 @@ layui.use(['table', 'form', 'jquery'], function() {
     window.recycle = function() {
         layer.open({
             type: 2,
+            maxmin: true,
             title: '回收站',
             shade: 0.1,
             area: [width + 'px', height + 'px'],

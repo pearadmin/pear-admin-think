@@ -33,6 +33,7 @@ layui.use(['table', 'form', 'code','jquery'], function() {
         if (obj.event === 'crud') {
             layer.open({
                 type: 2,
+                maxmin: true,
                 title: '生成',
                 shade: 0.1,
                 area: [width + 'px', height + 'px'],
@@ -50,6 +51,7 @@ layui.use(['table', 'form', 'code','jquery'], function() {
     $("#addMulti").click(function(){
         layer.open({
             type: 2,
+            maxmin: true,
             title: '新增多级',
             shade: 0.1,
             area: [width + 'px', height + 'px'],
@@ -60,6 +62,7 @@ layui.use(['table', 'form', 'code','jquery'], function() {
     $("#addBase").click(function(){
         layer.open({
             type: 2,
+            maxmin: true,
             title: '新增基础表',
             shade: 0.1,
             area: [width + 'px', height + 'px'],

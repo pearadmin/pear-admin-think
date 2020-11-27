@@ -10,10 +10,10 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 	};
 
 	pearMenu.prototype.render = function(opt) {
-		//默认配置值
+
 		var option = {
 			elem: opt.elem,
-			async: opt.async ? opt.async : false,
+			async: opt.async,
 			parseData: opt.parseData,
 			url: opt.url,
 			defaultOpen: opt.defaultOpen,
@@ -24,29 +24,22 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			height: opt.height,
 			theme: opt.theme,
 			data: opt.data ? opt.data : [],
-			change: opt.change ? opt.change : function() {
-			},
+			change: opt.change ? opt.change : function() {},
 			done: opt.done ? opt.done : function() {}
 		}
 
 		if (option.async) {
 			getData(option.url).then(function(data){
 				option.data = data;
-				if (option.parseData != false) {
-					option.parseData(option.data);
-				}
-				if (option.data.length > 0) {
-					if (option.control != false) {
-						createMenuAndControl(option);
-					} else {
-						createMenu(option);
-					}
-				}
-				element.init();
-				downShow(option);
-				option.done();
+				renderMenu(option);
 			});
+		} else {
+			//renderMenu中需要调用done事件，done事件中需要menu对象，但是此时还未返回menu对象，做个延时提前返回对象
+			window.setTimeout(function() {
+				renderMenu(option);
+			}, 500);
 		}
+
 		return new pearMenu(opt);
 	}
 
@@ -113,7 +106,6 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents(".layui-nav-item").addClass("layui-nav-itemed");
 			$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents("dd").addClass("layui-nav-itemed");
 		}
-
 		$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parent().addClass("layui-this");
 	}
 
@@ -138,18 +130,33 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 				width: "60px"
 			}, 400);
 			isHoverMenu(true, config);
-
 		}
 	}
 	
 	function getData(url){
 	    var defer = $.Deferred();
-		$.get(url, function(result) {
+		$.get(url+"?fresh=" + Math.random(), function(result) {
 			 defer.resolve(result)
 		});
 	    return defer.promise();
 	}
 	
+	function renderMenu(option){
+		if (option.parseData != false) {
+			option.parseData(option.data);
+		}
+		if (option.data.length > 0) {
+			if (option.control != false) {
+				createMenuAndControl(option);
+			} else {
+				createMenu(option);
+			}
+		}
+		element.init();
+		downShow(option);
+		option.done();
+	}
+
 	function createMenu(option) {
 		var menuHtml = '<ul lay-filter="' + option.elem +
 			'" class="layui-nav arrow   pear-menu layui-nav-tree pear-nav-tree">'

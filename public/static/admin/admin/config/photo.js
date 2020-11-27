@@ -98,6 +98,7 @@ layui.use(['table', 'form', 'jquery'], function() {
     window.add = function() {
         layer.open({
             type: 2,
+            maxmin: true,
             title: '新增图片',
             shade: 0.1,
             area: [width + 'px', height + 'px'],

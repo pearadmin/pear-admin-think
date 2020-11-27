@@ -17,7 +17,7 @@ return [
     // 是否使用背景图
     'useImgBg' => false,
     //验证码字符大小
-    'fontSize' => 30,
+    'fontSize' => 40,
     // 是否使用混淆曲线
     'useCurve' => true,
     //是否添加杂点
@@ -27,9 +27,9 @@ return [
     //背景颜色
     'bg'       => [255, 255, 255],
     // 验证码图片高度
-    'imageH'   => 80,
+    'imageH'   => 100,
     // 验证码图片宽度
-    'imageW'   => 250,
+    'imageW'   => 300,
 
     // 添加额外的验证码设置
     // verify => [
