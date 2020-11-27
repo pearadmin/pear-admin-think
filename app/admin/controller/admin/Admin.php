@@ -119,7 +119,7 @@ class Admin extends Base
         if($admin){
             try{
                 //删除中间表
-                Db::table('admin_role')->where('admin_id', $admin['id'])->delete();
+                Db::table('admin_admin_role')->where('admin_id', $admin['id'])->delete();
                 $admin->delete();
                 $this->rm();
             }catch (\Exception $e){
@@ -141,7 +141,7 @@ class Admin extends Base
         try{
             AdminModel::destroy($ids);
             //删除中间表
-             Db::table('admin_role')->whereIn('admin_id', $ids)->delete();
+             Db::table('admin_admin_role')->whereIn('admin_id', $ids)->delete();
              $this->rm();
         }catch (\Exception $e){
             $this->jsonApi('删除失败',201, $e->getMessage());
