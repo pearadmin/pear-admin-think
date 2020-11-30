@@ -77,11 +77,10 @@ class Index extends Base
     {
         $file = Request::file();
         try {
+            validate(['file' => ['fileSize:102400', 'fileExt:jpg,png,gif']])->check(['file' => $file]);
             $type = get_config('file-type');
             if($type==2){
                 //阿里云上传
-                validate(['image'=>'filesize:10240|fileExt:jpg|image:200,200,jpg'])
-                ->check($file);
                 $savename = [];
                 foreach($file as $k) {
                     $res = alYunOSS($k, $k->extension());
@@ -94,8 +93,6 @@ class Index extends Base
                     }
                 }
             }else{
-                validate(['image'=>'filesize:10240|fileExt:jpg|image:200,200,jpg'])
-                ->check($file);
                 foreach($file as $k) {
                     $savename = '/'. \think\facade\Filesystem::disk('public')->putFile( 'topic', $k);
                     $up = new \app\admin\model\admin\Photo;
@@ -104,7 +101,7 @@ class Index extends Base
                 }
             }
             $this->jsonApi('上传成功', 200, ['src'=>$savename,'thumb'=>$savename]);
-        } catch (think\exception\ValidateException $e) {
+          } catch (\think\exception\ValidateException $e) {
             $this->jsonApi('上传失败',201,$e->getMessage());
         }
     }
