@@ -211,7 +211,7 @@ PRIMARY KEY (`id`)
             }
             try {
                 foreach ($crud as $v) {
-                    @mkdir(dirname($v[0]));
+                    @mkdir(dirname($v[0], 0755, true));
                     @file_put_contents($v[0], $v[1]);
                 }
             }catch (\Exception $e){
