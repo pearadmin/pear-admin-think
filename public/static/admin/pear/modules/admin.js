@@ -1,10 +1,11 @@
-layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
+layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame'],
 	function(exports) {
 		"use strict";
 
 		const $ = layui.jquery,
 			form = layui.form,
 			element = layui.element,
+			yaml = layui.yaml,
 			pearTab = layui.tab,
 			pearMenu = layui.menu,
 			pearFrame = layui.frame;
@@ -17,31 +18,44 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 
 		const pearAdmin = new function() {
 
-			let configPath = '';
+			// 默认配置
+			let configType = 'yml';
+			let configPath = 'pear.config.yml';
 
 			this.setConfigPath = function(path) {
-
 				configPath = path;
 			}
-
+			
+			this.setConfigType = function(type) {
+				configType = type;
+			}
 
 			this.render = function(initConfig) {
 				if (initConfig !== undefined) {
 					applyConfig(initConfig);
 				} else {
-					pearAdmin.readConfig().then(function(param) {
-						applyConfig(param);
-					});
+					applyConfig(pearAdmin.readConfig());
 				}
 			}
 
 			this.readConfig = function() {
-				const defer = $.Deferred();
-				const configUrl = (configPath === '' ? "pear.config.json" : configPath) + "?fresh=" + Math.random();
-				$.getJSON(configUrl, function(result) {
-					defer.resolve(result)
-				});
-				return defer.promise();
+				if(configType === "yml"){
+					return yaml.load(configPath);
+				}
+				else
+				{
+					let data;
+					$.ajax({
+						url:configPath,
+						type:'get',
+						dataType:'json',
+						async: false,
+						success:function(result){
+							data = result;
+						}
+					})
+					return data;
+				}
 			}
 
 			this.logoRender = function(param) {
@@ -115,6 +129,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 					})
 
 					sideMenu.click(function(dom, data) {
+						
 						bodyTab.addTabOnly({
 							id: data.menuId,
 							title: data.menuTitle,
@@ -127,7 +142,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				} else {
 					bodyFrame = pearFrame.render({
 						elem: 'content',
-						title: '工作空间 / 首页',
+						title: '首页',
 						url: param.tab.index.href,
 						width: '100%',
 						height: '100%'
@@ -163,6 +178,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				}
 				localStorage.setItem("theme-color", color.id);
 				localStorage.setItem("theme-menu", menu);
+				localStorage.setItem("theme-color-context",color.color);
 				this.colorSet(color.color);
 				this.menuSkin(menu);
 			}
@@ -175,6 +191,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			}
 
 			this.colorSet = function(color) {
+				
 				let style = '';
 				// 自 定 义 菜 单 配 色
 				style +=
@@ -210,18 +227,16 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				// 自 定 义 样 式 选 择 边 框 配 色
 				style +=
 					'.pearone-color .color-content li.layui-this:after, .pearone-color .color-content li:hover:after {border: ' +
-					color + ' 2px solid!important;}';
+					color + ' 3px solid!important;}';
 
 				style += '.layui-nav .layui-nav-child dd.layui-this a, .layui-nav-child dd.layui-this{background-color:' + color +
 					'!important}';
-
-				style += ".pear-nav-control.pc .layui-this *{color:" + color + "!important}";
-
+					
 				style += '.pear-social-entrance {background-color:' + color + '!important}';
 				style += '.pear-admin .pe-collaspe {background-color:' + color + '!important}';
-				/* if ($("iframe").contents().find("#customTheme").length > 0) {
-					$("iframe").contents().find("#customTheme").remove();
-				} */
+				if(config.other.autoHead){
+					style += '.pear-admin .layui-header{background-color:' + color + '!important;}.pear-admin .layui-header .layui-nav .layui-nav-item>a{color:white!important;}';
+				}
 				$("#pearadmin-bg-color").html(style);
 			}
 		};
@@ -273,6 +288,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 		});
 
 		body.on("click", ".setting", function() {
+			
 			let bgColorHtml =
 				'<li class="layui-this" data-select-bgcolor="dark-theme" >' +
 				'<a href="javascript:;" data-skin="skin-blue" style="" class="clearfix full-opacity-hover">' +
@@ -308,7 +324,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				anim: -1,
 				skin: 'layer-anim-right',
 				move: false,
-				content: html + buildColorHtml() + buildLinkHtml(),
+				content: html + buildColorHtml() + buildLinkHtml() + bottomTool(),
 				success: function(layero, index) {
 					form.render();
 
@@ -333,9 +349,22 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 							layer.close(index);
 						});
 					})
+					
+					$('#closeTheme').click(function() {
+						const $layero = $('#layui-layer' + index);
+						$layero.animate({
+							left: $layero.offset().left + $layero.width()
+						}, 200, function() {
+							layer.close(index);
+						});
+					})
 				}
 			});
 		});
+
+		function bottomTool(){
+			return "<button id='closeTheme' style='position: absolute;bottom: 20px;left: 20px;' class='pear-btn'>关闭</button>"
+		}
 
 		body.on('click', '[data-select-bgcolor]', function() {
 			const theme = $(this).attr('data-select-bgcolor');
@@ -440,5 +469,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				res("返回值");
 			});
 		}
+
 		exports('admin', pearAdmin);
 	})

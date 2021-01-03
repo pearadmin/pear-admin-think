@@ -7,7 +7,7 @@ use think\facade\View;
 use think\facade\Request;
 use think\facade\Db;
 use app\admin\model\admin\Photo;
-class Config  extends Base
+class Config  extends  \app\admin\controller\Base
 {
     protected $middleware = ['AdminCheck','AdminPermission'];
     

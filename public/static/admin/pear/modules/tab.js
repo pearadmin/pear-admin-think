@@ -84,28 +84,40 @@ layui.define(['jquery', 'element'], function(exports) {
 		var title = '';
 
 		if (opt.close) {
-
 			title += '<span class="pear-tab-active"></span><span class="able-close">' + opt.title +
-				'</span><i class="layui-icon layui-unselect layui-tab-close">ဆ</i>'
-
+				'</span><i class="layui-icon layui-unselect layui-tab-close">ဆ</i>';
 		} else {
-
 			title += '<span class="pear-tab-active"></span><span class="disable-close">' + opt.title +
-				'</span><i class="layui-icon layui-unselect layui-tab-close">ဆ</i>'
+				'</span><i class="layui-icon layui-unselect layui-tab-close">ဆ</i>';
 		}
-
 		element.tabAdd(this.option.elem, {
 			title: title,
 			content: '<iframe id="' + opt.id + '" data-frameid="' + opt.id + '" scrolling="auto" frameborder="0" src="' +
 				opt.url + '" style="width:100%;height:100%;"></iframe>',
 			id: opt.id
 		});
-
 		element.tabChange(this.option.elem, opt.id);
 	}
-
 	var index = 0;
 
+	// 根据过滤 filter 标识, 删除执行选项卡
+	pearTab.prototype.delTabByElem = function(elem, id, callback){
+		var currentTab = $(".layui-tab[lay-filter='" + elem + "'] .layui-tab-title [lay-id='"+id+"']");
+		if (currentTab.find("span").is(".able-close")) {
+			tabDelete(elem, id, callback);
+		}
+	}
+	
+	// 根据过滤 filter 标识, 删除当前选项卡
+	pearTab.prototype.delCurrentTabByElem = function(elem,callback){
+			var currentTab = $(".layui-tab[lay-filter='" + elem + "'] .layui-tab-title .layui-this");
+			if (currentTab.find("span").is(".able-close")) {
+				var currentId = currentTab.attr("lay-id");
+				tabDelete(elem, currentId, callback);
+			}
+	}
+
+	// 通过过滤 filter 标识, 新增标签页
 	pearTab.prototype.addTabOnlyByElem = function(elem, opt, time) {
 		var title = '';
 		if (opt.close) {
@@ -312,13 +324,10 @@ layui.define(['jquery', 'element'], function(exports) {
 	function tabDelete(elem, id, callback) {
 
 		//根据 elem id 来删除指定的 layui title li
-
 		var tabTitle = $(".layui-tab[lay-filter='" + elem + "']").find(".layui-tab-title");
 
 		// 删除指定 id 的 title
-
 		var removeTab = tabTitle.find("li[lay-id='" + id + "']");
-
 		var nextNode = removeTab.next("li");
 
         if(!removeTab.hasClass("layui-this")){
@@ -334,37 +343,29 @@ layui.define(['jquery', 'element'], function(exports) {
 		if (nextNode.length) {
 
 			nextNode.addClass("layui-this");
-
 			currId = nextNode.attr("lay-id");
-
 			$("#" + elem + " [id='" + currId + "']").parent().addClass("layui-show");
 
 		} else {
 
 			var prevNode = removeTab.prev("li");
-
 			prevNode.addClass("layui-this");
-
 			currId = prevNode.attr("lay-id");
-
 			$("#" + elem + " [id='" + currId + "']").parent().addClass("layui-show");
 
 		}
-
 		callback(currId);
-
 		removeTab.remove();
-
 		// 删除 content
 		var tabContent = $(".layui-tab[lay-filter='" + elem + "']").find("iframe[id='" + id + "']").parent();
-
 		tabContent.remove();
-
 	}
 
 	function createTab(option) {
 
 		var type = "";
+		
+		var types = option.type+" ";
 
 		if (option.roll == true) {
 
@@ -379,7 +380,7 @@ layui.define(['jquery', 'element'], function(exports) {
 			type = "layui-tab-rollTool";
 		}
 
-		var tab = '<div class="pear-tab ' + type + ' layui-tab" lay-filter="' + option.elem + '" lay-allowClose="true">';
+		var tab = '<div class="pear-tab ' + types + type + ' layui-tab" lay-filter="' + option.elem + '" lay-allowClose="true">';
 
 		var title = '<ul class="layui-tab-title">';
 
@@ -473,7 +474,6 @@ layui.define(['jquery', 'element'], function(exports) {
 
 	function closeEvent(option) {
 		$(".layui-tab[lay-filter='" + option.elem + "']").on("click", ".layui-tab-close", function() {
-
 			var layid = $(this).parent().attr("lay-id");
 			tabDelete(option.elem, layid, option.closeEvent);
 		})

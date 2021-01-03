@@ -40,9 +40,10 @@ CREATE TABLE `admin_multi` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '多级地址',
    PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 COMMENT='多级管理';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 COMMENT='多级管理';
 INSERT INTO `admin_multi` (`id`, `name`) VALUES
-(1, 'admin');
+(1, 'admin'),
+(2, 'home');
 
 DROP TABLE IF EXISTS `admin_permission`;
 CREATE TABLE `admin_permission` (
@@ -57,7 +58,7 @@ CREATE TABLE `admin_permission` (
   `multi` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '所属多级',
    PRIMARY KEY (`id`),
    KEY `pid` (`pid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 COMMENT='权限表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 COMMENT='权限表';
 
 INSERT INTO `admin_permission` (`id`, `pid`, `title`, `href`, `icon`, `sort`, `type`, `status`,`multi`) VALUES
 (1, 0, '后台权限', '', 'layui-icon-username', 2, 0, 1,'admin'),
@@ -67,7 +68,14 @@ INSERT INTO `admin_permission` (`id`, `pid`, `title`, `href`, `icon`, `sort`, `t
 (5, 0, '系统管理', '', 'layui-icon-set', 3, 0, 1,'admin'),
 (6, 5, '后台日志', '/admin.config/log', '', 2, 1, 1,'admin'),
 (7, 5, '系统设置', '/admin.config/index', '', 1, 1, 1,'admin'),
-(8, 5, '图片管理', '/admin.config/photo', '', 2, 1, 1,'admin');
+(8, 5, '图片管理', '/admin.config/photo', '', 2, 1, 1,'admin'),
+(9, 0, '内容管理', '/', 'layui-icon-file-b', 4, 0, 1, 'home'),
+(10, 9, '新闻列表', '/home.news/index', '', 10, 1, 1, 'home'),
+(11, 10, '添加新闻', '/home.news/add','', 10, 1, 1, 'home'),
+(12, 10, '编辑新闻', '/home.news/edit', '', 10, 1, 1, 'home'),
+(13, 10, '删除新闻', '/home.news/del', '', 10, 1, 1, 'home'),
+(14, 10, '选中删除新闻', '/home.news/delall', '', 10, 1, 1, 'home'),
+(15, 10, '回收站新闻', '/home.news/recycle', '', 10, 1, 1, 'home');
 
 DROP TABLE IF EXISTS `admin_role`;
 CREATE TABLE `admin_role` (
@@ -123,3 +131,15 @@ CREATE TABLE `admin_photo` (
   `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 COMMENT='图片表';
+
+DROP TABLE IF EXISTS `home_news`;
+CREATE TABLE `home_news` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `title` varchar(255) NOT NULL COMMENT '标题',
+  `img` varchar(255) NOT NULL COMMENT '缩略图',
+  `desc` text COMMENT '内容',
+  `create_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  `delete_time` timestamp NULL DEFAULT NULL COMMENT '删除时间',
+   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 COMMENT='新闻';

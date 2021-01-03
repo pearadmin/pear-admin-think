@@ -9,7 +9,7 @@ use think\facade\Db;
 use app\admin\model\admin\Role;
 use app\admin\model\admin\Admin as AdminModel;
 use app\admin\validate\admin\Admin as AdminValidate;
-class Admin extends Base
+class Admin extends  \app\admin\controller\Base
 {
     protected $middleware = ['AdminCheck','AdminPermission'];
     /**

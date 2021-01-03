@@ -7,7 +7,7 @@ use think\facade\Request;
 use think\facade\Db;
 use think\facade\View;
 use think\facade\Session;
-class Index extends Base
+class Index extends  \app\admin\controller\Base
 {
     protected $middleware = ['AdminCheck'];
 

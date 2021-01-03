@@ -8,7 +8,7 @@ use think\facade\View;
 use think\facade\Db;
 use app\admin\model\admin\Permission as PermissionModel;
 use app\admin\validate\admin\Permission as PermissionValidate;
-class Permission extends Base
+class Permission extends  \app\admin\controller\Base
 {
     protected $middleware = ['AdminCheck','AdminPermission'];
     /**

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="__ADMIN__/pear/css/pear.css"/>
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="mainBox">
+        <div class="main-container">
+            
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            标题
+        </label>
+        <div class="layui-input-block">
+            <input type="text" class="layui-input layui-form-danger" lay-verify="required " name="title" type="text" value="{$data['title']}"/>
+               </div>
+           </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            缩略图
+        </label>
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-sm upload-image" type="button">
+                   <i class="fa fa-image">
+                   </i>
+                   上传图片
+               </button>
+               <input lay-verify="uploadimg" name="img" type="hidden" value="{$data['img']}"/>
+               <div class="upload-image">
+                   <span>
+                   </span>
+                   <img class="upload-image" src="{$data['img']}"/>
+               </div>
+               </div>
+           </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            内容
+        </label>
+        <div class="layui-input-block">
+            <textarea id="desc" name="desc" type="text/plain" style="width:100%;margin-bottom:20px;">{$data['desc']}</textarea>
+               </div>
+           </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit="" lay-filter="save">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<script src="__ADMIN__/layui/layui.js"></script>
+<script src="__ADMIN__/pear/pear.js"></script>
+<script>
+    layui.use(['form', 'jquery', 'layedit', 'uploads'], function () {
+        let form = layui.form;
+        let $ = layui.jquery;
+        let layedit = layui.layedit
+            
+        layedit.set({
+            uploadImage: {
+                url: "../admin.index/upload"
+            }
+        });
+        //建立编辑器   
+                var desc  = layedit.build("desc", {
+                height: 400 //设置编辑器的高度
+                });
+        form.on('submit(save)', function (data) {
+            
+                data.field.desc =layedit.getContent(desc);
+                
+            $.ajax({
+                data: JSON.stringify(data.field),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'post',
+                success: function (res) {
+                    //判断有没有权限
+                    if (res && res.code == 999) {
+                        layer.msg(res.msg, {
+                            icon: 5,
+                            time: 2000,
+                        })
+                        return false;
+                    } else if (res.code == 200) {
+                        layer.msg(res.msg,{icon:1,time:1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            parent.layui.table.reload("dataTable");
+                        });
+                    } else {
+                        layer.msg(res.msg,{icon:2,time:1000});
+                    }
+                }
+            })
+            return false;
+        });
+    })
+</script>
+</body>
+</html>

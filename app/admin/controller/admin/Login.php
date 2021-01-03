@@ -5,7 +5,7 @@ namespace app\admin\controller\admin;
 use think\facade\Request;
 use think\facade\View;
 use think\captcha\facade\Captcha;
-class Login extends Base
+class Login extends \app\admin\controller\Base
 {
     /**
      * 后台登录

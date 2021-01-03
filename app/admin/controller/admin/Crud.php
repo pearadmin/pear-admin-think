@@ -7,7 +7,7 @@ use think\facade\Request;
 use think\facade\View;
 use think\facade\Db;
 use app\admin\model\admin\Permission;
-class Crud extends Base
+class Crud extends  \app\admin\controller\Base
 {
     protected $middleware = ['AdminCheck','AdminPermission'];
     
@@ -51,9 +51,6 @@ class Crud extends Base
                  //创建JS目录
                  if(!is_dir(public_path().'static'.DS.'admin'.DS.'multi')) @mkdir(public_path().'static'.DS.'admin'.DS.'multi');
                  @mkdir(public_path().'static'.DS.'admin'.DS.'multi'.DS.$data['name']);
-                 //创建基础控制器
-                 @file_put_contents(app_path().DS.'controller'.DS.$data['name'].DS.'/Base.php', 
-                 str_replace(['{{$app}}'], [$data['name']], file_get_contents(root_path().'extend'.DS.'tpl'.DS.'base.php.tpl')));
              }catch (\Exception $e){
                  $this->jsonApi('添加失败',201, $e->getMessage());
              }
