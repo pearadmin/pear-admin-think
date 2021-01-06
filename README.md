@@ -7,7 +7,7 @@
     Pear Admin Think
   </h1>
 
-  [预 览](http://192.144.214.203/admin.php)   |   [官 网](http://www.pearadmin.com/)   |   [群聊](https://jq.qq.com/?_wv=1027&k=5OdSmve)   |   [社区](http://forum.pearadmin.com/)
+  [预 览](http://pear.jianla.cn/admin.php)   |   [官 网](http://www.pearadmin.com/)   |   [群聊](https://jq.qq.com/?_wv=1027&k=5OdSmve)   |   [社区](http://forum.pearadmin.com/)
 
 
 </div>
