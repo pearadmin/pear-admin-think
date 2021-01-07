@@ -12,15 +12,14 @@ use app\admin\validate\admin\Role as RoleValidate;
 class Role extends  \app\admin\controller\Base
 {
     protected $middleware = ['AdminCheck','AdminPermission'];
+    protected $model = 'app\admin\model\admin\Role';
+    protected $validate =  'app\admin\validate\admin\Role';
     /**
      * 角色
      */
     public function index()
     {
-        if (Request::isAjax()) {
-            $list = RoleModel::order('id','desc')->withoutField('permissions,delete_time')->paginate(Request::get('limit'));
-            $this->jsonApi('', 0, $list->items(), ['count' => $list->total(), 'limit' => Request::get('limit')]);
-        }
+        $this->_list();
         return View::fetch();
     }
 
@@ -29,19 +28,7 @@ class Role extends  \app\admin\controller\Base
      */
     public function add()
     {
-        if (Request::isAjax()) {
-            $data = Request::post();
-            //验证
-            $validate = new RoleValidate;
-            if(!$validate->check($data)) 
-            $this->jsonApi($validate->getError(),201);
-            try {
-                RoleModel::create($data);
-            }catch (\Exception $e){
-                $this->jsonApi('添加失败',201, $e->getMessage());
-            }
-            $this->jsonApi('添加成功');
-        }
+        $this->_add();
         return View::fetch();
     }
 
@@ -50,25 +37,10 @@ class Role extends  \app\admin\controller\Base
      */
     public function edit($id)
     { 
-        $role = RoleModel::find($id);
-        if (Request::isAjax()) {
-            $data = Request::post();
-            $data['id'] = $role['id'];
-            //验证
-            $validate = new RoleValidate;
-            if(!$validate->check($data)) 
-            $this->jsonApi($validate->getError(),201);
-            try {
-                $role->name = $data['name'];
-                $role->desc = $data['desc'];
-                $role->save();
-            }catch (\Exception $e){
-                $this->jsonApi('更新失败',201, $e->getMessage());
-            }
-            $this->jsonApi('更新成功');
-        }
+        $model = new $this->model();
+        $this->_edit($id);
         return View::fetch('',[
-            'model' => $role
+            'model' => $model->find($id)
         ]);
     }
 
@@ -132,29 +104,7 @@ class Role extends  \app\admin\controller\Base
      */
     public function recycle()
     {
-        if (Request::isAjax()) {
-            if (Request::isPost()){
-                $ids = Request::param('ids');
-                if (!is_array($ids)){
-                    $this->jsonApi('参数错误',201);
-                }
-                try{
-                    if(Request::param('type')=='1'){
-                        $data = RoleModel::onlyTrashed()->whereIn('id', $ids)->select();
-                        foreach($data as $k){
-                            $k->restore();
-                        }
-                    }else{
-                        RoleModel::destroy($ids,true);
-                    }
-                }catch (\Exception $e){
-                    $this->jsonApi('操作失败',201, $e->getMessage());
-                }
-                $this->jsonApi('操作成功');
-            }
-            $list = RoleModel::onlyTrashed()->order('id','desc')->withoutField('delete_time')->paginate(Request::get('limit'));
-            $this->jsonApi('', 0, $list->items(), ['count' => $list->total(), 'limit' => Request::get('limit')]);
-        }
+        $this->_recycle();
         return View::fetch();
     }
 }

@@ -228,36 +228,26 @@ PRIMARY KEY (`id`)
     private function getController()
     {
         $file = app_path().'controller'.DS.$this->multi.DS.$this->name_php;
-        $list = '
-            //重整数组
-            foreach ($list as $k => $v) {';
-                foreach($this->photo as $k=>$v){
-                    $i = explode('###',$v);
-                    $list .= '
-                    $list[$k][\'' . $i[0] . '\'] = \'<img src="\' . $v[\'' . $i[0] . '\'] . \'"/>\';';
-                }
-        $list .= '
-            }';
         $search = '';
         foreach($this->search as $k=>$v){
-            $i = explode('###',$v);
-            if(strstr($i[0],"time")){
-                $search .= '    
-                //按'.$i[1].'查找
-                $start = input("get.'.$i[0].'-start");
-                $end = input("get.'.$i[0].'-end");
-                if ($start && $end) {
-                    $where[]=["'.$i[0].'","between",[$start,date("Y-m-d",strtotime("$end +1 day"))]];
-                 }';
-               }else{
-                $search .= '    
-                //按'.$i[1].'查找
-                if ($'.$i[0].' = input("'.$i[0].'")) {
-                    $where[] = ["'.$i[0].'", "like", "%" . $'.$i[0].' . "%"];
-                }';
-               }
+        $i = explode('###',$v);
+        if(strstr($i[0],"time")){
+            $search .= '
+        //按'.$i[1].'查找
+        $start = input("get.'.$i[0].'-start");
+        $end = input("get.'.$i[0].'-end");
+        if ($start && $end) {
+            $where[]=["'.$i[0].'","between",[$start,date("Y-m-d",strtotime("$end +1 day"))]];
+        }';
+        }else{
+        $search .= '
+        //按'.$i[1].'查找
+        if ($'.$i[0].' = input("'.$i[0].'")) {
+            $where[] = ["'.$i[0].'", "like", "%" . $'.$i[0].' . "%"];
+        }';
         }
-        $content = str_replace(['{{$multi}}', '{{$multi_name_hump}}','{{$list}}','{{$search}}'], [ $this->multi, $this->multi_name_hump,$list,$search], file_get_contents(root_path().'extend'. DS .'tpl'. DS .'controller.php.tpl'));
+        }
+        $content = str_replace(['{{$multi}}', '{{$multi_name_hump}}','{{$search}}'], [ $this->multi, $this->multi_name_hump,$search], file_get_contents(root_path().'extend'. DS .'tpl'. DS .'controller.php.tpl'));
         return [$file, $content];
     }
 
@@ -268,11 +258,7 @@ PRIMARY KEY (`id`)
             foreach ($this->info as $k) {
             //软删除字段
             if ($k['name'] == 'delete_time'){
-            $del = ' 
-            use SoftDelete;
-            protected $deleteTime = "delete_time";
-            '
-            ;
+            $del = ' protected $deleteTime = "delete_time"; ' ;
             }
         }
         $content = str_replace(['{{$multi}}', '{{$multi_name_hump}}', '{{$name}}','{{$del}}'], [$this->multi, $this->multi_name_hump, $this->name,$del], file_get_contents(root_path().'extend'. DS .'tpl'. DS .'model.php.tpl'));

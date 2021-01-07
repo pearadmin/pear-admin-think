@@ -1,13 +1,8 @@
 <?php
 namespace app\admin\model\home;
 
-use think\Model;
-use think\model\concern\SoftDelete;
-class News extends Model
+class News extends \app\admin\model\Base
 {
     protected $table = 'home_news';
-     
-            use SoftDelete;
-            protected $deleteTime = "delete_time";
-            
+     protected $deleteTime = "delete_time"; 
 }

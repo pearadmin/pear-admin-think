@@ -11,6 +11,8 @@ use app\admin\validate\admin\Permission as PermissionValidate;
 class Permission extends  \app\admin\controller\Base
 {
     protected $middleware = ['AdminCheck','AdminPermission'];
+    protected $model = 'app\admin\model\admin\Permission';
+    protected $validate =  'app\admin\validate\admin\Permission';
     /**
      * 管理员
      */
@@ -28,20 +30,7 @@ class Permission extends  \app\admin\controller\Base
      */
     public function add()
     {
-        if (Request::isAjax()) {
-            $data = Request::post();
-            //验证
-            $validate = new PermissionValidate;
-            if(!$validate->check($data)) 
-            $this->jsonApi($validate->getError(),201);
-            try {
-                PermissionModel::create($data);
-                $this->rm();
-            }catch (\Exception $e){
-                $this->jsonApi('添加失败',201, $e->getMessage());
-            }
-            $this->jsonApi('添加成功');
-        }
+        $this->_add();
         return View::fetch('', [
             'permissions' => get_tree(PermissionModel::order('sort','asc')->select()->toArray()),
             'multi' => Db::name('admin_multi')->order(['name'])->column('name', 'id'),
@@ -54,21 +43,7 @@ class Permission extends  \app\admin\controller\Base
     public function edit($id)
     { 
         $permission = PermissionModel::find($id);
-        if (Request::isAjax()) {
-            $data = Request::post();
-            $data['id'] = $permission['id'];
-            //验证
-            $validate = new PermissionValidate;
-            if(!$validate->check($data)) 
-            $this->jsonApi($validate->getError(),201);
-            try {
-                $permission->save($data);
-                $this->rm();
-            }catch (\Exception $e){
-                $this->jsonApi('更新失败',201, $e->getMessage());
-            }
-            $this->jsonApi('更新成功');
-        }
+        $this->_edit($id);
         return View::fetch('',[
             'model' => $permission,
             'permissions' => get_tree((PermissionModel::order('sort','asc'))->select()->toArray()),

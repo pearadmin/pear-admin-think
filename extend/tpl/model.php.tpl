@@ -1,9 +1,7 @@
 <?php
 namespace app\admin\model\{{$multi}};
 
-use think\Model;
-use think\model\concern\SoftDelete;
-class {{$multi_name_hump}} extends Model
+class {{$multi_name_hump}} extends \app\admin\model\Base
 {
     protected $table = '{{$name}}';
     {{$del}}
