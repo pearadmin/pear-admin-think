@@ -82,47 +82,12 @@ class Base
         $this->isMobile = $this->request->isMobile();
     }
 
+    //页面渲染 
     protected function fetch($template = '',$data = [])
     {
         return View::fetch($template,$data);
     }
 
-    /**
-     * 验证数据
-     * @access protected
-     * @param  array        $data     数据
-     * @param  string|array $validate 验证器名或者验证规则数组
-     * @param  array        $message  提示信息
-     * @param  bool         $batch    是否批量验证
-     * @return array|string|true
-     * @throws ValidateException
-     */
-    protected function validate(array $data, $validate, array $message = [], bool $batch = false)
-    {
-        if (is_array($validate)) {
-            $v = new Validate();
-            $v->rule($validate);
-        } else {
-            if (strpos($validate, '.')) {
-                // 支持场景
-                [$validate, $scene] = explode('.', $validate);
-            }
-            $class = false !== strpos($validate, '\\') ? $validate : $this->app->parseClass('validate', $validate);
-            $v     = new $class();
-            if (!empty($scene)) {
-                $v->scene($scene);
-            }
-        }
-
-        $v->message($message);
-
-        // 是否批量验证
-        if ($batch || $this->batchValidate) {
-            $v->batch(true);
-        }
-
-        return $v->failException(true)->check($data);
-    }
     //添加数据 
     protected function _add($data)
     {
@@ -163,7 +128,7 @@ class Base
     //删除所选数据 
     protected function _delall($ids)
     {
-        if (!is_array($ids)) ['msg'=>'参数错误','code'=>'201'];
+        if (!is_array($ids)) return ['msg'=>'参数错误','code'=>'201'];
         try{
             $this->model->destroy($ids);
         }catch (\Exception $e){
@@ -175,7 +140,7 @@ class Base
     //回收站
     protected function _recycle($ids,$type)
     {
-        if (!is_array($ids)) ['msg'=>'参数错误','code'=>'201'];
+        if (!is_array($ids)) return ['msg'=>'参数错误','code'=>'201'];
         try{
             if($type=='1'){
                 $data = $this->model->onlyTrashed()->whereIn('id', $ids)->select();
@@ -189,6 +154,43 @@ class Base
             return ['msg'=>'删除失败'.$e->getMessage(),'code'=>'201'];
         }
         return ['msg'=>'删除成功','code'=>'200'];
+    }
+
+    /**
+     * 验证数据
+     * @access protected
+     * @param  array        $data     数据
+     * @param  string|array $validate 验证器名或者验证规则数组
+     * @param  array        $message  提示信息
+     * @param  bool         $batch    是否批量验证
+     * @return array|string|true
+     * @throws ValidateException
+     */
+    protected function validate(array $data, $validate, array $message = [], bool $batch = false)
+    {
+        if (is_array($validate)) {
+            $v = new Validate();
+            $v->rule($validate);
+        } else {
+            if (strpos($validate, '.')) {
+                // 支持场景
+                [$validate, $scene] = explode('.', $validate);
+            }
+            $class = false !== strpos($validate, '\\') ? $validate : $this->app->parseClass('validate', $validate);
+            $v     = new $class();
+            if (!empty($scene)) {
+                $v->scene($scene);
+            }
+        }
+
+        $v->message($message);
+
+        // 是否批量验证
+        if ($batch || $this->batchValidate) {
+            $v->batch(true);
+        }
+
+        return $v->failException(true)->check($data);
     }
 
 }
