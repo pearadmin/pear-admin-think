@@ -29,15 +29,24 @@
 </div>
 
 #### 项目简介
+>Pear Admin Think 基于 thinkphp6 的快速开发平台，通过简单的代码生成功能，即可快速构建你的功能业务，努力成为最顺手的轮子。
 
-* 账户：test 密码：123456
+#### 演示站信息
+* http://pear.jianla.cn/admin.php 账户：test 密码：123456
 
-* 1.推荐配Lnmp环境
-* 2.git clone https://gitee.com/down-home/Pear-Admin-Thinkphp
-* 3.composer update
-* 4.定义应用运行目录public
-* 6.访问Install.php进行安装
+#### 环境要求
+* PHP >= 7.1.0
+* Mysql >= 5.7.0 (需支持innodb引擎)
+* Apache 或 Nginx
+* 需要支持PATH_INFO
 
+#### 安装配置
+* git clone https://gitee.com/pear-admin/Pear-Admin-Think
+* 更新包composer update
+* 将网站入口部署至public目录下面
+* 修改伪静态配置, 请参考下方伪静态设置。
+* 运行网站地址, 会自动进入安装界面, 请根据提示进行设置, 然后点击安装。
+* 安装完成后会自动生成安装锁public/install.lock, 如需重新安装, 删掉该文件即可
 
 #### 代码一键生成CRUD方法
 >env APP_DEBUG = true
@@ -46,10 +55,6 @@
 * 第二步.根据多级创建对应前缀数据表。
 * 第三步.选择多级数据表生成。
 * 建议定义软删除delete_time，自动生成回收站功能。如不需要可自行删除。
-* 开源不易，如果对您有帮助。可以请作者喝杯咖啡！
-
-#### 完成项目
-* 整合RABC权限 OSS上传  邮件发送 系统设置 图片管理  代码生成  单点登录 一键安装
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/1002/182204_d99078d2_1302383.png "1.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/1002/182212_4ed0ec3f_1302383.png "2.png")
