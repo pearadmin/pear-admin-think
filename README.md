@@ -56,8 +56,9 @@
 * 第三步.选择多级数据表生成。
 * 建议定义软删除delete_time，自动生成回收站功能。如不需要可自行删除。
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/1002/182204_d99078d2_1302383.png "1.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2020/1002/182212_4ed0ec3f_1302383.png "2.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2020/1002/182218_41ee2978_1302383.png "3.png")
+#### 页面展示
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0108/151730_3a321dbc_1302383.png "1.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0108/151737_1d98a6db_1302383.png "2.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0108/151744_a26b9301_1302383.png "4.png")
 
 本框架为开源框架，Apache 开源协议，支持商用，学习
