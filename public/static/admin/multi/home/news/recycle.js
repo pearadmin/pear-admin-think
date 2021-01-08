@@ -30,12 +30,12 @@ layui.use(['table', 'form', 'jquery','laydate'], function() {
                 align: 'center'
             }, {
                 field: 'create_time',
-                title: '更新时间',
+                title: '创建时间',
                 unresize: true,
                 align: 'center'
             }, {
                 field: 'update_time',
-                title: '创建时间',
+                title: '更新时间',
                 unresize: true,
                 align: 'center'
             }, ]

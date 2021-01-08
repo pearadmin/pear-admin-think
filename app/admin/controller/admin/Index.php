@@ -2,36 +2,37 @@
 declare (strict_types = 1);
 
 namespace app\admin\controller\admin;
-use think\facade\App;
-use think\facade\Request;
 use think\facade\Db;
-use think\facade\View;
 use think\facade\Session;
 class Index extends  \app\admin\controller\Base
 {
     protected $middleware = ['AdminCheck'];
+    protected function initialize()
+    {
+        parent::initialize();
+    }
 
     //首页
     public function index()
     {
-        return View::fetch('',[
+        return $this->fetch('',[
             "APP_DS_PHP" => APP_DS_PHP
         ]);
     }
 
     //欢迎页
     public function home(){
-        return View::fetch('',[
-            'os'=>PHP_OS,
-            'space'=>round((disk_free_space('.')/(1024*1024)),2).'M',
-            'addr'=>Request::server('SERVER_ADDR'),
-            'run'=> Request::server('SERVER_SOFTWARE'),
-            'php'=>PHP_VERSION,
-            'php_run'=> php_sapi_name(),
-            'mysql'=> function_exists('mysql_get_server_info')?mysql_get_server_info():Db::query('SELECT VERSION() as mysql_version')[0]['mysql_version'],
-            'think'=> App::version(),
-            'upload'=>ini_get('upload_max_filesize'),
-            'max'=>ini_get('max_execution_time').'秒',
+        return $this->fetch('',[
+            'os' => PHP_OS,
+            'space' => round((disk_free_space('.')/(1024*1024)),2).'M',
+            'addr' => $this->request->server('SERVER_ADDR'),
+            'run' =>  $this->request->server('SERVER_SOFTWARE'),
+            'php' => PHP_VERSION,
+            'php_run' => php_sapi_name(),
+            'mysql' => function_exists('mysql_get_server_info')?mysql_get_server_info():Db::query('SELECT VERSION() as mysql_version')[0]['mysql_version'],
+            'think' => $this->app->version(),
+            'upload' => ini_get('upload_max_filesize'),
+            'max' => ini_get('max_execution_time').'秒',
         ]);
     }
 
@@ -55,12 +56,12 @@ class Index extends  \app\admin\controller\Base
     //修改密码
     public function pass()
     {
-        if (Request::post()){
+        if ($this->post){
             (new \app\admin\model\admin\Admin)->where('id',Session::get('admin.id'))->update(['password' => set_password(trim(Request::post('password')))]);
             (new \app\admin\model\admin\Admin)->logout();
             $this->jsonApi('修改成功',200,APP_DS_PHP.'/admin.login/index');
         }
-        return View::fetch();
+        return $this->fetch();
     }
 
     //清除缓存
@@ -75,7 +76,7 @@ class Index extends  \app\admin\controller\Base
      */
     public function upload()
     {
-        $file = Request::file();
+        $file = $this->request->file();
         try {
             validate(['file' => ['fileSize:102400', 'fileExt:jpg,png,gif']])->check(['file' => $file]);
             $type = get_config('file-type');

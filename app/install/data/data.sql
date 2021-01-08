@@ -138,8 +138,8 @@ CREATE TABLE `home_news` (
   `title` varchar(255) NOT NULL COMMENT '标题',
   `img` varchar(255) NOT NULL COMMENT '缩略图',
   `desc` text COMMENT '内容',
-  `create_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
-  `update_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   `delete_time` timestamp NULL DEFAULT NULL COMMENT '删除时间',
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 COMMENT='新闻';

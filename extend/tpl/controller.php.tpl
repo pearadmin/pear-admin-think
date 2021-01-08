@@ -1,22 +1,27 @@
 <?php
 namespace app\admin\controller\{{$multi}};
 
-use think\facade\View;
 class {{$multi_name_hump}} extends \app\admin\controller\Base
 {
     protected $middleware = ['AdminCheck','AdminPermission'];
-    protected $model = 'app\admin\model\{{$multi}}\{{$multi_name_hump}}';
-    protected $validate =  'app\admin\validate\{{$multi}}\{{$multi_name_hump}}';
+      protected function initialize()
+    {
+        parent::initialize();
+        $this->model = new \app\admin\model\{{$multi}}\{{$multi_name_hump}};
+        $this->validate =  new \app\admin\validate\{{$multi}}\{{$multi_name_hump}};
+    }
     
     /**
      * 列表
      */
     public function index()
     {
-        $where = [];
-        {{$search}}
-        $this->_list($where);
-        return View::fetch();
+        if ($this->isAjax) {
+            {{$search}}
+            $list = $this->model->order('id','desc')->where($this->where)->paginate($this->get['limit']);
+            $this->jsonApi('', 0, $list->items(), ['count' => $list->total(), 'limit' =>$this->get['limit']]);
+        }
+        return $this->fetch();
     }
 
     /**
@@ -24,8 +29,14 @@ class {{$multi_name_hump}} extends \app\admin\controller\Base
      */
     public function add()
     {
-        $this->_add();
-        return View::fetch();
+        if ($this->isAjax) {
+            $data = $this->post;
+            if(!$this->validate->check($data)) 
+            $this->jsonApi($this->validate->getError(),201);
+            $res = $this->_add($data);
+            $this->jsonApi($res['msg'],$res['code']);
+        }
+        return $this->fetch();
     }
 
     /**
@@ -33,10 +44,15 @@ class {{$multi_name_hump}} extends \app\admin\controller\Base
      */
     public function edit($id)
     { 
-        $model = new $this->model();
-        $this->_edit($id);
-        return View::fetch('',[
-            'data' => $model->find($id)
+        if ($this->isAjax) {
+            $data = $this->post;
+            if(!$this->validate->scene('edit')->check($data)) 
+            $this->jsonApi($this->validate->getError(),201);
+            $res = $this->_update($id,$data);
+            $this->jsonApi($res['msg'],$res['code']);
+        }
+        return $this->fetch('',[
+            'data' => $this->model->find($id)
         ]);
     }
 
@@ -45,7 +61,8 @@ class {{$multi_name_hump}} extends \app\admin\controller\Base
      */
     public function del($id)
     {
-       $this->_del($id);
+        $res = $this->_del($id);
+        $this->jsonApi($res['msg'],$res['code']);
     }
 
     /**
@@ -53,7 +70,9 @@ class {{$multi_name_hump}} extends \app\admin\controller\Base
      */
     public function delall()
     {
-        $this->_delall();
+        $ids = $this->param['ids'];
+        $res = $this->_delall($ids);
+        $this->jsonApi($res['msg'],$res['code']);
     }
 
 
@@ -62,9 +81,15 @@ class {{$multi_name_hump}} extends \app\admin\controller\Base
      */
     public function recycle()
     {
-        $where = [];
-        {{$search}}
-        $this->_recycle($where);
-        return View::fetch();
+        if ($this->isAjax) {
+            if ($this->isPost){
+                $res =  $this->_recycle($this->param['ids'],$this->param['type']);
+                $this->jsonApi($res['msg'],$res['code']);
+            }
+            {{$search}}
+            $list =  $this->model->onlyTrashed()->order('id','desc')->where($this->where)->paginate($this->get['limit']);
+            $this->jsonApi('', 0, $list->items(), ['count' => $list->total(), 'limit' => $this->get['limit']]);
+        }
+        return $this->fetch();
     }
 }

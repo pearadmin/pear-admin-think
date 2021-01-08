@@ -3,55 +3,48 @@ declare (strict_types = 1);
 
 namespace app\admin\controller\admin;
 
-use think\facade\View;
-use think\facade\Request;
 use think\facade\Db;
 use app\admin\model\admin\Photo;
 class Config  extends  \app\admin\controller\Base
 {
     protected $middleware = ['AdminCheck','AdminPermission'];
-    
+    protected function initialize()
+    {
+        parent::initialize();
+    }
     public function index()
     {
-        if (Request::isAjax()){
-            $data = Request::param();
+        if ($this->isAjax){
+            $data = $this->param;
             foreach ($data as $k => $v) {
                 Db::name('admin_config')->where('name', $k)->update(['value'=> $v]);
             }
             $this->jsonApi('保存成功');
         }
-        return View::fetch('', [
-            'data' =>  Db::name('admin_config')->column('value', 'name')
-            ]);
+        return $this->fetch('', [
+           'data' =>  Db::name('admin_config')->column('value', 'name')
+        ]);
     }
 
     public function photo()
     {
-        if (Request::isAjax()){
-            $list = Photo::order('id','desc')->paginate(Request::get('limit'));
-            $this->jsonApi('', 0, $list->items(),['count' => $list->total(), 'limit' => Request::get('limit')]);
+        if ($this->isAjax){
+            $list = Photo::order('id','desc')->paginate($this->get['limit']);
+            $this->jsonApi('', 0, $list->items(),['count' => $list->total(), 'limit' => $this->get['limit']]);
         }
-        return View::fetch();
+        return $this->fetch();
     }
 
     public function photoAdd()
     {
-        return View::fetch();
+        return $this->fetch();
     }
 
     public function photoDel()
     {
-        $id = Request::param('id');
+        $id = $this->param['id'];
         try{
-            $photo =  Photo::find($id);
-            if($photo['type']=='阿里云'){
-                alYunDel($photo['href']);
-            }else{
-                //删除本地文件
-                $path = '../public'.$photo['href'];
-                if (file_exists($path)) unlink($path);
-            }
-            $photo->delete();
+            Photo::del($id);
         }catch (\Exception $e){
             $this->jsonApi('删除失败',201);
         }
@@ -60,21 +53,11 @@ class Config  extends  \app\admin\controller\Base
 
     public function photoDelAll()
     {
-        $ids = Request::param('ids');
-        if (!is_array($ids)){
-            $this->jsonApi('参数错误',201);
-        }
+        $ids =  $this->param['ids'];
+        if (!is_array($ids)) $this->jsonApi('参数错误',201);
         try{
             foreach ($ids as $k) {
-                $photo =  Photo::where('id',$k)->find();
-                if($photo['type']=='阿里云'){
-                    alYunDel($photo['href']);
-                }else{
-                    //删除本地文件
-                    $path = '../public'.$photo['href'];
-                    if (file_exists($path)) unlink($path);
-                }
-                $photo->delete();
+                Photo::del($k);
             }
         }catch (\Exception $e){
             $this->jsonApi('删除失败',201);
@@ -84,15 +67,14 @@ class Config  extends  \app\admin\controller\Base
 
     public function log()
     {
-        if (Request::isAjax()){
-            $where = [];
+        if ($this->isAjax){
             if ($search = input('get.uid')) {
-               $where[] = ['uid', '=',$search];
+                $this->where[] = ['uid', '=',$search];
             }
-            $list = (new \app\admin\model\admin\AdminLog)->with('log')->order('id','desc')->where($where)->paginate(Request::get('limit'));
-            $this->jsonApi('', 0, $list->items(), ['count' => $list->total(), 'limit' => Request::get('limit')]);
+            $list = (new \app\admin\model\admin\AdminLog)->with('log')->order('id','desc')->where($this->where)->paginate($this->get['limit']);
+            $this->jsonApi('', 0, $list->items(), ['count' => $list->total(), 'limit' => $this->get['limit']]);
         }
-        return View::fetch();
+        return $this->fetch();
     }
 
 }

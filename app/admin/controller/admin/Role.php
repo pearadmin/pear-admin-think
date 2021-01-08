@@ -3,24 +3,27 @@ declare (strict_types = 1);
 
 namespace app\admin\controller\admin;
 
-use think\facade\Request;
-use think\facade\View;
 use think\facade\Db;
 use app\admin\model\admin\Permission;
-use app\admin\model\admin\Role as RoleModel;
-use app\admin\validate\admin\Role as RoleValidate;
 class Role extends  \app\admin\controller\Base
 {
     protected $middleware = ['AdminCheck','AdminPermission'];
-    protected $model = 'app\admin\model\admin\Role';
-    protected $validate =  'app\admin\validate\admin\Role';
+    protected function initialize()
+    {
+        parent::initialize();
+        $this->model = new \app\admin\model\admin\Role;
+        $this->validate =  new \app\admin\validate\admin\Role;
+    }
     /**
      * 角色
      */
     public function index()
     {
-        $this->_list();
-        return View::fetch();
+        if ($this->isAjax) {
+            $list = $this->model->order('id','desc')->select();
+            $this->jsonApi('', 0, $list->toArray(),['count' => $list->count()]);
+        }
+        return $this->fetch();
     }
 
     /**
@@ -28,8 +31,14 @@ class Role extends  \app\admin\controller\Base
      */
     public function add()
     {
-        $this->_add();
-        return View::fetch();
+        if ($this->isAjax) {
+            $data = $this->post;
+            if(!$this->validate->check($data)) 
+            $this->jsonApi($this->validate->getError(),201);
+            $res = $this->_add($data);
+            $this->jsonApi($res['msg'],$res['code']);
+        }
+        return $this->fetch();
     }
 
      /**
@@ -37,10 +46,15 @@ class Role extends  \app\admin\controller\Base
      */
     public function edit($id)
     { 
-        $model = new $this->model();
-        $this->_edit($id);
-        return View::fetch('',[
-            'model' => $model->find($id)
+        if ($this->isAjax) {
+            $data = $this->post;
+            if(!$this->validate->scene('edit')->check($data)) 
+            $this->jsonApi($this->validate->getError(),201);
+            $res = $this->_update($id,$data);
+            $this->jsonApi($res['msg'],$res['code']);
+        }
+        return $this->fetch('',[
+            'model' => $this->model->find($id)
         ]);
     }
 
@@ -49,18 +63,12 @@ class Role extends  \app\admin\controller\Base
      */
     public function del($id)
     {
-        $role = RoleModel::find($id);
-        if($role){
-            try{
-                //删除中间表
-                Db::table('admin_admin_role')->where('role_id', $role['id'])->delete();
-                $role->delete();
-                $this->rm();
-            }catch (\Exception $e){
-                $this->jsonApi('删除失败',201, $e->getMessage());
-            }
-            $this->jsonApi('删除成功');
+        $res = $this->_del($id);
+        if($res['code']=='200'){
+            Db::table('admin_admin_role')->where('role_id', $id)->delete();
+            $this->rm();
         }
+        $this->jsonApi($res['msg'],$res['code']);
     }
 
     /**
@@ -68,7 +76,7 @@ class Role extends  \app\admin\controller\Base
      */
     public function permission($id)
     {
-        $role = RoleModel::find($id);
+        $role = $this->model->find($id);
         $permissions = Permission::order('sort','asc')->select();
         foreach ($permissions as $permission){
             if ($role['permissions']){
@@ -80,10 +88,9 @@ class Role extends  \app\admin\controller\Base
             }
         }
         $permissions = get_tree($permissions->toArray());
-        if (Request::isAjax()){
-            $postPermissions = Request::param('permissions');
-            if(!isset($postPermissions))
-            $this->jsonApi('至少选择一项',201);
+        if ($this->isAjax){
+            $postPermissions = $this->param['permissions']??'';
+            if(!$postPermissions) $this->jsonApi('至少选择一项',201);
             try{
                 $role->permissions = implode(",",$postPermissions);
                 $role->save();
@@ -93,7 +100,7 @@ class Role extends  \app\admin\controller\Base
             }
             $this->jsonApi('更新成功');
         }
-        return View::fetch('',[
+        return $this->fetch('',[
             'permissions' => $permissions,
             'role' => $role,
         ]);
@@ -104,7 +111,18 @@ class Role extends  \app\admin\controller\Base
      */
     public function recycle()
     {
-        $this->_recycle();
-        return View::fetch();
+        if ($this->isAjax) {
+            if ($this->isPost){
+                $res =  $this->_recycle($this->param['ids'],$this->param['type']);
+                $this->jsonApi($res['msg'],$res['code']);
+            }
+            //按用户名
+            if ($search = input('get.username')) {
+                $this->where[] = ['username', 'like', "%" . $search . "%"];
+            }
+            $list = $this->model->onlyTrashed()->order('id','desc')->withoutField('delete_time')->where($this->where)->paginate($this->get['limit']);
+            $this->jsonApi('', 0, $list->items(), ['count' => $list->total(), 'limit' => $this->get['limit']]);
+        }
+        return $this->fetch();
     }
 }

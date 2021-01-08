@@ -2,36 +2,38 @@
 declare (strict_types = 1);
 
 namespace app\admin\controller\admin;
-use think\facade\Request;
-use think\facade\View;
 use think\captcha\facade\Captcha;
 class Login extends \app\admin\controller\Base
 {
+    protected function initialize()
+    {
+        parent::initialize();
+        $this->model = new \app\admin\model\admin\Admin;
+        $this->validate =  new \app\admin\validate\admin\Admin;
+    }
+
     /**
      * 后台登录
      */
     public function index(){
-        $admin = new \app\admin\model\admin\Admin;
         //是否已经登录
-        if ($admin->isLogin()){
+        if ($this->model->isLogin()){
             return redirect(APP_DS_PHP);
         }
-        if (Request::isAjax()){
+        if ($this->isAjax){
             //获取数据
-            $data = Request::post();
+            $data = $this->post;
             //验证
-            $validate = new \app\admin\validate\admin\Admin;
-            if(!$validate->scene('login')->check($data)) 
-            $this->jsonApi($validate->getError(),0);
+            if(!$this->validate->scene('login')->check($data)) 
+            $this->jsonApi($this->validate->getError(),0);
             //是否存储30天
-            if(!isset($data['remember'])) 
-            $data['remember']=0;
-            if (true == $admin->login($data['username'],$data['password'],$data['remember'])){
+            if(!isset($data['remember'])) $data['remember'] = 0;
+            if (true == $this->model->login($data['username'],$data['password'],$data['remember'])){
                 $this->jsonApi('登录成功');
             }
             $this->jsonApi('用户名或密码错误',0);
         }
-        return View::fetch();
+        return $this->fetch();
     }
 
     /**
@@ -41,12 +43,12 @@ class Login extends \app\admin\controller\Base
         ob_clean();
         return Captcha::create();   
     }
-
+ 
      /**
      * 退出登陆
      */
     public function logout(){
-        (new \app\admin\model\admin\Admin)->logout();
+        $this->model->logout();
         $this->jsonApi('退出成功',200,APP_DS_PHP.'/admin.login/index');
     }
 }

@@ -124,7 +124,7 @@ class Admin extends Model
         if ($admin['id'] == 1){
             $perms = Permission::order('sort','asc')->select();
             foreach ($perms as $p){
-                if($p['status']!=0)
+                if($p['status'] == 1)
                 $permissions[$p['id']] = [
                     'id' => $p['id'],
                     'pid' => $p['pid'],
@@ -142,7 +142,7 @@ class Admin extends Model
                     if ($r['permissions']) {
                         $permission = Permission::whereIn('id',$r['permissions'])->select();
                         foreach ($permission as $p) {
-                            if($p['status']!=0)
+                            if($p['status'] == 1)
                             $permissions[$p['id']] = [
                                 'id' => $p['id'],
                                 'pid' => $p['pid'],

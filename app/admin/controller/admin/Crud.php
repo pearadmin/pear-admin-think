@@ -3,25 +3,26 @@ declare (strict_types = 1);
 
 namespace app\admin\controller\admin;
 
-use think\facade\Request;
-use think\facade\View;
 use think\facade\Db;
 use app\admin\model\admin\Permission;
 class Crud extends  \app\admin\controller\Base
 {
     protected $middleware = ['AdminCheck','AdminPermission'];
-    
+    protected function initialize()
+    {
+        parent::initialize();
+    }
     /**
      * 列表
      */
     public function index()
     {
-        if (Request::isAjax()) {
+        if ($this->isAjax){
             $name = input('get.name');
             $list = Db::query('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_NAME NOT IN ("admin_admin","admin_admin_role","admin_admin_log","admin_multi","admin_role","admin_permission","admin_config","admin_photo","USER_PRIVILEGES") AND TABLE_NAME LIKE "' . $name . '%"');
             $this->jsonApi('', 0, $list);
         }
-        return View::fetch('',[
+        return $this->fetch('',[
             'list' => Db::name('admin_multi')->order(['name'])->column('name')
         ]);
     }
@@ -31,8 +32,8 @@ class Crud extends  \app\admin\controller\Base
      */
     public function addMulti()
     {
-        if (Request::isAjax()){
-            $data['name'] = Request::post('name');
+        if ($this->isAjax){
+            $data['name'] = $this->post['name'];
             if($data['name']=="admin") 
             $this->jsonApi('admin禁止添加',201);
             $validate = new \app\admin\validate\admin\Multi;
@@ -56,7 +57,7 @@ class Crud extends  \app\admin\controller\Base
              }
              $this->jsonApi('添加成功');
         }
-        return View::fetch();
+        return $this->fetch();
     }
 
     /**
@@ -64,8 +65,8 @@ class Crud extends  \app\admin\controller\Base
      */
     public function delMulti()
     {
-        if (Request::isAjax()){
-            $name = Request::post('name');
+        if ($this->isAjax){
+            $name = $this->post['name'];
             if($name=="admin") 
             $this->jsonApi('admin禁止删除',201);
             try {
@@ -96,9 +97,9 @@ class Crud extends  \app\admin\controller\Base
      */
     public function addBase()
     {
-        if (Request::isAjax()){
-            $name = Request::post('name');
-            $desc = Request::post('desc');
+        if ($this->isAjax){
+            $name = $this->post['name'];
+            $desc = $this->post['desc'];
                 $sql = '
 DROP TABLE IF EXISTS `'.$name.'`;
 CREATE TABLE `'.$name.'` (
@@ -117,7 +118,7 @@ PRIMARY KEY (`id`)
                 }
             }
             }
-        return View::fetch();
+        return $this->fetch();
     }
 
     /**
@@ -125,7 +126,7 @@ PRIMARY KEY (`id`)
      */
     public function crud($name)
     {
-        $sql = Db::query('SELECT COLUMN_NAME,IS_NULLABLE,DATA_TYPE,IF(COLUMN_COMMENT = "",COLUMN_NAME,COLUMN_COMMENT) COLUMN_COMMENT FROM information_schema.COLUMNS WHERE TABLE_NAME = "' . $name . '" AND COLUMN_NAME <> "id"');
+        $sql = Db::query('SELECT COLUMN_NAME,IS_NULLABLE,DATA_TYPE,IF(COLUMN_COMMENT = "",COLUMN_NAME,COLUMN_COMMENT) COLUMN_COMMENT FROM information_schema.COLUMNS WHERE TABLE_NAME = "' . $name . '" AND COLUMN_NAME <> "id" order by ORDINAL_POSITION asc');
         foreach ($sql as $k) {
             $info[] = [
                 'name' => $k['COLUMN_NAME'],
@@ -134,8 +135,8 @@ PRIMARY KEY (`id`)
                 'type' => $k['DATA_TYPE'],
             ];
         }
-        if (Request::isAjax()){
-            $data = Request::param();
+        if ($this->isAjax){
+            $data = $this->param;
             $array = array_merge($data['sql-edit']??[],$data['sql-photo']??[]);
             if (count($array) != count(array_unique($array)))  $this->jsonApi('特殊字段重复设置', 201);
             // 完整表名
@@ -217,7 +218,7 @@ PRIMARY KEY (`id`)
             $this->jsonApi('操作成功');
         }
         //表数据
-        return View::fetch('',[
+        return $this->fetch('',[
             'info' => $info,
             'permissions' => get_tree(Permission::order('sort','asc')->select()->toArray()),
             'desc' => Db::query('SELECT TABLE_COMMENT FROM information_schema.TABLES WHERE TABLE_NAME = "' . $name . '"')[0]['TABLE_COMMENT']
@@ -233,18 +234,18 @@ PRIMARY KEY (`id`)
         $i = explode('###',$v);
         if(strstr($i[0],"time")){
             $search .= '
-        //按'.$i[1].'查找
-        $start = input("get.'.$i[0].'-start");
-        $end = input("get.'.$i[0].'-end");
-        if ($start && $end) {
-            $where[]=["'.$i[0].'","between",[$start,date("Y-m-d",strtotime("$end +1 day"))]];
-        }';
-        }else{
-        $search .= '
-        //按'.$i[1].'查找
-        if ($'.$i[0].' = input("'.$i[0].'")) {
-            $where[] = ["'.$i[0].'", "like", "%" . $'.$i[0].' . "%"];
-        }';
+            //按'.$i[1].'查找
+            $start = input("get.'.$i[0].'-start");
+            $end = input("get.'.$i[0].'-end");
+            if ($start && $end) {
+                $this->where[]=["'.$i[0].'","between",[$start,date("Y-m-d",strtotime("$end +1 day"))]];
+            }';
+            }else{
+            $search .= '
+            //按'.$i[1].'查找
+            if ($'.$i[0].' = input("'.$i[0].'")) {
+                $this->where[] = ["'.$i[0].'", "like", "%" . $'.$i[0].' . "%"];
+            }';
         }
         }
         $content = str_replace(['{{$multi}}', '{{$multi_name_hump}}','{{$search}}'], [ $this->multi, $this->multi_name_hump,$search], file_get_contents(root_path().'extend'. DS .'tpl'. DS .'controller.php.tpl'));

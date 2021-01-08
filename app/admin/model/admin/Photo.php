@@ -30,4 +30,17 @@ class Photo extends Model
         ];
         self::create($data);
     }
+
+    static public function del($id)
+    {
+        $photo =  self::find($id);
+        if($photo['type']=='阿里云'){
+            alYunDel($photo['href']);
+        }else{
+            //删除本地文件
+            $path = '../public'.$photo['href'];
+            if (file_exists($path)) unlink($path);
+        }
+        $photo->delete();
+    }
 }

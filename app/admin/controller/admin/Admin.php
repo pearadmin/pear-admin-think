@@ -3,30 +3,32 @@ declare (strict_types = 1);
 
 namespace app\admin\controller\admin;
 
-use think\facade\Request;
-use think\facade\View;
 use think\facade\Db;
 use app\admin\model\admin\Role;
-use app\admin\model\admin\Admin as AdminModel;
-use app\admin\validate\admin\Admin as AdminValidate;
 class Admin extends  \app\admin\controller\Base
 {
     protected $middleware = ['AdminCheck','AdminPermission'];
+    
+    protected function initialize()
+    {
+        parent::initialize();
+        $this->model = new \app\admin\model\admin\Admin;
+        $this->validate =  new \app\admin\validate\admin\Admin;
+    }
     /**
      * 管理员
      */
     public function index()
     {
-        if (Request::isAjax()) {
-            $where = [];
+        if ($this->isAjax) {
             //按用户名
             if ($search = input('get.username')) {
-               $where[] = ['username', 'like', "%" . $search . "%"];
+               $this->where[] = ['username', 'like', "%" . $search . "%"];
             }
-            $list = AdminModel::order('id','desc')->where('id','>','1')->withoutField('password,rand_key,delete_time')->where($where)->paginate(Request::get('limit'));
-            $this->jsonApi('', 0, $list->items(), ['count' => $list->total(), 'limit' => Request::get('limit')]);
+            $list = $this->model->order('id','desc')->where('id','>','1')->withoutField('password,rand_key,delete_time')->where($this->where)->paginate($this->get['limit']);
+            $this->jsonApi('', 0, $list->items(), ['count' => $list->total(), 'limit' =>$this->get['limit']]);
         }
-        return View::fetch();
+        return $this->fetch();
     }
 
     /**
@@ -34,15 +36,14 @@ class Admin extends  \app\admin\controller\Base
      */
     public function add()
     {
-        if (Request::isAjax()) {
-            $data = Request::post();
+        if ($this->isAjax){
+            $data = $this->post;
             //验证
-            $validate = new AdminValidate;
-            if(!$validate->scene('add')->check($data)) 
-            $this->jsonApi($validate->getError(),201);
+            if(!$this->validate->scene('add')->check($data)) 
+            $this->jsonApi($this->validate->getError(),201);
             try {
                 $password =  set_password($data['password']);
-                AdminModel::create(array_merge($data, [
+                $this->model->create(array_merge($data, [
                     'password' => $password,
                 ]));
             }catch (\Exception $e){
@@ -50,7 +51,7 @@ class Admin extends  \app\admin\controller\Base
             }
             $this->jsonApi('添加成功');
         }
-        return View::fetch();
+        return $this->fetch();
     }
 
      /**
@@ -58,14 +59,13 @@ class Admin extends  \app\admin\controller\Base
      */
     public function edit($id)
     { 
-        $admin = AdminModel::find($id);
-        if (Request::isAjax()) {
-            $data = Request::post();
+        $admin =  $this->model->find($id);
+        if ($this->isAjax){
+            $data = $this->post;
             $data['id'] = $admin['id'];
             //验证
-            $validate = new AdminValidate;
-            if(!$validate->scene('edit')->check($data)) 
-            $this->jsonApi($validate->getError(),201);
+            if(!$this->validate->scene('edit')->check($data)) 
+            $this->jsonApi($this->validate->getError(),201);
             //是否需要修改密码
             if ($data['password']){
                 $admin->password = set_password($data['password']);
@@ -80,7 +80,7 @@ class Admin extends  \app\admin\controller\Base
             }
             $this->jsonApi('更新成功');
         }
-        return View::fetch('',[
+        return $this->fetch('',[
             'model' => $admin
         ]);
     }
@@ -90,24 +90,13 @@ class Admin extends  \app\admin\controller\Base
      */
     public function status()
     {
-        $id = Request::param('id');
-        $status = Request::param('status');
-        if (!in_array($status,[1,2])){
-            $this->jsonApi('参数错误',201);
-        }
-        $admin =  AdminModel::find($id);
-        if ($admin->isEmpty()){
-            $this->jsonApi('数据不存在',201);
-        }
-        try{
-            $admin->status = $status;
-            $admin->token = null;
-            $admin->save();
-            $this->rm();
-        }catch (\Exception $e){
-            $this->jsonApi('更新失败',201,$e->getMessage());
-        }
-        $this->jsonApi('更新成功');
+        $data = [
+           'status' => $this->param['status'],
+           'token' => null
+        ];
+        $res = $this->_update($this->param['id'],$data);
+        if($res['code']=='200') $this->rm();
+        $this->jsonApi($res['msg'],$res['code']);
     }
 
     /**
@@ -115,18 +104,12 @@ class Admin extends  \app\admin\controller\Base
      */
     public function del($id)
     {
-        $admin = AdminModel::find($id);
-        if($admin){
-            try{
-                //删除中间表
-                Db::table('admin_admin_role')->where('admin_id', $admin['id'])->delete();
-                $admin->delete();
-                $this->rm();
-            }catch (\Exception $e){
-                $this->jsonApi('删除失败',201, $e->getMessage());
-            }
-            $this->jsonApi('删除成功');
+        $res = $this->_del($id);
+        if($res['code']=='200'){
+            Db::table('admin_admin_role')->where('admin_id', $id)->delete();
+            $this->rm();
         }
+        $this->jsonApi($res['msg'],$res['code']);
     }
 
     /**
@@ -134,19 +117,13 @@ class Admin extends  \app\admin\controller\Base
      */
     public function del_all()
     {
-        $ids = Request::param('ids');
-        if (!is_array($ids)){
-            $this->jsonApi('参数错误',201);
+        $ids = $this->param['ids'];
+        $res = $this->_delall($ids);
+        if($res['code']=='200'){
+            Db::table('admin_admin_role')->whereIn('admin_id', $ids)->delete();
+            $this->rm();
         }
-        try{
-            AdminModel::destroy($ids);
-            //删除中间表
-             Db::table('admin_admin_role')->whereIn('admin_id', $ids)->delete();
-             $this->rm();
-        }catch (\Exception $e){
-            $this->jsonApi('删除失败',201, $e->getMessage());
-        }
-        $this->jsonApi('删除成功');
+        $this->jsonApi($res['msg'],$res['code']);
     }
 
     /**
@@ -154,8 +131,8 @@ class Admin extends  \app\admin\controller\Base
      */
     public function role()
     {
-        $id = Request::param('id');
-        $admin = AdminModel::with('roles')->where('id',$id)->find();
+        $id = $this->param['id'];
+        $admin = $this->model->with('roles')->where('id',$id)->find();
         $roles = Role::select();
         foreach ($roles as $k=>$role){
             if (isset($admin->roles) && !$admin->roles->isEmpty()){
@@ -166,10 +143,9 @@ class Admin extends  \app\admin\controller\Base
                 }
             }
         }
-        if (Request::isAjax()){
-            $postRoles = Request::param('roles');
-            if(!isset($postRoles))
-            $this->jsonApi('至少选择一项',201);
+        if ($this->isAjax){
+            $postRoles = $this->param['roles']??'';
+            if(!$postRoles) $this->jsonApi('至少选择一项',201);
             Db::startTrans();
             try{
                 //清除原先的角色
@@ -189,44 +165,30 @@ class Admin extends  \app\admin\controller\Base
             }
             $this->jsonApi('更新成功');
         }
-        return View::fetch('',[
+        
+        return $this->fetch('',[
             'admin' => $admin,
             'roles' => $roles,
         ]);
     }
+
     /**
      * 回收站
      */
     public function recycle()
     {
-        if (Request::isAjax()) {
-            if (Request::isPost()){
-                $ids = Request::param('ids');
-                if (!is_array($ids)){
-                    $this->jsonApi('参数错误',201);
-                }
-                try{
-                    if(Request::param('type')=='1'){
-                        $data = AdminModel::onlyTrashed()->whereIn('id', $ids)->select();
-                        foreach($data as $k){
-                            $k->restore();
-                        }
-                    }else{
-                        AdminModel::destroy($ids,true);
-                    }
-                }catch (\Exception $e){
-                    $this->jsonApi('操作失败',201, $e->getMessage());
-                }
-                $this->jsonApi('操作成功');
+        if ($this->isAjax) {
+            if ($this->isPost){
+                $res =  $this->_recycle($this->param['ids'],$this->param['type']);
+                $this->jsonApi($res['msg'],$res['code']);
             }
-            $where = [];
             //按用户名
             if ($search = input('get.username')) {
-               $where[] = ['username', 'like', "%" . $search . "%"];
+                $this->where[] = ['username', 'like', "%" . $search . "%"];
             }
-            $list = AdminModel::onlyTrashed()->order('id','desc')->withoutField('password,delete_time')->where($where)->paginate(Request::get('limit'));
-            $this->jsonApi('', 0, $list->items(), ['count' => $list->total(), 'limit' => Request::get('limit')]);
+            $list = $this->model->onlyTrashed()->order('id','desc')->withoutField('password,delete_time')->where($this->where)->paginate($this->get['limit']);
+            $this->jsonApi('', 0, $list->items(), ['count' => $list->total(), 'limit' => $this->get['limit']]);
         }
-        return View::fetch();
+        return $this->fetch();
     }
 }
