@@ -1,14 +1,14 @@
 <?php
-namespace app\admin\controller\{{$multi}};
-
-class {{$multi_name_hump}} extends \app\admin\controller\Base
+namespace app\admin\controller;
+use think\facade\Request;
+class {{$app}} extends \app\common\controller\AdminBase
 {
     protected $middleware = ['AdminCheck','AdminPermission'];
-      protected function initialize()
+    
+    protected function initialize()
     {
-        parent::initialize();
-        $this->model = new \app\admin\model\{{$multi}}\{{$multi_name_hump}};
-        $this->validate =  new \app\admin\validate\{{$multi}}\{{$multi_name_hump}};
+        $this->model = new \app\common\model\{{$app}};
+        $this->validate =  new \app\common\validate\{{$app}};
     }
     
     /**
@@ -16,10 +16,10 @@ class {{$multi_name_hump}} extends \app\admin\controller\Base
      */
     public function index()
     {
-        if ($this->isAjax) {
+        if (Request::isAjax()) {
             {{$search}}
-            $list = $this->model->order('id','desc')->where($this->where)->paginate($this->get['limit']);
-            $this->jsonApi('', 0, $list->items(), ['count' => $list->total(), 'limit' =>$this->get['limit']]);
+            $list = $this->model->order('id','desc')->where($this->where)->paginate(Request::get('limit'));
+            $this->jsonApi('', 0, $list->items(), ['count' => $list->total(), 'limit' => Request::get('limit')]);
         }
         return $this->fetch();
     }
@@ -29,12 +29,17 @@ class {{$multi_name_hump}} extends \app\admin\controller\Base
      */
     public function add()
     {
-        if ($this->isAjax) {
-            $data = $this->post;
-            if(!$this->validate->check($data)) 
+        if (Request::isAjax()){
+            $data = Request::post();
+            //验证
+            if(!$this->validate->scene('add')->check($data)) 
             $this->jsonApi($this->validate->getError(),201);
-            $res = $this->_add($data);
-            $this->jsonApi($res['msg'],$res['code']);
+            try {
+                $this->model->create($data);
+            }catch (\Exception $e){
+                $this->jsonApi('添加失败',201, $e->getMessage());
+            }
+            $this->jsonApi('添加成功');
         }
         return $this->fetch();
     }
@@ -44,15 +49,22 @@ class {{$multi_name_hump}} extends \app\admin\controller\Base
      */
     public function edit($id)
     { 
-        if ($this->isAjax) {
-            $data = $this->post;
+        $model =  $this->model->find($id);
+        if (Request::isAjax()){
+            $data = Request::post();
+            $data['id'] = $model['id'];
+            //验证
             if(!$this->validate->scene('edit')->check($data)) 
             $this->jsonApi($this->validate->getError(),201);
-            $res = $this->_update($id,$data);
-            $this->jsonApi($res['msg'],$res['code']);
+            try {
+                $model->save($data);
+            }catch (\Exception $e){
+                $this->jsonApi('更新失败',201, $e->getMessage());
+            }
+            $this->jsonApi('更新成功');
         }
         return $this->fetch('',[
-            'data' => $this->model->find($id)
+            'data' => $model
         ]);
     }
 
@@ -61,8 +73,14 @@ class {{$multi_name_hump}} extends \app\admin\controller\Base
      */
     public function del($id)
     {
-        $res = $this->_del($id);
-        $this->jsonApi($res['msg'],$res['code']);
+        $model = $this->model->find($id);
+        if ($model->isEmpty()) $this->jsonApi('数据不存在',201);
+        try{
+            $model->delete();
+        }catch (\Exception $e){
+            $this->jsonApi('删除失败',201,$e->getMessage());
+        }
+        $this->jsonApi('删除成功');
     }
 
     /**
@@ -70,9 +88,14 @@ class {{$multi_name_hump}} extends \app\admin\controller\Base
      */
     public function delall()
     {
-        $ids = $this->param['ids'];
-        $res = $this->_delall($ids);
-        $this->jsonApi($res['msg'],$res['code']);
+        $ids = Request::post('ids');
+        if (!is_array($ids)) $this->jsonApi('参数错误',201);
+        try{
+            $this->model->destroy($ids);
+        }catch (\Exception $e){
+            $this->jsonApi('删除失败',201,$e->getMessage());
+        }
+        $this->jsonApi('删除成功');
     }
 
 
@@ -81,14 +104,27 @@ class {{$multi_name_hump}} extends \app\admin\controller\Base
      */
     public function recycle()
     {
-        if ($this->isAjax) {
-            if ($this->isPost){
-                $res =  $this->_recycle($this->param['ids'],$this->param['type']);
-                $this->jsonApi($res['msg'],$res['code']);
+        if (Request::isAjax()){
+            if (Request::isPost()){
+                $ids = Request::param('ids');
+                if (!is_array($ids)) return ['msg'=>'参数错误','code'=>'201'];
+                try{
+                    if(Request::param('type')=='1'){
+                        $data = $this->model->onlyTrashed()->whereIn('id', $ids)->select();
+                        foreach($data as $k){
+                            $k->restore();
+                        }
+                    }else{
+                        $this->model->destroy($ids,true);
+                    }
+                }catch (\Exception $e){
+                    $this->jsonApi('删除失败',201,$e->getMessage());
+                }
+                $this->jsonApi('删除成功');
             }
             {{$search}}
-            $list =  $this->model->onlyTrashed()->order('id','desc')->where($this->where)->paginate($this->get['limit']);
-            $this->jsonApi('', 0, $list->items(), ['count' => $list->total(), 'limit' => $this->get['limit']]);
+            $list = $this->model->onlyTrashed()->order('id','desc')->withoutField('delete_time')->where($this->where)->paginate(Request::get('limit'));
+            $this->jsonApi('', 0, $list->items(), ['count' => $list->total(), 'limit' => Request::get('limit')]);
         }
         return $this->fetch();
     }

@@ -1,16 +1,27 @@
 <?php
-namespace app\admin\validate\{{$multi}};
+namespace app\common\validate;
 
-use think\Validate;
-
-class {{$multi_name_hump}} extends Validate
+class {{$app}} extends ValidateBase
 {
     protected $rule = [{{$rule}}
     ];
+
     protected $message = [{{$message}}
     ];
-    protected $scene = [
-        'edit' => [{{$scene}}
-        ],
-    ];
+
+    /**
+     * 添加
+     */
+    public function sceneAdd()
+    {
+        return $this->only([{{$scene}}]);
+    }
+
+    /**
+     * 编辑
+     */
+    public function sceneEdit()
+    {
+        return $this->only([{{$scene}}]);
+    }
 }

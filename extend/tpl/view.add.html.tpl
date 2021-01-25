@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="__ADMIN__/pear/css/pear.css"/>
+    <link rel="stylesheet" href="__STATIC__/component/pear/css/pear.css" />
 </head>
 <body>
 <form class="layui-form" action="">
@@ -24,8 +24,8 @@
         </div>
     </div>
 </form>
-<script src="__ADMIN__/layui/layui.js"></script>
-<script src="__ADMIN__/pear/pear.js"></script>
+<script src="__STATIC__/component/layui/layui.all.js"></script>
+<script src="__STATIC__/component/pear/pear.js"></script>
 <script>
     layui.use(['form', 'jquery', 'layedit', 'uploads'], function () {
         let form = layui.form;

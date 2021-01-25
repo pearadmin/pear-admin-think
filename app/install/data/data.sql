@@ -35,16 +35,6 @@ CREATE TABLE `admin_admin_log` (
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 COMMENT='管理员日志';
 
-DROP TABLE IF EXISTS `admin_multi`;
-CREATE TABLE `admin_multi` (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '多级地址',
-   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 COMMENT='多级管理';
-INSERT INTO `admin_multi` (`id`, `name`) VALUES
-(1, 'admin'),
-(2, 'home');
-
 DROP TABLE IF EXISTS `admin_permission`;
 CREATE TABLE `admin_permission` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
@@ -55,27 +45,26 @@ CREATE TABLE `admin_permission` (
   `sort` tinyint(4) NOT NULL DEFAULT '99' COMMENT '排序',
   `type` tinyint(1) DEFAULT '1' COMMENT '菜单',
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
-  `multi` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '所属多级',
    PRIMARY KEY (`id`),
    KEY `pid` (`pid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 COMMENT='权限表';
 
-INSERT INTO `admin_permission` (`id`, `pid`, `title`, `href`, `icon`, `sort`, `type`, `status`,`multi`) VALUES
-(1, 0, '后台权限', '', 'layui-icon-username', 2, 0, 1,'admin'),
-(2, 1, '管理员', '/admin.admin/index', '', 1, 1, 1,'admin'),
-(3, 1, '角色管理', '/admin.role/index', '', 99, 1, 1,'admin'),
-(4, 1, '菜单权限', '/admin.permission/index', '', 99, 1, 1,'admin'),
-(5, 0, '系统管理', '', 'layui-icon-set', 3, 0, 1,'admin'),
-(6, 5, '后台日志', '/admin.config/log', '', 2, 1, 1,'admin'),
-(7, 5, '系统设置', '/admin.config/index', '', 1, 1, 1,'admin'),
-(8, 5, '图片管理', '/admin.config/photo', '', 2, 1, 1,'admin'),
-(9, 0, '内容管理', '/', 'layui-icon-file-b', 4, 0, 1, 'home'),
-(10, 9, '新闻列表', '/home.news/index', '', 10, 1, 1, 'home'),
-(11, 10, '添加新闻', '/home.news/add','', 10, 1, 1, 'home'),
-(12, 10, '编辑新闻', '/home.news/edit', '', 10, 1, 1, 'home'),
-(13, 10, '删除新闻', '/home.news/del', '', 10, 1, 1, 'home'),
-(14, 10, '选中删除新闻', '/home.news/delall', '', 10, 1, 1, 'home'),
-(15, 10, '回收站新闻', '/home.news/recycle', '', 10, 1, 1, 'home');
+INSERT INTO `admin_permission` (`id`, `pid`, `title`, `href`, `icon`, `sort`, `type`, `status`) VALUES
+(1, 0, '后台权限', '', 'layui-icon layui-icon-username', 2, 0, 1),
+(2, 1, '管理员', '/admin_admin/index', '', 1, 1, 1),
+(3, 1, '角色管理', '/admin_role/index', '', 99, 1, 1),
+(4, 1, '菜单权限', '/admin_permission/index', '', 99, 1, 1),
+(5, 0, '系统管理', '', 'layui-icon layui-icon-set', 3, 0, 1),
+(6, 5, '后台日志', '/admin_config/log', '', 2, 1, 1),
+(7, 5, '系统设置', '/admin_config/index', '', 1, 1, 1),
+(8, 5, '图片管理', '/admin_config/photo', '', 2, 1, 1),
+(9, 0, '内容管理', '/', 'layui-icon layui-icon-file-b', 4, 0, 1),
+(10, 9, '新闻列表', '/home_news/index', '', 10, 1, 1),
+(11, 10, '添加新闻', '/home_news/add','', 10, 1, 1),
+(12, 10, '编辑新闻', '/home_news/edit', '', 10, 1, 1),
+(13, 10, '删除新闻', '/home_news/del', '', 10, 1, 1),
+(14, 10, '选中删除新闻', '/home_news/delall', '', 10, 1, 1),
+(15, 10, '回收站新闻', '/home_news/recycle', '', 10, 1, 1);
 
 DROP TABLE IF EXISTS `admin_role`;
 CREATE TABLE `admin_role` (

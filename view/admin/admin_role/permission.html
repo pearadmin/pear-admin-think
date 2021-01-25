@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="__STATIC__/component/pear/css/pear.css" />
+    <style>
+        /*分配权限*/
+        .cate-box{border-bottom: 1px solid #f0f0f0}
+        .cate-box dt .cate-first{padding:5px 10px}
+        .cate-box dd{padding:0 50px}
+        .cate-box dd .cate-second{margin-bottom: 10px}
+        .cate-box dd .cate-third{padding:0 40px;margin-bottom: 10px}
+    </style>
+</head>
+<body>
+    <form class="layui-form" action="">
+        <div class="mainBox" style="position: inherit;">
+            <div class="main-container">
+            <div class="layui-form-item">
+                <label for="" class="layui-form-label">角色名称</label>
+                <div class="layui-word-aux layui-form-mid">{$role->name}</div>
+            </div>
+            <div class="layui-form-item">
+                <label for="" class="layui-form-label">角色描述</label>
+                <div class="layui-word-aux layui-form-mid">{$role->desc}</div>
+            </div>
+            <div class="layui-form-item">
+                <label for="" class="layui-form-label">权限</label>
+                <div class="layui-input-block">
+                    {foreach $permissions as $p1}
+                    <dl class="cate-box">
+                        <dt>
+                            <div class="cate-first"><input id="menu{$p1['id']}" type="checkbox" name="permissions[]" value="{$p1['id']}" title="{$p1['title']}" lay-skin="primary" {if isset($p1['own']) && $p1['own'] } checked {/if} ></div>
+                        </dt>
+                        {if isset($p1['children']) && !empty($p1['children']) }
+                        {foreach $p1['children'] as $p2 }
+                        <dd>
+                            <div class="cate-second"><input id="menu{$p1['id']}-{$p2['id']}" type="checkbox" name="permissions[]" value="{$p2['id']}" title="{$p2['title']}" lay-skin="primary" {if isset($p2['own']) && $p2['own'] } checked {/if} ></div>
+                            {if isset($p2['children']) && !empty($p2['children']) }
+                            <div class="cate-third">
+                                {foreach $p2['children'] as $p3 }
+                                <input type="checkbox" id="menu{$p1['id']}-{$p2['id']}-{$p3['id']}" name="permissions[]" value="{$p3['id']}" title="{$p3['title']}" lay-skin="primary" {if isset($p3['own']) && $p3['own'] } checked {/if} >
+                                {/foreach}
+                            </div>
+                            {/if}
+                        </dd>
+                        {/foreach}
+                        {/if}
+                    </dl>
+                    {/foreach}
+                </div>
+            </div>
+        </div>
+        <input id="id" type="hidden" value="{$role->id}"/>
+        <div class="bottom" style="position: initial;">
+            <div class="button-container">
+                <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit="" lay-filter="save">
+                    <i class="layui-icon layui-icon-ok"></i>
+                    提交
+                </button>
+                <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </div>
+</form>
+<script src="__STATIC__/component/layui/layui.js"></script>
+<script src="__STATIC__/component/pear/pear.js"></script>
+<script src="__STATIC__/admin/js/admin_role/permission.js"></script>
+</body>
+</html>

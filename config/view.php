@@ -24,6 +24,7 @@ return [
     'taglib_end'    => '}',
     //模板输出替换
     'tpl_replace_string'  =>  [
-        '__ADMIN__'=>'/static/admin',
+        '__APP_ADMIN__' => APP_ADMIN,
+        '__STATIC__'    => '/static',
     ]
 ];

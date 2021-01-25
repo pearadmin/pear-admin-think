@@ -15,10 +15,10 @@ class AdminCheck
     public function handle($request, \Closure $next)
     {
         //验证登录
-        if ((new \app\admin\model\admin\Admin)->isLogin()==false) {
-            return redirect(APP_DS_PHP.'/admin.login/index');
+        if ((new \app\admin\model\AdminAdmin)->isLogin()==false) {
+            return redirect(APP_ADMIN.'/login/index');
          }
-         (new \app\admin\model\admin\AdminLog)->record();
+         (new \app\admin\model\AdminAdminLog)->record();
          return $next($request);
     }
 }

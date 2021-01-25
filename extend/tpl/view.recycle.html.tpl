@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<link rel="stylesheet" href="__ADMIN__/pear/css/pear.css" />
+        <link rel="stylesheet" href="__STATIC__/component/pear/css/pear.css" />
 	</head>
 	<body class="pear-container">
         {{searchs}}
@@ -23,8 +23,8 @@
 			彻底删除
 		</button>
 		</script>
-		<script src="__ADMIN__/layui/layui.js"></script>
-        <script src="__ADMIN__/pear/pear.js"></script>
-        <script src="__ADMIN__/multi/{{$multi}}/{{$multi_name}}/recycle.js"></script>
+        <script src="__STATIC__/component/layui/layui.all.js"></script>
+        <script src="__STATIC__/component/pear/pear.js"></script>
+        <script src="__STATIC__/admin/js/{{$name}}/recycle.js"></script>
 	</body>
 </html>

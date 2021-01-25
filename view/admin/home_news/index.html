@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+        <link rel="stylesheet" href="__STATIC__/component/pear/css/pear.css" />
+	</head>
+	<body class="pear-container">
+         <div class="layui-card">
+                <div class="layui-card-body">
+                    <form class="layui-form" action="">
+                    <div class="layui-form-item">   
+                        <div class="layui-form-item layui-inline">
+                            <label class="layui-form-label">标题</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="title" placeholder="" class="layui-input">
+                            </div>
+                        </div>   
+                        <div class="layui-form-item layui-inline">
+                            <label class="layui-form-label">创建时间</label>
+                            <div class="layui-input-inline">
+                            <input type="text" class="layui-input" id="create_time-start" name="create_time-start" placeholder="开始时间" autocomplete="off">
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" id="create_time-end" name="create_time-end" placeholder="结束时间" autocomplete="off">
+                        </div>
+                    </div>     
+                    <div class="layui-form-item layui-inline">
+                        <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="query">
+                            <i class="layui-icon layui-icon-search"></i>
+                            查询
+                        </button>
+                        <button type="reset" class="pear-btn pear-btn-md">
+                            <i class="layui-icon layui-icon-refresh"></i>
+                            重置
+                        </button>
+                        </div>
+                </form>
+            </div>
+        </div>
+		<div class="layui-card">
+			<div class="layui-card-body">
+				<table id="dataTable" lay-filter="dataTable"></table>
+			</div>
+		</div>
+
+		<script type="text/html" id="toolbar">
+			<button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+		        <i class="layui-icon layui-icon-add-1"></i>
+		        新增
+			</button>
+			<button class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove">
+		        <i class="layui-icon layui-icon-delete"></i>
+		        删除
+		    </button>
+            <button class="pear-btn pear-btn-md" lay-event="recycle">
+		        <i class="layui-icon layui-icon-delete"></i>
+		        回收站
+		    </button>
+		</script>
+
+		<script type="text/html" id="options">
+			<button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i></button>
+		    <button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i></button>
+		</script>
+        <script src="__STATIC__/component/layui/layui.all.js"></script>
+        <script src="__STATIC__/component/pear/pear.js"></script>
+        <script src="__STATIC__/admin/js/home_news/index.js"></script>
+	</body>
+</html>

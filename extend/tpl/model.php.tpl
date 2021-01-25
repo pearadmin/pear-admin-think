@@ -1,8 +1,8 @@
 <?php
-namespace app\admin\model\{{$multi}};
+namespace app\common\model;
 
-class {{$multi_name_hump}} extends \app\admin\model\Base
+class {{$app}} extends \app\common\model\ModelBase
 {
     protected $table = '{{$name}}';
-    {{$del}}
+   {{$del}}
 }

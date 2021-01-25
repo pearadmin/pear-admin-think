@@ -13,16 +13,16 @@ class Index
     {
         if (Request::isAjax()) {
             $data = Request::post();
-            $username = $data['username'];
-            $nickname = $data['nickname'];
+            $username = trim($data['username']);
+            $nickname = trim($data['nickname']);
             if (!preg_match("/^[a-zA-Z]{1}([0-9a-zA-Z]|[._]){4,19}$/", $username)) $this->jsonApi('管理用户名：至少包含5个字符，需以字母开头',201);
             if (!preg_match("/^[\@A-Za-z0-9\!\#\$\%\^\&\*\.\~]{6,22}$/", $data['password'])) $this->jsonApi('登录密码至少包含6个字符。可使用字母，数字和符号',201);
             $password = set_password($data['password']);
-            $dbhost = $data['host'];
-            $dbuser = $data['user'];
-            $dbpass = $data['pass'];
-            $dbport = $data['port'];
-            $dbname = $data['name'];
+            $dbhost = trim($data['host']);
+            $dbuser = trim($data['user']);
+            $dbpass = trim($data['pass']);
+            $dbport = trim($data['port']);
+            $dbname = trim($data['name']);
 			try { 
 				$conn = new \PDO("mysql:host=$dbhost", $dbuser, $dbpass); 
 			} catch(\PDOException $e) { 

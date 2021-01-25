@@ -13,11 +13,19 @@
 namespace think;
 
 require __DIR__ . '/../vendor/autoload.php';
+//定义ADMIN常量
+define("APP_ADMIN",null);
+//定义分隔符
+define('DS', DIRECTORY_SEPARATOR);
 
 // 执行HTTP应用并响应
 $http = (new App())->http;
+// 检测程序安装
+if(!is_file(__DIR__ . '/install.lock')){
+    $response = $http->name('install')->run();
+}
 
-$response = $http->name('index')->run();
+$response = $http->run();
 
 $response->send();
 
