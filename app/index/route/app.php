@@ -2,30 +2,16 @@
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006-2019 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2006~2018 http://thinkphp.cn All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
+use think\facade\Route;
 
-// [ 应用入口文件 ]
-namespace think;
-//定义ADMIN常量
-define("APP_ADMIN",'/admin.php');
-//定义分隔符
-define('DS', DIRECTORY_SEPARATOR);
+Route::get('/', function () {
+    return 'hello this is pear admin think!';
+});
 
-require __DIR__ . '/../vendor/autoload.php';
-// 执行HTTP应用并响应
-$http = (new App())->http;
-// 检测程序安装
-if(!is_file(__DIR__ . '/install.lock')){
-    $response = $http->name('install')->run();
-}
 
-$response = $http->name('admin')->run();
-
-$response->send();
-
-$http->end($response);
