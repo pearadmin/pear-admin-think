@@ -57,5 +57,10 @@
 * 建议定义软删除delete_time，自动生成回收站功能。如不需要可自行删除。
 
 #### 页面展示
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0125/105743_9a0b2028_1302383.png "1.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0125/105751_eee295c7_1302383.png "2.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0125/105757_f9904ddc_1302383.png "3.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0125/105803_23b8bcb9_1302383.png "4.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0125/105810_382eb1b9_1302383.png "5.png")
 
 本框架为开源框架，Apache 开源协议，支持商用，学习
