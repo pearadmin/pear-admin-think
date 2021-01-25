@@ -101,10 +101,10 @@ layui.use(['admin', 'jquery', 'layer','element'], function() {
                 title: '修改密码',
                 shade: 0.1,
                 area: ['300px', '300px'],
-                content:MODULE_PATH+'index/pass'
+                content:MODULE_PATH+'/index/pass'
             });
         }else if ($(elem).hasClass('cache')) {
-            $.post(MODULE_PATH+'index/cache',
+            $.post(MODULE_PATH+'/index/cache',
             function(data){
                 layer.msg(data.msg, {time: 1500});
                  location.reload()
