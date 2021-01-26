@@ -40,7 +40,7 @@ layui.use(['jquery','element','form','upload'], function() {
 	//选完文件后不自动上传
 	  upload.render({
 		elem: '#logo-img'
-		,url: '__APP_ADMIN__/index/upload'
+		,url: '{:app_admin()}/index/upload"/index/upload'
 		,auto: false
 		,exts: 'jpg|png|gif|bmp|jpeg'
 		,size: 1000

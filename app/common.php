@@ -6,6 +6,14 @@ use OSS\OssClient;
 use OSS\Core\OssException;
 // 应用公共文件
 
+//获取常量
+if (!function_exists('app_admin')) {
+    function app_admin()
+    {
+        return APP_ADMIN;
+    }
+}
+
 /**
  * 发送邮箱
  * @param array $data

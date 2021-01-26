@@ -289,7 +289,7 @@ PRIMARY KEY (`id`)
         $contentjs = '    
         layedit.set({
             uploadImage: {
-                url: "__APP_ADMIN__/index/upload"
+                url: "{:app_admin()}/index/upload"
             }
         });
         //建立编辑器'
@@ -374,7 +374,7 @@ PRIMARY KEY (`id`)
         $contentjs = '    
         layedit.set({
             uploadImage: {
-                url: "__APP_ADMIN__/index/upload"
+                url: "{:app_admin()}/index/upload"
             }
         });
         //建立编辑器'

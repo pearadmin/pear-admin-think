@@ -34,8 +34,7 @@
 				<input type="checkbox"  name="remember" title="30天内自动登录" lay-skin="primary" checked>
 			</div>
 			<div class="layui-form-item">
-				<button class="pear-btn pear-btn-success login" lay-submit
-                lay-filter="login-submit" id="login">
+				<button class="pear-btn pear-btn-success login" lay-submit lay-filter="formLogin">
 					登 入
 				</button>
 			</div>
@@ -44,5 +43,8 @@
 		<script src="__STATIC__/component/layui/layui.js"></script>
 		<script src="__STATIC__/component/pear/pear.js"></script>
 		<script src="__STATIC__/admin/js/login/index.js"></script>
+		<script>
+            let MODULE_PATH = '{:app_admin()}'
+        </script>
 	</body>
 </html>

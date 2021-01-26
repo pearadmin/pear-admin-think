@@ -48,7 +48,7 @@ layui.use(['form','jquery'],function(){
                         icon: 1
                     });
                     setTimeout(function() {
-                        window.parent.location = '__APP_ADMIN__/login/index';
+                        window.parent.location = '{:app_admin()}/login/index';
                         var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
                         parent.layer.close(index);
                     }, 111)

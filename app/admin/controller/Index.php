@@ -14,7 +14,7 @@ class Index extends \app\common\controller\AdminBase
     public function index()
     {
        return $this->fetch('',[
-           'nickname'=>get_field('admin_admin',Session::get('admin.id'),'nickname')
+           'nickname'  => get_field('admin_admin',Session::get('admin.id'),'nickname')
        ]);
     }
 
