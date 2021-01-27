@@ -30,7 +30,7 @@ CREATE TABLE `admin_admin_log` (
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '操作页面',
   `desc` text CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '日志内容',
   `ip` varchar(20) NOT NULL DEFAULT '' COMMENT '操作IP',
-  `user_agent` varchar(500) NOT NULL COMMENT 'User-Agent',
+  `user_agent` text NOT NULL COMMENT 'User-Agent',
   `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 COMMENT='管理员日志';
