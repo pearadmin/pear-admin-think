@@ -18,6 +18,7 @@ layui.use(['admin', 'jquery', 'layer','element'], function() {
         "tab": {
             "muiltTab": true,
             "keepState": true,
+            "session": true,
             "tabMax": 30,
             "index": {
                 "id": "0",

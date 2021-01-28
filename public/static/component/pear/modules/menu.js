@@ -64,6 +64,13 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			if (domsss.text() != '') {
 				data['menuPath'] = domsss.find("span").text() + " / " + data['menuPath'];
 			}
+			if ($("#" + _this.option.elem).is(".pear-nav-mini")) {
+					if(_this.option.accordion){
+						activeMenus = $(this).parent().parent().parent().children("a");
+					}else{
+						activeMenus.push($(this).parent().parent().parent().children("a"));
+					}
+			}
 			clickEvent(dom, data);
 		})
 	}
@@ -133,7 +140,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 
 	function getData(url) {
 		var defer = $.Deferred();
-		$.get(url, function(result) {
+		$.get(url + "?fresh=" + Math.random(), function(result) {
 			defer.resolve(result)
 		});
 		return defer.promise();
