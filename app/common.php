@@ -4,15 +4,8 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use OSS\OssClient;
 use OSS\Core\OssException;
+use app\common\model\SiteConfig;
 // 应用公共文件
-
-//获取常量
-if (!function_exists('app_admin')) {
-    function app_admin()
-    {
-        return APP_ADMIN;
-    }
-}
 
 /**
  * 发送邮箱
@@ -25,7 +18,7 @@ if (!function_exists('app_admin')) {
 function go_mail($addr,$title,$content)
 {
     $mail = new PHPMailer(true);
-    $data = Db::name('admin_config')->column('value', 'name');
+    $data = SiteConfig::getKeyValue('email');
     try {
         $mail->SMTPDebug = 0;                    
         $mail->CharSet = 'utf-8';          
@@ -52,7 +45,7 @@ function go_mail($addr,$title,$content)
  *阿里云上传
  */
 function alYunOSS($filePath,$Extension){
-    $data = Db::name('admin_config')->column('value', 'name');
+    $data = SiteConfig::getKeyValue('file');
     $accessKeyId =  $data['file-accessKeyId']; 
     $accessKeySecret = $data['file-accessKeySecret']; 
     $endpoint = $data['file-endpoint'];
@@ -172,9 +165,10 @@ if (!function_exists('get_config')) {
    * @param  string $config 系统设置类型
    * @return string         系统设置内容
    */
-  function get_config($config)
+  function get_config($key,$value='')
   {
-      return get_field('admin_config', ['name' => $config], 'value');
+      $config = SiteConfig::getKeyValue($key);
+      return isset($config[$value])?$config[$value]:[];
   }
 }
 

@@ -63,7 +63,7 @@ layui.use(['table', 'form', 'jquery'], function() {
 
     table.render({
         elem: '#dataTable',
-        url: 'photo',
+        url: 'index',
         page: true,
         cols: cols,
         skin: 'line',
@@ -102,7 +102,7 @@ layui.use(['table', 'form', 'jquery'], function() {
             title: '新增图片',
             shade: 0.1,
             area: [width + 'px', height + 'px'],
-            content:'photoAdd'
+            content:'add'
         });
     }
 
@@ -114,7 +114,7 @@ layui.use(['table', 'form', 'jquery'], function() {
             layer.close(index);
             let loading = layer.load();
             $.ajax({
-                url:'photoDel',
+                url:'del',
                 data:{id:obj.data['id']},
                 dataType: 'json',
                 type: 'POST',
@@ -162,7 +162,7 @@ layui.use(['table', 'form', 'jquery'], function() {
             layer.close(index);
             let loading = layer.load();
             $.ajax({
-                url:"photoDelAll",
+                url:"del_all",
                 data:{ids:ids},
                 dataType: 'json',
                 type: 'POST',

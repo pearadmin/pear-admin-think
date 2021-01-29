@@ -79,7 +79,7 @@ class Index extends \app\common\controller\AdminBase
              $this->validate($file,  [
                 'file|图片' =>'fileSize:102400,fileExt:jpg,png,gif'
              ]);
-             if(get_config('file-type')==2){
+             if(get_config('file','file-type')==2){
                  //阿里云上传
                  $savename = [];
                  foreach($file as $k) {

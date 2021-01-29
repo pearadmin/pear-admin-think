@@ -23,7 +23,7 @@
 			<div class="layui-form-item">
 				<input placeholder="密 码" type="password" name="password" hover class="layui-input"  />
 			</div>
-			{if get_config('login_captcha')}
+			{if get_config('web','login_captcha')}
 			<div class="layui-form-item">
 				<input type="text" maxlength="4" name="captcha" 
                 placeholder="验证码" class="code layui-input layui-input-inline" >

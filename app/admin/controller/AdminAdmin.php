@@ -215,4 +215,16 @@ class AdminAdmin extends  \app\common\controller\AdminBase
         }
         return $this->fetch();
     }
+
+    public function log()
+    {
+        if (Request::isAjax()) {    
+            if ($search = input('get.uid')) {
+                $this->where[] = ['uid', '=',$search];
+            }
+            $list = (new \app\admin\model\AdminAdminLog)->with('log')->order('id','desc')->where($this->where)->paginate(Request::get('limit'));
+            $this->jsonApi('', 0, $list->items(), ['count' => $list->total(), 'limit' => Request::get('limit')]);
+        }
+        return $this->fetch();
+    }
 }

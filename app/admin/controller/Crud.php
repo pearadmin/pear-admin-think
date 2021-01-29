@@ -63,7 +63,7 @@ PRIMARY KEY (`id`)
         //验证
         try {
             $this->validate($data,  [
-               'name' =>'notIn:admin_admin,admin_admin_log,admin_admin_role,admin_config,admin_permission,admin_photo,admin_role'
+               'name' =>'notIn:admin_admin,admin_admin_log,admin_admin_role,site_config,admin_permission,admin_photo,admin_role'
             ]);
         }catch (\Exception $e){
             $this->jsonApi('系统内置禁止操作',201);
@@ -244,10 +244,12 @@ PRIMARY KEY (`id`)
     {
         $file = root_path().'app'.DS.'common'.DS.'model'.DS.$this->crud['app'].'.php';
         $del = '';
-            foreach ($this->crud['info'] as $k) {
+        foreach ($this->crud['info'] as $k) {
             //软删除字段
             if ($k['COLUMN_NAME'] == 'delete_time'){
-            $del = ' protected $deleteTime = "delete_time"; ' ;
+                $del = 'protected $deleteTime = "delete_time";';
+            }else{
+                $del = 'protected $deleteTime = false;';
             }
         }
         $content = str_replace(['{{$name}}', '{{$app}}', '{{$del}}'], [$this->crud['name'], $this->crud['app'],$del], file_get_contents(root_path().'extend'. DS .'tpl'. DS .'model.php.tpl'));

@@ -55,9 +55,9 @@ INSERT INTO `admin_permission` (`id`, `pid`, `title`, `href`, `icon`, `sort`, `t
 (3, 1, '角色管理', '/admin_role/index', '', 99, 1, 1),
 (4, 1, '菜单权限', '/admin_permission/index', '', 99, 1, 1),
 (5, 0, '系统管理', '', 'layui-icon layui-icon-set', 3, 0, 1),
-(6, 5, '后台日志', '/admin_config/log', '', 2, 1, 1),
-(7, 5, '系统设置', '/admin_config/index', '', 1, 1, 1),
-(8, 5, '图片管理', '/admin_config/photo', '', 2, 1, 1),
+(6, 5, '后台日志', '/admin_admin/log', '', 2, 1, 1),
+(7, 5, '系统设置', '/site_config/web', '', 1, 1, 1),
+(8, 5, '图片管理', '/admin_photo/index', '', 2, 1, 1),
 (9, 0, '内容管理', '/', 'layui-icon layui-icon-file-b', 4, 0, 1),
 (10, 9, '新闻列表', '/home_news/index', '', 10, 1, 1),
 (11, 10, '添加新闻', '/home_news/add','', 10, 1, 1),
@@ -81,32 +81,19 @@ CREATE TABLE `admin_role` (
 INSERT INTO `admin_role` (`id`, `name`, `desc`, `create_time`, `update_time`, `delete_time`) VALUES
 (1, '超级管理员', '拥有所有管理权限', '2020-09-01 11:01:34', '2020-09-01 11:01:34', NULL);
 
-DROP TABLE IF EXISTS `admin_config`;
-CREATE TABLE `admin_config` (
+DROP TABLE IF EXISTS `site_config`;
+CREATE TABLE `site_config` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `name` char(50) NOT NULL COMMENT '名称',
-  `value` text CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '值',
+  `key` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '键',
+  `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '名称',
+  `value` text CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '值',
    PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 COMMENT='系统设置';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 COMMENT='系统设置';
 
-INSERT INTO `admin_config` (`id`, `name`, `value`) VALUES
-(1, 'login_captcha', '0'),
-(2, 'smtp-user', '123456@qq.com'),
-(3, 'smtp-pass', '234'),
-(4, 'smtp-port', '465'),
-(5, 'smtp-host', 'smtp.qq.com'),
-(6, 'file-type', '1'),
-(7, 'file-endpoint', 'img.pear.cn'),
-(8, 'file-OssName', 'pear-img'),
-(9, 'file-accessKeyId', '123123s'),
-(10, 'file-accessKeySecret', 'asdfasdfasdfsadfasdf'),
-(11, 'title', 'Pear Admin Thinkphp'),
-(12, 'key', 'Pear Admin Thinkphp'),
-(13, 'desc', 'Pear Admin Thinkphp'),
-(14, 'tel', '17777777777'),
-(15, 'qq', '123456'),
-(16, 'mail', '123456@qq.com'),
-(17, 'addr', '中国');
+INSERT INTO `site_config` (`id`, `key`, `name`, `value`) VALUES
+(1, 'web', '网站设置', '{\"title\":\"Pear Admin Thinkphp\",\"key\":\"Pear Admin Thinkphp\",\"desc\":\"Pear Admin Thinkphp\",\"tel\":\"17777777777\",\"qq\":\"123456\",\"mail\":\"123456@qq.com\",\"addr\":\"\\u4e2d\\u56fd\",\"login_captcha\":\"0\"}'),
+(2, 'email', '邮箱设置', '{\"smtp-user\":\"123456@qq.com\",\"smtp-pass\":\"234\",\"smtp-port\":\"465\",\"smtp-host\":\"smtp.qq.com\",\"login_captcha\":\"0\"}'),
+(3, 'file', '文件设置', '{\"file-type\":\"1\",\"file-endpoint\":\"img.pear.cn\",\"file-OssName\":\"pear-img\",\"file-accessKeyId\":\"123123s\",\"file-accessKeySecret\":\"asdfasdfasdfsadfasdf\",\"login_captcha\":\"0\"}');
 
 DROP TABLE IF EXISTS `admin_photo`;
 CREATE TABLE `admin_photo` (

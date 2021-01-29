@@ -34,7 +34,7 @@ class AdminAdmin extends Validate
      */
     public function sceneLogin()
     {
-        if(get_config('login_captcha')){
+        if(get_config('web','login_captcha')){
             return $this->only(['username','password','captcha'])->append('captcha|验证码', 'require|captcha');
         }else{
             return $this->only(['username','password'])->append('captcha|验证码', 'require|captcha');

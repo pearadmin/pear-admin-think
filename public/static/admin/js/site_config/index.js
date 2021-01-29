@@ -1,6 +1,15 @@
-layui.use(['form', 'jquery'], function() {
+layui.use(['form', 'jquery','element'], function() {
     let form = layui.form;
     let $ = layui.jquery;
+    let element = layui.element;
+    var url = window.location.href;
+    var index = url.lastIndexOf("\/");
+    str = url.substring(index + 1,url.length);
+    element.tabChange('TabBrief', str); 
+    element.on('tab(TabBrief)', function(data){
+        location.href= $(this).attr("lay-id");
+    });
+
     form.on('switch(login_captcha)', function(data) {
         if (data.elem.checked) {
             $(data.elem).val('1');
