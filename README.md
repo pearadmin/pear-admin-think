@@ -31,9 +31,6 @@
 #### 项目简介
 >Pear Admin Think 基于 thinkphp6 的快速开发平台，通过简单的代码生成功能，即可快速构建你的功能业务，努力成为最顺手的轮子。
 
-#### 演示站信息
-* http://pear.jianla.cn 账户：test 密码：123456
-
 #### 环境要求
 * PHP >= 7.1.0
 * Mysql >= 5.7.0 (需支持innodb引擎)
@@ -57,6 +54,7 @@
 * 建议定义软删除delete_time，自动生成回收站功能。如不需要可自行删除。
 
 #### 页面展示
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0130/152153_79e9f4ee_1302383.png "QQ图片20210130151210.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0125/105743_9a0b2028_1302383.png "1.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0125/105751_eee295c7_1302383.png "2.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0125/105757_f9904ddc_1302383.png "3.png")
