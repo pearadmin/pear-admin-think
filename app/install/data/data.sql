@@ -91,9 +91,9 @@ CREATE TABLE `site_config` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 COMMENT='系统设置';
 
 INSERT INTO `site_config` (`id`, `key`, `name`, `value`) VALUES
-(1, 'web', '网站设置', '{\"title\":\"Pear Admin Thinkphp\",\"key\":\"Pear Admin Thinkphp\",\"desc\":\"Pear Admin Thinkphp\",\"tel\":\"17777777777\",\"qq\":\"123456\",\"mail\":\"123456@qq.com\",\"addr\":\"\\u4e2d\\u56fd\",\"login_captcha\":\"0\"}'),
-(2, 'email', '邮箱设置', '{\"smtp-user\":\"123456@qq.com\",\"smtp-pass\":\"234\",\"smtp-port\":\"465\",\"smtp-host\":\"smtp.qq.com\",\"login_captcha\":\"0\"}'),
-(3, 'file', '文件设置', '{\"file-type\":\"1\",\"file-endpoint\":\"img.pear.cn\",\"file-OssName\":\"pear-img\",\"file-accessKeyId\":\"123123s\",\"file-accessKeySecret\":\"asdfasdfasdfsadfasdf\",\"login_captcha\":\"0\"}');
+(1, 'web', '网站设置', '{"title":"Pear Admin Thinkphp","key":"Pear Admin Thinkphp","desc":"Pear Admin Thinkphp","tel":"17777777777","qq":"123456","mail":"123456@qq.com","addr":"\\u4e2d\\u56fd","login_captcha":"1"}'),
+(2, 'email', '邮箱设置', '{"smtp-user":"123456@qq.com","smtp-pass":"234","smtp-port":"465","smtp-host":"smtp.qq.com"}'),
+(3, 'file', '文件设置', '{"file-type":"1","file-endpoint":"img.pear.cn","file-OssName":"pear-img","file-accessKeyId":"123123s","file-accessKeySecret":"asdfasdfasdfsadfasdf"}');
 
 DROP TABLE IF EXISTS `admin_photo`;
 CREATE TABLE `admin_photo` (
