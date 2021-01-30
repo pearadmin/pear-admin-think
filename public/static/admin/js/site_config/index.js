@@ -18,8 +18,10 @@ layui.use(['form', 'jquery','element'], function() {
         }
     });
     form.on('submit(configform)', function(data) {
-        if (!data.field.login_captcha) {
-            data.field.login_captcha = '0';
+        if(str=='web'){
+            if (!data.field.login_captcha) {
+                data.field.login_captcha = '0';
+            }
         }
         $.ajax({
             data:JSON.stringify(data.field),
