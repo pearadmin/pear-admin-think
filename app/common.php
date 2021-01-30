@@ -1,64 +1,6 @@
 <?php
 use think\facade\Db;
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-use OSS\OssClient;
-use OSS\Core\OssException;
-use app\common\model\SiteConfig;
 // 应用公共文件
-
-/**
- * 发送邮箱
- * @param array $data
- * @param string $addr 地址
- * @param string $title 标题
- * @param string $content 内容
- * @return mixed
- */
-function go_mail($addr,$title,$content)
-{
-    $mail = new PHPMailer(true);
-    $data = SiteConfig::getKeyValue('email');
-    try {
-        $mail->SMTPDebug = 0;                    
-        $mail->CharSet = 'utf-8';          
-        $mail->isSMTP();                                     
-        $mail->Host = $data['smtp-host'];  
-        $mail->SMTPAuth = true;                          
-        $mail->Username =  $data['smtp-user'];             
-        $mail->Password =  $data['smtp-pass'];                  
-        $mail->SMTPSecure = 'ssl';                            
-        $mail->Port =  $data['smtp-port'];                                
-        $mail->setFrom($data['smtp-user'], $data['title']);
-        $mail->addAddress($addr);    
-        $mail->isHTML(true);                                 
-        $mail->Subject = $title;
-        $mail->Body    = $content;
-    return $mail->send();
-        echo 'Message has been sent';
-	} catch (Exception $e) {
-        echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
-    }
-}
-
-/**
- *阿里云上传
- */
-function alYunOSS($filePath,$Extension){
-    $data = SiteConfig::getKeyValue('file');
-    $accessKeyId =  $data['file-accessKeyId']; 
-    $accessKeySecret = $data['file-accessKeySecret']; 
-    $endpoint = $data['file-endpoint'];
-    $bucket= $data['file-OssName'];    
-    $object = 'upload/'.date("Ymd") .'/'.time() .rand(10000,99999) ."." .$Extension;    // 文件名称
-    try{
-        $ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint,true);
-        $rel = $ossClient->uploadFile($bucket, $object, $filePath);
-            return  ['code' => 200,'src' => $rel["info"]["url"]];
-    } catch(OssException $e) {
-            return ['code' => 201,'msg' => $e->getMessage()];
-    }
-}
 
 if (!function_exists('delete_dir')) {
   /**
@@ -163,12 +105,12 @@ if (!function_exists('get_config')) {
   /**
    * 获取系统设置
    * @param  string $config 系统设置类型
-   * @return string         系统设置内容
+   * @return string         系统设置内容,不存在输出键数组;
    */
   function get_config($key,$value='')
   {
-      $config = SiteConfig::getKeyValue($key);
-      return isset($config[$value])?$config[$value]:[];
+      $config = (new \app\common\model\SiteConfig)->getKeyValue($key);
+      return isset($config[$value])?$config[$value]:$config;
   }
 }
 

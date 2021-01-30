@@ -4,13 +4,13 @@ namespace app\common\validate;
 class HomeNews extends ValidateBase
 {
     protected $rule = [
-           'title' => 'require',
-           'img' => 'require',
+          'title' => 'require',
+          'img' => 'require',
     ];
 
     protected $message = [
-            'title.require' => '标题为必填项',
-            'img.require' => '缩略图为必填项',
+           'title.require' => '标题为必填项',
+           'img.require' => '缩略图为必填项',
     ];
 
     /**

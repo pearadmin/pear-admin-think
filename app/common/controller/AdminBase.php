@@ -64,7 +64,13 @@ abstract class AdminBase
     // 初始化
     protected function initialize()
     {}
-    
+
+    //页面分配变量
+    protected function assign($key,$value)
+    {
+        return View::assign($key,$value);
+    }
+
     //页面渲染 
     protected function fetch($template = '',$data = [])
     {

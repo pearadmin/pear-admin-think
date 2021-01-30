@@ -4,41 +4,41 @@ layui.use(['table', 'form', 'jquery','laydate'], function() {
     let $ = layui.jquery;
     let laydate = layui.laydate;
      
-            laydate.render({
-                elem: "#create_time-start"
-            });
-            laydate.render({
-                elem: "#create_time-end"
-            })
+           laydate.render({
+               elem: "#create_time-start"
+           });
+           laydate.render({
+               elem: "#create_time-end"
+           })
     let cols = [
         [{
             type: 'checkbox'
             },{
-                field: 'title',
-                title: '标题',
-                unresize: true,
-                align: 'center'
-            }, {
-                field: 'img',
-                title: '缩略图',
-                unresize: true,
-                align: 'center'
-            }, {
-                field: 'desc',
-                title: '内容',
-                unresize: true,
-                align: 'center'
-            }, {
-                field: 'create_time',
-                title: '创建时间',
-                unresize: true,
-                align: 'center'
-            }, {
-                field: 'update_time',
-                title: '更新时间',
-                unresize: true,
-                align: 'center'
-            }, ]
+               field: 'title',
+               title: '标题',
+               unresize: true,
+               align: 'center'
+           }, {
+               field: 'img',
+               title: '缩略图',
+               unresize: true,
+               align: 'center'
+           }, {
+               field: 'desc',
+               title: '内容',
+               unresize: true,
+               align: 'center'
+           }, {
+               field: 'create_time',
+               title: '创建时间',
+               unresize: true,
+               align: 'center'
+           }, {
+               field: 'update_time',
+               title: '更新时间',
+               unresize: true,
+               align: 'center'
+           }, ]
     ];
     table.render({
         elem: '#dataTable',
@@ -69,12 +69,12 @@ layui.use(['table', 'form', 'jquery','laydate'], function() {
             page:{curr: 1}
         })
          
-            laydate.render({
-                elem: "#create_time-start"
-            });
-            laydate.render({
-                elem: "#create_time-end"
-            })
+           laydate.render({
+               elem: "#create_time-start"
+           });
+           laydate.render({
+               elem: "#create_time-end"
+           })
         return false;
     });
     if (typeof width !== 'number' || width === 0) {

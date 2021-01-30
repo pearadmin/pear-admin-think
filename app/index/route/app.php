@@ -10,8 +10,10 @@
 // +----------------------------------------------------------------------
 use think\facade\Route;
 
-Route::get('/', function () {
-    return 'hello this is pear admin think!';
-});
+Route::get('/', 'Index/index');
+//调取配置
+Route::get('config','Test/config');
+//发送邮件
+Route::rule('email','Test/email');
 
 

@@ -9,40 +9,40 @@
     <div class="mainBox">
         <div class="main-container">
             
-            <div class="layui-form-item">
-                <label class="layui-form-label">
-                    标题
-                </label>
-                <div class="layui-input-block">
-                    <input type="text" class="layui-input layui-form-danger" lay-verify="required " name="title" type="text"/>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">
-                    缩略图
-                </label>
-                <div class="layui-input-block">
-                    <button class="layui-btn layui-btn-sm upload-image" type="button">
-                        <i class="fa fa-image">
-                        </i>
-                        上传图片
-                    </button>
-                    <input lay-verify="uploadimg" name="img" type="hidden"/>
-                    <div class="upload-image">
-                        <span>
-                        </span>
-                        <img class="upload-image" src=""/>
-                    </div>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">
-                    内容
-                </label>
-                <div class="layui-input-block">
-                    <textarea id="desc" name="desc" type="text/plain" style="width:100%;margin-bottom:20px;"></textarea>
-                </div>
-            </div>
+           <div class="layui-form-item">
+               <label class="layui-form-label">
+                   标题
+               </label>
+               <div class="layui-input-block">
+                   <input type="text" class="layui-input layui-form-danger" lay-verify="required " name="title" type="text"/>
+               </div>
+           </div>
+           <div class="layui-form-item">
+               <label class="layui-form-label">
+                   缩略图
+               </label>
+               <div class="layui-input-block">
+                   <button class="layui-btn layui-btn-sm upload-image" type="button">
+                       <i class="fa fa-image">
+                       </i>
+                       上传图片
+                   </button>
+                   <input lay-verify="uploadimg" name="img" type="hidden"/>
+                   <div class="upload-image">
+                       <span>
+                       </span>
+                       <img class="upload-image" src=""/>
+                   </div>
+               </div>
+           </div>
+           <div class="layui-form-item">
+               <label class="layui-form-label">
+                   内容
+               </label>
+               <div class="layui-input-block">
+                   <textarea id="desc" name="desc" type="text/plain" style="width:100%;margin-bottom:20px;"></textarea>
+               </div>
+           </div>
         </div>
     </div>
     <div class="bottom">
@@ -66,19 +66,19 @@
         let $ = layui.jquery;
         let layedit = layui.layedit
             
-        layedit.set({
-            uploadImage: {
-                url: "{:app_admin()}/index/upload"
-            }
-        });
-        //建立编辑器
-                    var desc  = layedit.build("desc", {
-                    height: 400 //设置编辑器的高度
-                    });
+       layedit.set({
+           uploadImage: {
+               url: "{:app_admin()}/index/upload"
+           }
+       });
+       //建立编辑器
+                   var desc  = layedit.build("desc", {
+                   height: 400 //设置编辑器的高度
+                   });
         form.on('submit(save)', function (data) {
             
-                        data.field.desc=layedit.getContent(desc);
-                    
+                       data.field.desc=layedit.getContent(desc);
+                   
             $.ajax({
                 data: JSON.stringify(data.field),
                 dataType: 'json',

@@ -18,16 +18,16 @@ class HomeNews extends \app\common\controller\AdminBase
     {
         if (Request::isAjax()) {
             
-            //按标题查找
-            if ($title = input("title")) {
-                $this->where[] = ["title", "like", "%" . $title . "%"];
-            }
-            //按创建时间查找
-            $start = input("get.create_time-start");
-            $end = input("get.create_time-end");
-            if ($start && $end) {
-                $this->where[]=["create_time","between",[$start,date("Y-m-d",strtotime("$end +1 day"))]];
-            }
+           //按标题查找
+           if ($title = input("title")) {
+               $this->where[] = ["title", "like", "%" . $title . "%"];
+           }
+           //按创建时间查找
+           $start = input("get.create_time-start");
+           $end = input("get.create_time-end");
+           if ($start && $end) {
+               $this->where[]=["create_time","between",[$start,date("Y-m-d",strtotime("$end +1 day"))]];
+           }
             $list = $this->model->order('id','desc')->where($this->where)->paginate(Request::get('limit'));
             $this->jsonApi('', 0, $list->items(), ['count' => $list->total(), 'limit' => Request::get('limit')]);
         }
@@ -133,16 +133,16 @@ class HomeNews extends \app\common\controller\AdminBase
                 $this->jsonApi('删除成功');
             }
             
-            //按标题查找
-            if ($title = input("title")) {
-                $this->where[] = ["title", "like", "%" . $title . "%"];
-            }
-            //按创建时间查找
-            $start = input("get.create_time-start");
-            $end = input("get.create_time-end");
-            if ($start && $end) {
-                $this->where[]=["create_time","between",[$start,date("Y-m-d",strtotime("$end +1 day"))]];
-            }
+           //按标题查找
+           if ($title = input("title")) {
+               $this->where[] = ["title", "like", "%" . $title . "%"];
+           }
+           //按创建时间查找
+           $start = input("get.create_time-start");
+           $end = input("get.create_time-end");
+           if ($start && $end) {
+               $this->where[]=["create_time","between",[$start,date("Y-m-d",strtotime("$end +1 day"))]];
+           }
             $list = $this->model->onlyTrashed()->order('id','desc')->withoutField('delete_time')->where($this->where)->paginate(Request::get('limit'));
             $this->jsonApi('', 0, $list->items(), ['count' => $list->total(), 'limit' => Request::get('limit')]);
         }

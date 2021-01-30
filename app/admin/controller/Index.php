@@ -5,6 +5,7 @@ namespace app\admin\controller;
 use think\facade\Db;
 use think\facade\Session;
 use think\facade\Request;
+use app\common\service\UploadService;
 class Index extends \app\common\controller\AdminBase
 {
     protected $middleware = ['AdminCheck'];
@@ -69,38 +70,12 @@ class Index extends \app\common\controller\AdminBase
          $this->jsonApi('清理成功');  
      }
  
-      /**
+    /**
       * 通用上传
       */
      public function upload()
      {
-         $file = $this->request->file();
-         try {
-             $this->validate($file,  [
-                'file|图片' =>'fileSize:102400,fileExt:jpg,png,gif'
-             ]);
-             if(get_config('file','file-type')==2){
-                 //阿里云上传
-                 $savename = [];
-                 foreach($file as $k) {
-                     $res = alYunOSS($k, $k->extension());
-                     if ($res["code"] == 201){
-                         $this->jsonApi('上传失败',201,$res["msg"]);
-                     }else{
-                         $savename = $res['src'];
-                        (new \app\admin\model\AdminPhoto)->add($k,$res['src'],2);
-                     }
-                 }
-             }else{
-                 foreach($file as $k) {
-                     $savename = '/'. \think\facade\Filesystem::disk('public')->putFile( 'topic', $k);
-                     $savename = str_replace("\\","/",$savename);
-                     (new \app\admin\model\AdminPhoto)->add($k,$savename,1);
-                 }
-             }
-             $this->jsonApi('上传成功', 0, ['src'=>$savename,'thumb'=>$savename]);
-           } catch (\think\exception\ValidateException $e) {
-             $this->jsonApi('上传失败',201,$e->getMessage());
-         }
+        $res = UploadService::commonFile($this->request->file());
+        $this->jsonApi($res['msg'],$res['code'],$res['data']);
      }
 }
