@@ -25,8 +25,8 @@ class PlaybillService
         $qrCode->setSize(144);
         $qrCode->setRoundBlockSize(false);
         $qrCode->writeFile($new_file);
-        $image = \think\Image::open($_SERVER['DOCUMENT_ROOT'].$addr);
-        $image->water($new_file,$position)->save($_SERVER['DOCUMENT_ROOT'].$new_file);
+        $image = \think\Image::open(public_path().$addr);
+        $image->water($new_file,$position)->save(public_path().$new_file);
         return ['code'=>'200','msg'=>$new_file];
     }
 }
