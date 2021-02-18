@@ -15,5 +15,7 @@ Route::get('/', 'Index/index');
 Route::get('config','Test/config');
 //发送邮件
 Route::rule('email','Test/email');
+//生成海报
+Route::rule('play_bill','Test/play_bill');
 
 

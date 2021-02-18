@@ -1,4 +1,4 @@
-layui.use(['form', 'jquery','element'], function() {
+layui.use(['form', 'jquery','element', 'uploads'], function() {
     let form = layui.form;
     let $ = layui.jquery;
     let element = layui.element;

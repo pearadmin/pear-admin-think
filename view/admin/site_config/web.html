@@ -77,6 +77,42 @@
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">
+                                网站LOGO
+                            </label>
+                            <div class="layui-input-block">
+                            <button class="layui-btn layui-btn-sm upload-image" type="button">
+                                    <i class="fa fa-image">
+                                    </i>
+                                    上传图片
+                                </button>
+                                <input lay-verify="uploadlogo" name="logo" type="hidden" value="{$data['logo']??''}"/>
+                                <div class="upload-image">
+                                    <span>
+                                    </span>
+                                    <img class="upload-image" src="{$data['logo']??''}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">
+                                网站海报
+                            </label>
+                            <div class="layui-input-block">
+                            <button class="layui-btn layui-btn-sm upload-image" type="button">
+                                    <i class="fa fa-image">
+                                    </i>
+                                    上传图片
+                                </button>
+                                <input lay-verify="uploadbg" name="bg" type="hidden" value="{$data['bg']??''}"/>
+                                <div class="upload-image">
+                                    <span>
+                                    </span>
+                                    <img class="upload-image" src="{$data['bg']??''}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">
                                 登录验证码
                             </label>
                             <div class="layui-input-block">
