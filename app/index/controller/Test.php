@@ -18,9 +18,7 @@ class Test extends Base
             $res = MailService::go(Request::post('email'),'你有新邮件','测试内容');
             $this->jsonApi($res['msg'],$res['code']);
         }
-        return $this->fetch('',[
-            'site' => get_config('web')
-        ]);
+        return $this->fetch();
     }
 
     /**
@@ -33,9 +31,7 @@ class Test extends Base
             $res = PlaybillService::go('10001',Request::post('link'),$bg);
             $this->jsonApi($res['msg'],$res['code']);
         }
-        return $this->fetch('',[
-            'site' => get_config('web')
-        ]);
+        return $this->fetch();
     }
 
 }

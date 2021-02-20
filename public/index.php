@@ -25,7 +25,7 @@ if(!is_file(__DIR__ . '/install.lock')){
     $response = $http->name('install')->run();
 }
 
-$response = $http->name('index')->run();
+$response = $http->run();
 
 $response->send();
 

@@ -10,6 +10,8 @@ return [
     'app_namespace'    => '',
     // 是否启用路由
     'with_route'       => true,
+    // 开启应用快速访问
+    'app_express'    =>    true,
     // 默认应用
     'default_app'      => 'index',
     // 默认时区
@@ -19,7 +21,7 @@ return [
     'app_map'          => [],
     // 域名绑定（自动多应用模式有效）
     'domain_bind'      => [
-        'admin.2.com' => 'admin'
+        'admin' => 'admin' //  等同 'admin.2.com' => 'admin',
     ],
     // 禁止URL访问的应用列表（自动多应用模式有效）
     'deny_app_list'    => [],

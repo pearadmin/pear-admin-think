@@ -22,7 +22,7 @@
 	<body>
 		<!-- header -->
 		<div class="ew-header">
-			<img class="layui-logo" src="__STATIC__/index/images/un28.svg" style="height:50px;padding: 10px;" />
+			<img class="layui-logo" {if condition="$site.logo eq ''"} src="__STATIC__/index/images/un28.svg"{else} src="{$site.logo}" {/if} style="height:50px;padding: 10px;" />
 			<div class="ew-nav-group">
 				<div class="nav-toggle"><i class="layui-icon layui-icon-more-vertical"></i></div>
 				<ul class="layui-nav" lay-filter="ew-header-nav">
@@ -78,12 +78,18 @@
 
 		<div class="section" nav-id="product">
 			<div class="section-title" style="font-size: 20px;font-weight:500;">
-				功能测试
+				用法演示
 			</div>
 			<div class="layui-container" style="padding-bottom: 60px;">
 				<div class="layui-row layui-col-space30">
 					<div class="layui-col-md4 layui-col-sm6">
 						<div class="product-card" style="border-radius: 6px;overflow: hidden;">
+							<div class="product-cover">
+								<div class="product-cover-img" style="background-image: url('__STATIC__/index/images/un1.svg');"></div>
+								<div class="product-tools" style="left: 35%;">
+									<a href="/email.html" class="layui-btn  layui-btn-primary" target="_blank">演示</a>
+								</div>
+							</div>
 							<div class="product-body">
 								<a href="/email.html" class="product-title">邮件发送	<span class="layui-badge-rim">方法</span></a>
 							</div>
@@ -91,6 +97,12 @@
 					</div>
 					<div class="layui-col-md4 layui-col-sm6">
 						<div class="product-card" style="border-radius: 6px;overflow: hidden;">
+							<div class="product-cover">
+								<div class="product-cover-img" style="background-image: url('__STATIC__/index/images/un2.svg');"></div>
+								<div class="product-tools" style="left: 35%;">
+									<a href="/email.html" class="layui-btn  layui-btn-primary" target="_blank">演示</a>
+								</div>
+							</div>
 							<div class="product-body">
 								<a href="/play_bill.html" class="product-title">生成海报	<span class="layui-badge-rim">方法</span></a>
 							</div>

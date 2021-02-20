@@ -16,7 +16,7 @@
 </div>
 <!-- header -->
 <div class="ew-header">
-    <a class="layui-logo" href="/">{$site.title}</a>
+    <img class="layui-logo" {if condition="$site.logo eq ''"} src="__STATIC__/index/images/un28.svg"{else} src="{$site.logo}" {/if} style="height:50px;padding: 10px;" />
     <div class="ew-nav-group">
         <div class="nav-toggle"><i class="layui-icon layui-icon-more-vertical"></i></div>
         <ul class="layui-nav" lay-filter="ew-header-nav">
