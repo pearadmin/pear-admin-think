@@ -29,7 +29,7 @@ layui.use(['table', 'form', 'jquery'], function() {
                 unresize: true,
                 align: 'center',
                 templet:function (d) {
-                    return '<img src=" '+d.href+'"></i>';
+                    return '<img class="photo" photo-data="' + d.href + '" src=" '+d.href+'"></i>';
                 }
             },{
                 field: 'mime',
@@ -189,4 +189,14 @@ layui.use(['table', 'form', 'jquery'], function() {
     window.refresh = function() {
         table.reload('dataTable');
     }
+
+    // 查看大图
+    $("body").on('click','.photo', function(){
+        layer.open({
+            title:'查看大图',
+            type: 1,
+            content: "<img src='" + $(this).attr('photo-data') + "'>",
+            area: ['70%', '70%'],
+        })
+    });
 })

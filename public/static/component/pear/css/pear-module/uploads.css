@@ -31,3 +31,9 @@ img.show-big-image {
     width: 100%;
     height: 100%
 }
+
+img.photo {
+    max-width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
