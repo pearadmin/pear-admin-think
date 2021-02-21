@@ -197,7 +197,6 @@ layui.use(['table', 'form', 'jquery'], function() {
         layer.open({
             type: 1,
             title: false,
-            closeBtn: 0,
             area: ['auto'],
             skin: 'layui-layer-nobg', //没有背景色
             shadeClose: true,
