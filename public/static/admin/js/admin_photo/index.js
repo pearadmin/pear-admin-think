@@ -29,7 +29,7 @@ layui.use(['table', 'form', 'jquery'], function() {
                 unresize: true,
                 align: 'center',
                 templet:function (d) {
-                    return '<img class="photo" photo-data="' + d.href + '" src=" '+d.href+'"></i>';
+                    return '<img class="photo" lay-event="photo" src=" '+d.href+'"></i>';
                 }
             },{
                 field: 'mime',
@@ -77,6 +77,8 @@ layui.use(['table', 'form', 'jquery'], function() {
     table.on('tool(dataTable)', function(obj) {
         if (obj.event === 'remove') {
             window.remove(obj);
+        } else if (obj.event === 'photo') {
+            window.photo(obj);
         } 
     });
 
@@ -191,12 +193,15 @@ layui.use(['table', 'form', 'jquery'], function() {
     }
 
     // 查看大图
-    $("body").on('click','.photo', function(){
+    window.photo = function(obj){
         layer.open({
-            title:'查看大图',
             type: 1,
-            content: "<img src='" + $(this).attr('photo-data') + "'>",
-            area: ['70%', '70%'],
+            title: false,
+            closeBtn: 0,
+            area: ['auto'],
+            skin: 'layui-layer-nobg', //没有背景色
+            shadeClose: true,
+            content: "<img src='" + obj.data['href'] + "'>"
         })
-    });
+    };
 })
