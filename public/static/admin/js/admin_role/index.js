@@ -75,19 +75,25 @@ layui.use(['table', 'form', 'jquery'], function() {
             window.recycle(obj);
         }
     });
-    if (typeof width !== 'number' || width === 0) {
-        width = $(window).width() * 0.8;
+
+    //弹出窗设置 自己设置弹出百分比
+    function screen() {
+        if (typeof width !== 'number' || width === 0) {
+          width = $(window).width() * 0.8;
+        }
+        if (typeof height !== 'number' || height === 0) {
+          height = $(window).height() - 20;
+        }
+        return [width + 'px', height + 'px'];
     }
-    if (typeof height !== 'number' || height === 0) {
-        height = $(window).height() - 20;
-    }
+
     window.add = function() {
         layer.open({
             type: 2,
             maxmin: true,
             title: '新增角色',
             shade: 0.1,
-            area: [width + 'px', height + 'px'],
+            area: screen(),
             content:'add'
         });
     }
@@ -98,7 +104,7 @@ layui.use(['table', 'form', 'jquery'], function() {
             maxmin: true,
             title: '修改角色',
             shade: 0.1,
-            area: [width + 'px', height + 'px'],
+            area: screen(),
             content:'edit?id='+obj.data['id']
         });
     }
@@ -109,7 +115,7 @@ layui.use(['table', 'form', 'jquery'], function() {
             maxmin: true,
             title: '分配直接权限',
             shade: 0.1,
-            area: [width + 'px', height + 'px'],
+            area: screen(),
             content:'permission?id='+obj.data['id']
         });
     }
@@ -159,7 +165,7 @@ layui.use(['table', 'form', 'jquery'], function() {
             maxmin: true,
             title: '回收站',
             shade: 0.1,
-            area: [width + 'px', height + 'px'],
+            area: screen(),
             content:'recycle',
             cancel: function () {
                 table.reload('dataTable');

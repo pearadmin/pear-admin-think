@@ -52,13 +52,52 @@ layui.use(['table', 'form', 'jquery'], function() {
         page: true,
         cols: cols,
         skin: 'line',
-        toolbar: '#dataTable',
+        toolbar: '#toolbar',
         defaultToolbar: [{
             layEvent: 'refresh',
             icon: 'layui-icon-refresh',
         }, 'filter', 'print', 'exports']
     });
-    
+
+    window.batchRemove = function(obj) {
+        console.log(1)
+        layer.confirm('确定要清空日志嘛？', {
+            icon: 3,
+            title: '提示'
+        }, function(index) {
+            layer.close(index);
+            let loading = layer.load();
+            $.ajax({
+                url:"del_log",
+                dataType: 'json',
+                type: 'POST',
+                success: function(res) {
+                    layer.close(loading);
+                     //判断有没有权限
+                     if(res && res.code==999){
+                        layer.msg(res.msg, {
+                            icon: 5,
+                            time: 2000, 
+                        })
+                        return false;
+                    }else if (res.code==200) {
+                        layer.msg(res.msg, {
+                            icon: 1,
+                            time: 1000
+                        }, function() {
+                            table.reload('dataTable');
+                        });
+                    } else {
+                        layer.msg(res.msg, {
+                            icon: 2,
+                            time: 1000
+                        });
+                    }
+                }
+            })
+        });
+    }
+
     form.on('submit(query)', function(data) {
         table.reload('dataTable', {
             where: data.field,
@@ -70,6 +109,8 @@ layui.use(['table', 'form', 'jquery'], function() {
     table.on('toolbar(dataTable)', function(obj) {
         if (obj.event === 'refresh') {
             table.reload('dataTable');
+        }else if (obj.event === 'batchRemove') {
+            window.batchRemove(obj);
         }
     });
 })

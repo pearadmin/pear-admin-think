@@ -269,7 +269,7 @@ class CrudService
                    if ($k['IS_NULLABLE'] === 'NO') {
                        $lay_verify = ' lay-verify="uploadimg"';
                    }
-                   $columns .= '<button class="layui-btn layui-btn-sm upload-image" type="button">
+                   $columns .= '<button class="pear-btn pear-btn-primary pear-btn-sm upload-image" type="button">
                        <i class="fa fa-image">
                        </i>
                        上传图片
@@ -354,7 +354,7 @@ class CrudService
                   if($k['IS_NULLABLE'] === 'NO') {
                       $lay_verify = ' lay-verify="uploadimg"';
                   }
-                  $columns .= '<button class="layui-btn layui-btn-sm upload-image" type="button">
+                  $columns .= '<button class="pear-btn pear-btn-primary pear-btn-sm upload-image" type="button">
                   <i class="fa fa-image">
                   </i>
                   上传图片

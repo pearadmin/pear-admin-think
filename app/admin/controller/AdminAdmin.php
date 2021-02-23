@@ -227,4 +227,14 @@ class AdminAdmin extends  \app\common\controller\AdminBase
         }
         return $this->fetch();
     }
+
+    /**
+     * 清空日志
+     */
+    public function del_log()
+    {
+        Db::table('admin_admin_log')->delete(true);
+        $this->jsonApi('删除成功');
+    }
+
 }

@@ -30,7 +30,7 @@ layui.use(['table', 'form', 'code','jquery'], function() {
             maxmin: true,
             title: '生成',
             shade: 0.1,
-            area: [width + 'px', height + 'px'],
+            area: screen(),
             content:'crud?name='+e
         });
     }
@@ -113,11 +113,15 @@ layui.use(['table', 'form', 'code','jquery'], function() {
     }
     lists($(".node").find("span").eq(0).text());
     
-    if (typeof width !== 'number' || width === 0) {
-        width = $(window).width() * 0.8;
-    }
-    if (typeof height !== 'number' || height === 0) {
-        height = $(window).height() - 20;
+    //弹出窗设置 自己设置弹出百分比
+    function screen() {
+        if (typeof width !== 'number' || width === 0) {
+          width = $(window).width() * 0.8;
+        }
+        if (typeof height !== 'number' || height === 0) {
+          height = $(window).height() - 20;
+        }
+        return [width + 'px', height + 'px'];
     }
 
     $("#addBase").click(function(){
@@ -126,7 +130,7 @@ layui.use(['table', 'form', 'code','jquery'], function() {
             maxmin: true,
             title: '新增基础表',
             shade: 0.1,
-            area: [width + 'px', height + 'px'],
+            area: screen(),
             content:'addBase'
         });
     })

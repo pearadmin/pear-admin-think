@@ -77,12 +77,6 @@ layui.use(['table', 'form', 'jquery','laydate'], function() {
            })
         return false;
     });
-    if (typeof width !== 'number' || width === 0) {
-        width = $(window).width() * 0.8;
-    }
-    if (typeof height !== 'number' || height === 0) {
-        height = $(window).height() - 20;
-    }
 
     window.renew = function(obj) {
     let data = table.checkStatus(obj.config.id).data;

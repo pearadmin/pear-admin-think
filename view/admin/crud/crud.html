@@ -67,7 +67,7 @@
                         <div class="layui-input-block">
                             {volist name="$info" id="v"}
                                 {if condition="!in_array($v['COLUMN_NAME'], ['delete_time'])"}
-                                    <input type="checkbox" name="sql-search[]" value="{$v.COLUMN_NAME}###{$v.COLUMN_COMMENT}###{$v.IS_NULLABLE}" title="{$v.COLUMN_NAME}" >
+                                    <input type="checkbox" lay-skin="primary" name="sql-search[]" value="{$v.COLUMN_NAME}###{$v.COLUMN_COMMENT}###{$v.IS_NULLABLE}" title="{$v.COLUMN_NAME}" >
                                 {/if}
                             {/volist}
                         </div>
@@ -82,7 +82,7 @@
                         <div class="layui-input-block">
                             {volist name="$info" id="v"}
                             {if condition="!in_array($v['COLUMN_NAME'], ['create_time', 'update_time','delete_time'])"}
-                            <input type="checkbox" name="sql-edit[]" value="{$v.COLUMN_NAME}###{$v.COLUMN_COMMENT}###{$v.IS_NULLABLE}" title="{$v.COLUMN_NAME}" >
+                            <input type="checkbox" lay-skin="primary" name="sql-edit[]" value="{$v.COLUMN_NAME}###{$v.COLUMN_COMMENT}###{$v.IS_NULLABLE}" title="{$v.COLUMN_NAME}" >
                             {/if}
                             {/volist}
                         </div>
@@ -94,7 +94,7 @@
                         <div class="layui-input-block">
                             {volist name="$info" id="v"}
                             {if condition="!in_array($v['COLUMN_NAME'], ['create_time', 'update_time','delete_time'])"}
-                            <input type="checkbox" name="sql-photo[]" value="{$v.COLUMN_NAME}###{$v.COLUMN_COMMENT}###{$v.IS_NULLABLE}" title="{$v.COLUMN_NAME}" >
+                            <input type="checkbox" lay-skin="primary" name="sql-photo[]" value="{$v.COLUMN_NAME}###{$v.COLUMN_COMMENT}###{$v.IS_NULLABLE}" title="{$v.COLUMN_NAME}" >
                             {/if}
                             {/volist}
                         </div>
