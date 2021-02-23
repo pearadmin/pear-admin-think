@@ -11,7 +11,8 @@ layui.use(['table', 'form', 'jquery','laydate'], function() {
             title: '操作',
             unresize: true,
             align: 'center',
-            toolbar: '#options'
+            toolbar: '#options',
+            width: 150
         }]
     ];
     table.render({
@@ -84,7 +85,7 @@ layui.use(['table', 'form', 'jquery','laydate'], function() {
             maxmin: true,
             title: '修改{{$cname}}',
             shade: 0.1,
-            area: [width  + 'px', height + 'px'],
+            area: screen(),
             content:'edit?id='+obj.data['id']
         });
     }
