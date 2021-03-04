@@ -1,6 +1,0 @@
-/vendor
-/runtime
-/.idea
-/public/common
-/public/install.lock
-.env
