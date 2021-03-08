@@ -26,7 +26,7 @@ class Index extends Base
                         'pk|数据库前缀' => 'alphaDash',
                     ]);
                     try { 
-                        $dsn = "mysql:host=$dbhost;port=$dbport;dbname=$dbname";
+                        $dsn = "mysql:host=$dbhost:$dbport;dbname=$dbname";
                         $db = new \PDO($dsn, $dbuser, $dbpass); 
                     } catch(\PDOException $e) { 
                         $res = "数据库信息错误"; 
@@ -39,18 +39,19 @@ class Index extends Base
                     ]);
                     break;
                 default: 
-                    $dsn = "mysql:host=$dbhost;port=$dbport;dbname=$dbname";
+                    $dbpk = trim($data['pk']);
+                    $dsn = "mysql:host=$dbhost:$dbport;dbname=$dbname";
                     $db = new \PDO($dsn, $dbuser, $dbpass);  
-                    $info = self::createTables($db,trim($data['pk']));
-                    $sql = Db::table('admin_admin')->insert([
-                        'username' => trim($data['username']),
-                        'nickname' => trim($data['nickname']),
-                        'password' => set_password($data['password'])
-                    ]);
+                    $info = self::createTables($db,$dbpk);
                     if($info){
                         $res =  "数据表创建失败".$info;
                         break;
                     } 
+                    $username = trim($data['username']);
+                    $nickname = trim($data['nickname']);
+                    $password = set_password($data['password']);
+                    $sql = "insert into {$dbpk}admin_admin  (username,nickname,password) values('$username','$nickname','$password');";
+                    $db->query($sql);
                     $content = str_replace(['{{$dbhost}}','{{$dbname}}','{{$dbuser}}','{{$dbpass}}','{{$dbport}}','{{$dbpk}}'], 
                     [$dbhost,$dbname,$dbuser,$dbpass,$dbport,$dbpk], 
                     file_get_contents(app_path().'data'. DS .'database.tpl'));

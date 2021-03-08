@@ -98,7 +98,7 @@ class Crud extends \app\admin\controller\Base
             foreach ($data as $k => $v) {
                 if (substr($v, 0, 12) == 'CREATE TABLE') {
                     try {
-                        Db::query($v);
+                        Db::execute($v);
                     }catch (\Exception $e){
                         $this->jsonApi('创建失败',201,$e->getMessage());
                         }
