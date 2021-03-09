@@ -26,8 +26,10 @@ class Index extends Base
                         'pk|数据库前缀' => 'alphaDash',
                     ]);
                     try { 
-                        $dsn = "mysql:host=$dbhost:$dbport;dbname=$dbname";
+                        $dsn = "mysql:host=$dbhost:$dbport";
                         $db = new \PDO($dsn, $dbuser, $dbpass); 
+                        $sql = 'CREATE DATABASE IF NOT EXISTS '.$dbname.' DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci';
+                        $db->exec($sql);
                     } catch(\PDOException $e) { 
                         $res = "数据库信息错误"; 
                     }
