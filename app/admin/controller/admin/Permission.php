@@ -94,20 +94,25 @@ class Permission extends \app\admin\controller\Base
     /**
      * 删除
      */
-    public function remove($id)
+    public function remove($id,$type=false)
     {
         $model =  $this->model->with('child')->find($id);
-        if (isset($model->child) && !$model->child->isEmpty()){
-            $this->jsonApi('存在子权限，禁止删除',201);
+        if(!$type){
+            if (isset($model->child) && !$model->child->isEmpty()){
+                $this->jsonApi('存在子权限，确认删除后不可恢复',202);
+            }
+        }else{
+            $arr = Db::name('admin_permission')->where('pid',$id)->field('id,pid')->select();
+            foreach($arr as $k=>$v){
+                Db::name('admin_permission')->where('pid',$v['id'])->delete();
+                Db::name('admin_role_permission')->where('permission_id',$v['id'])->delete();
+                Db::name('admin_admin_permission')->where('permission_id',$v['id'])->delete();
+            }
         }
-        try{
-            $model->delete();
-            Db::table('admin_role_permission')->where('permission_id', $id)->delete();
-            Db::table('admin_admin_permission')->where('permission_id', $id)->delete();
-            $this->rm();
-        }catch (\Exception $e){
-            $this->jsonApi('删除失败',201,$e->getMessage());
-        }
+        $model->delete();
+        Db::name('admin_role_permission')->where('permission_id', $id)->delete();
+        Db::name('admin_admin_permission')->where('permission_id', $id)->delete();
+        $this->rm();
         $this->jsonApi('删除成功');
     }
 }

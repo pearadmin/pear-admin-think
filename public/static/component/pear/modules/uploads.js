@@ -27,7 +27,7 @@ function _upload(elem, options) {
     var form, name = 'file',
         accept = 'image/*',
         path = 'images',
-        url = '/index/upload';
+        url = '/' + window.location.pathname.split("/")[1] + '/index/upload';
         form = Math.random().toString(36).substr(2);
         var input = '<input accept="' + accept + '" name="' + name + '" type="file"/>';
         $('body').append('<form enctype="multipart/form-data" id="' + form + '" style="display: none;">' + input + '</form>');

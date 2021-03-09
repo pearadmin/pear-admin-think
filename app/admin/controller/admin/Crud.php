@@ -40,36 +40,31 @@ class Crud extends \app\admin\controller\Base
         //验证
         if(!$this->validate->scene('del')->check(['name'=>$name])) 
         $this->jsonApi($this->validate->getError(),201);
-        try {
-            Db::query('drop table '.config('database.connections.mysql.prefix').$name);
-            if(Request::param('type')){
-                try {
-                    $head = strstr($name , '_',true);  
-                    $foot = substr($name,strlen($head)+1);
-                    $foot_hump = underline_hump($foot);
-                    $name_hump = underline_hump($name);
-                    // 控制器
-                    $controller = app_path().'controller'.DS.$head.DS.$foot_hump.'.php';
-                    if (file_exists($controller)) unlink($controller);
-                    // 模型
-                    $model = root_path().'app'.DS.'common'.DS.'model'.DS.$name_hump.'.php';
-                    if (file_exists($model)) unlink($model);
-                    // 验证器
-                    $validate = root_path().'app'.DS.'common'.DS.'validate'.DS.$name_hump.'.php';
-                    if (file_exists($validate)) unlink($validate);
-                    //删除视图目录
-                    $view = root_path().'view'.DS.'admin'.DS.$head.DS.$foot;
-                    if (file_exists($view)) delete_dir($view);
-                    //删除菜单
-                    (new \app\admin\model\AdminPermission)->where('href', 'like', "%" . $head.'.'.$foot . "%")->delete();
-                    $this->rm();
-                }catch (\Exception $e){
-                $this->jsonApi('删除失败',201,$e->getMessage());
-                }
-                $this->jsonApi('操作成功');
+        Db::query('drop table '.config('database.connections.mysql.prefix').$name);
+        if(Request::param('type')){
+            try {
+                $head = strstr($name , '_',true);  
+                $foot = substr($name,strlen($head)+1);
+                $foot_hump = underline_hump($foot);
+                $name_hump = underline_hump($name);
+                // 控制器
+                $controller = app_path().'controller'.DS.$head.DS.$foot_hump.'.php';
+                if (file_exists($controller)) unlink($controller);
+                // 模型
+                $model = root_path().'app'.DS.'common'.DS.'model'.DS.$name_hump.'.php';
+                if (file_exists($model)) unlink($model);
+                // 验证器
+                $validate = root_path().'app'.DS.'common'.DS.'validate'.DS.$name_hump.'.php';
+                if (file_exists($validate)) unlink($validate);
+                //删除视图目录
+                $view = root_path().'view'.DS.'admin'.DS.$head.DS.$foot;
+                if (file_exists($view)) delete_dir($view);
+                //删除菜单
+                (new \app\admin\model\AdminPermission)->where('href', 'like', "%" . $head.'.'.$foot . "%")->delete();
+                $this->rm();
+            }catch (\Exception $e){
+            $this->jsonApi('删除失败',201,$e->getMessage());
             }
-        }catch (\Exception $e){
-            $this->jsonApi('删除失败,请手动删除','201');
         }
         $this->jsonApi('操作成功');
     }
@@ -124,13 +119,16 @@ class Crud extends \app\admin\controller\Base
             $res = $crud->crud($name,Request::post());
             if($res){
                 $this->rm();
-                $this->jsonApi('操作成功');
+                if(Request::post('menu') != null){
+                    $this->jsonApi('操作成功',200,true);
+                }else{
+                    $this->jsonApi('操作成功',200);
+                }
             }
             $this->jsonApi('不可操作',201);
         }
         return $this->fetch('',[
             'data' => $data,
-
             'permissions' => get_tree((new \app\admin\model\AdminPermission)->order('sort','asc')->select()->toArray()),
             'desc' => Db::query('SELECT TABLE_COMMENT FROM information_schema.TABLES WHERE TABLE_NAME = "' . $name . '"')[0]['TABLE_COMMENT']
         ]);

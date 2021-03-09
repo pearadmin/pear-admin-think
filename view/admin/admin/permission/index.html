@@ -157,9 +157,36 @@
                                         render();
                                     });
                                 } else {
-                                    layer.msg(res.msg, {
-                                        icon: 2,
-                                        time: 1000
+                                    layer.confirm(res.msg, {
+                                        icon: 3,
+                                        title: '提示'
+                                    }, function(index) {
+                                        layer.close(index);
+                                        let loading = layer.load();
+                                        $.ajax({
+                                            url:MODULE_PATH + 'remove',
+                                            data:{id:obj.data['id'],type:true},
+                                            dataType: 'json',
+                                            type: 'POST',
+                                            success: function(res) {
+                                                layer.close(loading);
+                                                //判断有没有权限
+                                                if(res && res.code==999){
+                                                    layer.msg(res.msg, {
+                                                        icon: 5,
+                                                        time: 2000, 
+                                                    })
+                                                    return false;
+                                                }else if (res.code==200) {
+                                                    layer.msg(res.msg, {
+                                                        icon: 1,
+                                                        time: 1000
+                                                    }, function() {
+                                                        render();
+                                                    });
+                                                }
+                                            }
+                                        })
                                     });
                                 }
                             }

@@ -79,8 +79,8 @@ class Role extends \app\admin\controller\Base
         if ($model->isEmpty()) $this->jsonApi('数据不存在',201);
         try{
             $model->delete();
-            Db::table('admin_admin_role')->where('role_id', $id)->delete();
-            Db::table('admin_role_permission')->where('role_id', $id)->delete();
+            Db::name('admin_admin_role')->where('role_id', $id)->delete();
+            Db::name('admin_role_permission')->where('role_id', $id)->delete();
             $this->rm();
         }catch (\Exception $e){
             $this->jsonApi('删除失败',201,$e->getMessage());

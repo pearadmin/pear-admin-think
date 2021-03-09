@@ -15,7 +15,7 @@ class AdminPermission extends Model
      */
     public function child()
     {
-        return $this->hasMany('Permission','pid','id');
+        return $this->hasMany('AdminPermission','pid','id');
     }
 
     public function make_menu($path,$name,$pid)
@@ -23,9 +23,11 @@ class AdminPermission extends Model
         $data = [
             'pid' => $pid,
             'title' => $name,
-            'href' =>$path.'index'
+            'href' =>$path.'index',
         ];
-        $menu = self::create($data);
+        $menu = self::create(array_merge($data, [
+            'icon'=>'layui-icon layui-icon-fire'
+        ]));
         $crud = [
             'add' => "新增",
             'edit' => "修改",

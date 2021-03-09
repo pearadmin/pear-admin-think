@@ -159,13 +159,6 @@
 				}
 			});
 
-			form.on('submit(dict-type-query)', function(data) {
-				table.reload('dict-type-table', {
-					where: data.field
-				})
-				return false;
-			});
-
 			//弹出窗设置 自己设置弹出百分比
 			function screen() {
 				if (typeof width !== 'number' || width === 0) {
@@ -237,7 +230,7 @@
 										icon: 1,
 										time: 1000
 									}, function() {
-										table.reload('dict-data-table');
+										table.reload('dict-type-table');
 									});
 								} else {
 									layer.msg(res.msg, {
@@ -260,7 +253,7 @@
 				layer.open({
 					type: 2,
 					maxmin: true,
-					title: '生成',
+					title: 'CRUD生成',
 					shade: 0.1,
 					area: screen(),
 					content: MODULE_PATH + 'crud/name/' + obj

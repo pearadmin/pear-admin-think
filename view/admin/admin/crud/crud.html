@@ -144,8 +144,8 @@ layui.use(['form','jquery'],function(){
                     return false;
                 }else if(res.code==200){
                     layer.msg(res.msg,{icon:1,time:1000},function(){
+                        if(res.data) window.top.document.location.reload();
                         parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
-                        parent.layui.table.reload("dict-data-table");
                     });
                 }else{
                     layer.msg(res.msg,{icon:2,time:1000});

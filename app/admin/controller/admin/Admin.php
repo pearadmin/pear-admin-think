@@ -113,8 +113,8 @@ class Admin extends  \app\admin\controller\Base
         if ($model->isEmpty()) $this->jsonApi('数据不存在',201);
         try{
             $model->delete();
-            Db::table('admin_admin_role')->where('admin_id', $id)->delete();
-            Db::table('admin_admin_permission')->where('admin_id', $id)->delete();
+            Db::name('admin_admin_role')->where('admin_id', $id)->delete();
+            Db::name('admin_admin_permission')->where('admin_id', $id)->delete();
             $this->rm();
         }catch (\Exception $e){
             $this->jsonApi('删除失败',201,$e->getMessage());
@@ -131,8 +131,8 @@ class Admin extends  \app\admin\controller\Base
         if (!is_array($ids)) $this->jsonApi('参数错误',201);
         try{
             $this->model->destroy($ids);
-            Db::table('admin_admin_role')->whereIn('admin_id', $ids)->delete();
-            Db::table('admin_admin_permission')->whereIn('admin_id', $ids)->delete();
+            Db::name('admin_admin_role')->whereIn('admin_id', $ids)->delete();
+            Db::name('admin_admin_permission')->whereIn('admin_id', $ids)->delete();
             $this->rm();
         }catch (\Exception $e){
             $this->jsonApi('删除失败',201,$e->getMessage());
@@ -282,7 +282,7 @@ class Admin extends  \app\admin\controller\Base
      */
     public function removeLog()
     {
-        Db::table('admin_admin_log')->delete(true);
+        Db::name('admin_admin_log')->delete(true);
         $this->jsonApi('删除成功');
     }
 
