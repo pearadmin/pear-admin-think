@@ -139,7 +139,7 @@ PRIMARY KEY (`id`)
         $message = '';
         $scene   = '';
         for ($i=0; $i <$this->data_count; $i++) { 
-            if ($this->data['null'][$i] == 'NO') {
+            if ($this->data['null'][$i] == 'NO' && $this->data['formType'][$i]!="4") {
                 $rule .= '
         \'' . $this->data['name'][$i] . '\' => \'require';
                 $message .= '
