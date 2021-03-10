@@ -126,7 +126,7 @@ PRIMARY KEY (`id`)
                 $del = ' protected $deleteTime = "delete_time";';
             }
         }
-        $content = str_replace(['{{$table_name_hump}}','{{$del}}'], 
+        $content = str_replace(['{{$table_name_hump}}','{{$del}}'],
         [$this->table_name_hump,$del], 
         file_get_contents(root_path().'extend'.DS.'tpl'.DS.'model.php.tpl'));
         return [$file, $content];
@@ -261,7 +261,7 @@ PRIMARY KEY (`id`)
         $columns = '';
         $contentjs = '';
         $content = '';
-        for ($i=0; $i <$this->data_count; $i++) { 
+        for ($i=0; $i <$this->data_count; $i++) {
             if($this->data['form'][$i]&&$this->data['formType'][$i]!='4'){
                 $columns .= '
             <div class="layui-form-item">
@@ -272,6 +272,12 @@ PRIMARY KEY (`id`)
                     ';
                 $lay_verify = '';
                 switch ($this->data['formType'][$i]) {
+                    case '5':
+                        if($this->data['null'][$i] === 'NO') {
+                            $lay_verify = ' lay-verify="required ';
+                        }
+                        $columns .= '<textarea class="layui-textarea"' . $lay_verify . ' name="' . $this->data['name'][$i] . '" ></textarea>';
+                        break;
                     case '3':
                         if ($this->data['null'] === 'NO') {
                             $lay_verify = ' lay-verify="uploadimg"';
@@ -337,6 +343,12 @@ PRIMARY KEY (`id`)
                     ';
                 $lay_verify = '';
                 switch ($this->data['formType'][$i]) {
+                    case '5':
+                        if($this->data['null'][$i] === 'NO') {
+                            $lay_verify = ' lay-verify="required ';
+                        }
+                        $columns .= '<textarea class="layui-textarea"' . $lay_verify . ' name="' . $this->data['name'][$i] . '" >{$model[\'' . $this->data['name'][$i] . '\']}</textarea>';
+                        break;
                     case '3':
                         if ($this->data['null'] === 'NO') {
                             $lay_verify = ' lay-verify="uploadimg"';
