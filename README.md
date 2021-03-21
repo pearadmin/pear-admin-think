@@ -6,10 +6,9 @@
    <h1 align="center">
     Pear Admin Think
    </h1>
-  
-   <h4 align="center">
-    基 于 Thinkphp 的 快 速 开 发 平 台
-   </h4> 
+    <h4 align="center">
+    开 箱 即 用 的 PHP 快 速 开 发 平 台
+  </h4> 
 
   [预 览](http://pear.jianla.cn)   |   [官 网](http://www.pearadmin.com/)   |   [群聊](https://jq.qq.com/?_wv=1027&k=5OdSmve)   |   [社区](http://forum.pearadmin.com/)
 
