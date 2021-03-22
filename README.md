@@ -34,14 +34,14 @@
 >Pear Admin Think 基于 thinkphp6 的快速开发平台，通过简单的代码生成功能，即可快速构建你的功能业务，努力成为最顺手的轮子。
 
 #### 环境要求
-* PHP >= 7.1.0
+* PHP >= 7.3.0
 * Mysql >= 5.7.0 (需支持innodb引擎)
 * Apache 或 Nginx
 * 需要支持PATH_INFO
 
 #### 安装配置
 * git clone https://gitee.com/pear-admin/Pear-Admin-Think
-* 更新包composer update
+* 更新包composer update(可忽略)
 * 将网站入口部署至public目录下面
 * 修改伪静态配置, 请参考下方伪静态设置。
 * 运行网站地址, 会自动进入安装界面, 请根据提示进行设置, 然后点击安装。

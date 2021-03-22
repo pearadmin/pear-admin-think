@@ -14,7 +14,7 @@ class OssService
        $accessKeySecret = $data['file-accessKeySecret']; 
        $endpoint = $data['file-endpoint'];
        $bucket= $data['file-OssName'];    
-       $object = $path.DS.date("Ymd").DS.time().rand(10000,99999).DS.$Extension;    // 文件名称
+       $object = $path.'/'.date("Ymd").'/'.time().rand(10000,99999).'/'.$Extension;    // 文件名称
        try{
            $ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint,true);
            $rel = $ossClient->uploadFile($bucket, $object, $filePath);

@@ -58,7 +58,8 @@ class AdminAdmin extends Model
         if (!$admin && !$hash) return false;
         //判断Session是否存在
         if (!$admin) {
-            $hash = explode('###', aes_decrypt($hash?$hash:'-'));
+            if(!isset($hash{10})) return false;
+            $hash = explode('###', aes_decrypt($hash));
             if (!isset($hash[1])) return false;
             $info = self::field(true)->where(['id'=>$hash[0],'token'=>$hash[1],'status'=>1])->find();
             if(!$info) return false;
