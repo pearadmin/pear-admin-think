@@ -14,7 +14,7 @@ class AdminAdminLog extends Model
     
     public function log()
     {
-        return $this->belongsTo('Admin','uid','id');
+        return $this->belongsTo('AdminAdmin','uid','id');
     }
 
     // 管理员日志记录
