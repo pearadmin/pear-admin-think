@@ -16,7 +16,7 @@
 
 <p align="center">
     <a href="#">
-        <img src="https://img.shields.io/badge/pear-admin-layui-3.7.0+-green.svg" alt="Layui Version">
+        <img src="https://img.shields.io/badge/Pear Admin Layui-3.6.5+-green.svg" alt="Pear Admin Layui Version">
     </a>
 	<a href="#">
         <img src="https://img.shields.io/badge/php-7.3.0+-green.svg" alt="PHP Version">
