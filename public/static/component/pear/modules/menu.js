@@ -62,16 +62,25 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 				openType: dom.attr("open-type")
 			};
 			var doms = hash(dom);
-			if (doms.text() != '') {
-				data['menuPath'] = doms.find("span").text() + " / " + data['menuPath'];
+			if (doms != null) {
+				if (doms.text() != '') {
+					data['menuPath'] = doms.find("span").text() + " / " + data['menuPath'];
+				}
 			}
-			var domss = hash(doms);
-			if (domss.text() != '') {
-				data['menuPath'] = domss.find("span").text() + " / " + data['menuPath'];
+			if (doms != null) {
+				var domss = hash(doms);
+				if(domss!=null){
+				if (domss.text() != '') {
+					data['menuPath'] = domss.find("span").text() + " / " + data['menuPath'];
+				}}
 			}
-			var domsss = hash(domss);
-			if (domsss.text() != '') {
-				data['menuPath'] = domsss.find("span").text() + " / " + data['menuPath'];
+			if (domss != null) {
+
+				var domsss = hash(domss);
+				if(domsss!=null){
+				if (domsss.text() != '') {
+					data['menuPath'] = domsss.find("span").text() + " / " + data['menuPath'];
+				}}
 			}
 			if ($("#" + _this.option.elem).is(".pear-nav-mini")) {
 				if (_this.option.accordion) {
@@ -85,7 +94,11 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 	}
 
 	function hash(dom) {
-		return dom.parent().parent().prev();
+		var d = dom.parent().parent().prev();
+		if (d.prop("tagName") === "UL") {
+			return null;
+		}
+		return d;
 	}
 
 	pearMenu.prototype.skin = function(skin) {
@@ -106,9 +119,10 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 				display: "block"
 			});
 			var controlId = $("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents("ul").attr("pear-id");
-
-			$("#" + this.option.control).find(".layui-this").removeClass("layui-this");
-			$("#" + this.option.control).find("[pear-id='" + controlId + "']").addClass("layui-this");
+			if (controlId != undefined) {
+				$("#" + this.option.control).find(".layui-this").removeClass("layui-this");
+				$("#" + this.option.control).find("[pear-id='" + controlId + "']").addClass("layui-this");
+			}
 		}
 		if (this.option.accordion == true) {
 			$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents(".pear-nav-tree").find(".layui-nav-itemed").removeClass(
@@ -229,7 +243,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 		$.each(option.data, function(i, item) {
 			var menuItem = '';
 			var controlItem = '';
-			if (index === option.defaultMenu) {
+			if (i === option.defaultMenu) {
 				controlItem = '<li pear-href="' + item.href + '" pear-title="' + item.title + '" pear-id="' + item.id +
 					'" class="layui-this layui-nav-item"><a href="#">' + item.title + '</a></li>';
 				menuItem = '<ul  pear-id="' + item.id + '" lay-filter="' + option.elem +
