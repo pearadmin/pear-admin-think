@@ -14,7 +14,7 @@ class UploadService
     {
         $v = new Validate();
         $v->rule([
-            'file|图片' =>'fileSize:102400,fileExt:jpg,png,gif'
+            'file|图片' =>'fileSize:102400|fileExt:jpg,png,gif'
          ]);
         return $v->failException(true)->check($file);
     }
