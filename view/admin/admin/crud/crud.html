@@ -71,30 +71,30 @@
                     <tbody>
                     {foreach $data as $k=>$v}
                     <tr>
-                        <input type="hidden" name="name[]" value="{$v.COLUMN_NAME}">
-                        <input type="hidden" name="type[]" value="{$v.DATA_TYPE}">
-                        <input type="hidden" name="desc[]" value="{$v.COLUMN_COMMENT}">
-                        <input type="hidden" name="null[]" value="{$v.IS_NULLABLE}">
+                        <input type="hidden" name="name[]" value="{$v.name}">
+                        <input type="hidden" name="type[]" value="{$v.type}">
+                        <input type="hidden" name="desc[]" value="{$v.comment}">
+                        <input type="hidden" name="null[]" value="{$v.notnull}">
                         <td>
-                            {$v.COLUMN_NAME}
+                            {$v.name}
                         </td>
                         <td>
-                            {$v.DATA_TYPE}
+                            {$v.type}
                         </td>
                         <td>
-                            {$v.COLUMN_COMMENT}
+                            {$v.comment}
                         </td>
                         <td>
-                            {$v.IS_NULLABLE}
+                            {$v.notnull}
                         </td>
                         <td>
-                            <input type="checkbox" name="list[]" title="列表" lay-skin="primary" {if $v.IS_NULLABLE=="NO"}checked{/if}>
+                            <input type="checkbox" name="list[]" title="列表" lay-skin="primary" {if $v.notnull=="true"}checked{/if}>
                         </td>
                         <td>
                             <input type="checkbox" name="search[]" title="搜索" lay-skin="primary">
                         </td>
                         <td>
-                            <input type="checkbox" name="form[]" title="表单" lay-skin="primary" {if $v.IS_NULLABLE=="NO"}checked{/if}>
+                            <input type="checkbox" name="form[]" title="表单" lay-skin="primary" {if $v.notnull=="true"}checked{/if}>
                         </td>
                         <td>
                             <select name="formType[]">

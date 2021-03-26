@@ -74,7 +74,7 @@ class Crud extends \app\admin\controller\Base
      */
     public function list($name)
     {
-        $sql = Db::query('SELECT COLUMN_NAME,IS_NULLABLE,DATA_TYPE,IF(COLUMN_COMMENT = "",COLUMN_NAME,COLUMN_COMMENT) COLUMN_COMMENT FROM information_schema.COLUMNS WHERE TABLE_NAME = "' . $name . '"order by ORDINAL_POSITION asc');
+        $sql = Db::getFields($name);
         $this->jsonApi('', 0, $sql);
     }
 
@@ -112,8 +112,7 @@ class Crud extends \app\admin\controller\Base
      */
     public function crud($name)
     {
-        $data = Db::query('SELECT COLUMN_NAME,IS_NULLABLE,DATA_TYPE,IF(COLUMN_COMMENT = "",COLUMN_NAME,COLUMN_COMMENT) COLUMN_COMMENT 
-        FROM information_schema.COLUMNS WHERE TABLE_NAME = "' . $name . '" AND COLUMN_NAME <> "id" order by ORDINAL_POSITION asc');
+        $data = Db::getFields($name);
         if (Request::isAjax()) {
             $crud = new \app\admin\service\CrudService;
             $res = $crud->crud($name,Request::post());
