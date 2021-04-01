@@ -37,7 +37,7 @@
 >仅供技术研究使用，请勿用于非法用途，否则产生的后果作者概不负责。
 
 #### 安装配置
-* git clone https://gitee.com/pear-admin/Pear-Admin-Think（或直接下载）
+* git clone https://gitee.com/pear-admin/Pear-Admin-Think
 * 更新包composer update(可以忽略)
 * 将网站入口部署至public目录下面
 * 修改thinkphp伪静态配置。
