@@ -37,10 +37,10 @@
 >仅供技术研究使用，请勿用于非法用途，否则产生的后果作者概不负责。
 
 #### 安装配置
-* git clone https://gitee.com/pear-admin/Pear-Admin-Think
-* 更新包composer update(可忽略)
+* git clone https://gitee.com/pear-admin/Pear-Admin-Think（或直接下载）
+* 更新包composer update(可以忽略)
 * 将网站入口部署至public目录下面
-* 修改伪静态配置, 请参考下方伪静态设置。
+* 修改thinkphp伪静态配置。
 * 运行网站地址, 会自动进入安装界面, 请根据提示进行设置, 然后点击安装。
 * 安装完成后会自动生成安装锁public/install.lock, 如需重新安装, 删掉该文件即可
 * 如果需要隐藏后台,可以在config/app.php域名绑定。 否则直接访问/admin.php
