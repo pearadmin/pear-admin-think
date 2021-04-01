@@ -4,27 +4,19 @@ namespace app\common\service;
 use OSS\OssClient;
 use OSS\Core\OssException;
 use think\exception\ValidateException;
-use think\Validate;
 class UploadService
 {
-    /**
-     * 验证数据
-     */
-    private static function validate($file)
-    {
-        $v = new Validate();
-        $v->rule([
-            'file|图片' =>'fileSize:102400|fileExt:jpg,png,gif'
-         ]);
-        return $v->failException(true)->check($file);
-    }
-    
+
    /**
     *通用上传
     */
     static function commonFile($file,$path = 'common'){
         try {
-            self::validate($file);
+            validate(['file'=>[
+                'fileSize' => 410241024,
+                'fileExt' => 'jpg,jpeg,png,bmp,gif',
+                'fileMime' => 'image/jpeg,image/png,image/gif', 
+            ]])->check(['file' => $file]);
         } catch (\think\exception\ValidateException $e) {
             return ['msg'=>'上传失败','code'=>201,'data'=>$e->getMessage()];
         }

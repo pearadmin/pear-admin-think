@@ -50,7 +50,7 @@ if (!function_exists('get_config')) {
      * @param  string $config 系统设置类型
      * @return string         系统设置内容,不存在输出键数组;
      */
-    function get_config($key,$value=''): string
+    function get_config($key,$value='')
     {
         $config = (new \app\common\model\AdminConfig)->getKeyValue($key);
         return isset($config[$value])?$config[$value]:$config;
@@ -79,7 +79,11 @@ if (!function_exists('aes_decrypt')) {
      */
     function aes_decrypt($string, $key="ONSPEED"): string
     {
-        return openssl_decrypt(hex2bin($string), 'AES-128-ECB', $key, OPENSSL_RAW_DATA);
+        try {
+            return openssl_decrypt(hex2bin($string), 'AES-128-ECB', $key, OPENSSL_RAW_DATA);
+        }catch (\Exception $e){
+            return false;
+        }
     }
 }
 

@@ -154,7 +154,7 @@
                                         icon: 1,
                                         time: 1000
                                     }, function() {
-                                        obj.del();
+                                        table.reload('dataTable');
                                     });
                                 } else {
                                     layer.msg(res.msg, {

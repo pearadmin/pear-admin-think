@@ -24,7 +24,7 @@
         </div>
     </div>
 </form>
-<script src="/static/component/layui/layui.all.js"></script>
+<script src="/static/component/layui/layui.js"></script>
 <script src="/static/component/pear/pear.js"></script>
 <script>
     layui.use(['form', 'jquery', 'layedit', 'uploads'], function () {
