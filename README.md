@@ -33,6 +33,9 @@
 #### 项目简介
 >Pear Admin Think 基于 thinkphp6 的快速开发平台，通过简单的代码生成功能，即可快速构建你的功能业务，努力成为最顺手的轮子。
 
+#### 项目声明
+>仅供技术研究使用，请勿用于非法用途，否则产生的后果作者概不负责。
+
 #### 安装配置
 * git clone https://gitee.com/pear-admin/Pear-Admin-Think
 * 更新包composer update(可忽略)
