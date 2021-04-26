@@ -115,10 +115,12 @@
                                     登录验证码
                                 </label>
                                 <div class="layui-input-block">
-                                    {if $data['login_captcha']}
+                                    {if $data['login_captcha']==1}
                                     <input checked="" lay-filter="login_captcha" lay-skin="switch" lay-text="开启|关闭" name="login_captcha" type="checkbox" value="1"/>
+                                    <input lay-filter="login_captcha" lay-skin="switch" lay-text="开启|关闭" name="login_captcha" type="hidden" value="0"/>
                                     {else}
-                                    <input lay-filter="login_captcha" lay-skin="switch" lay-text="开启|关闭" name="login_captcha" type="checkbox" value=""/>
+                                        <input lay-filter="login_captcha" lay-skin="switch" lay-text="开启|关闭" name="login_captcha" type="checkbox" value="0"/>
+                                        <input lay-filter="login_captcha" lay-skin="switch" lay-text="开启|关闭" name="login_captcha" type="hidden" value="1"/>
                                     {/if}
                                 </div>
                             </div>

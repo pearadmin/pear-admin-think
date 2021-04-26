@@ -12,7 +12,7 @@ return [
 	'addr' => '',
 	'logo' => '',
 	'bg' => '',
-	'login_captcha' => '1',
+	'login_captcha' => '0',
 	'smtp-user' => '',
 	'smtp-pass' => '',
 	'smtp-port' => '',

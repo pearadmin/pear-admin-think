@@ -19,24 +19,48 @@
                     {$data}
 					</p>
 					<div class="action">
-                     <a id="href" href="{$url}" class="pear-btn pear-btn-primary">立即跳转</a>
-                     <button  class="pear-btn"><b id="wait"><?php echo($wait);?></b>秒后自动跳转</button>
+					 {if $msg=='权限不足'}
+					 <a href="javascript:void(0);" id="href" class="pear-btn pear-btn-primary">立即关闭</a>
+					 <button  class="pear-btn"><b id="close"><?php echo($wait);?></b>秒后自动关闭</button>
+					 {else}
+					 <a id="href" href="{$url}" class="pear-btn pear-btn-primary">立即跳转</a>
+					 <button  class="pear-btn"><b id="wait"><?php echo($wait);?></b>秒后自动跳转</button>
+					 {/if}
 					</div>
 				</div>
 			</div>
 		</div>
+		<script src="/static/component/layui/layui.js"></script>
+		<script src="/static/component/pear/pear.js"></script>
         <script type="text/javascript">
-        (function(){
-            var wait = document.getElementById('wait'),
-                href = document.getElementById('href').href;
-            var interval = setInterval(function(){
-                var time = --wait.innerHTML;
-                if(time <= 0) {
-                    location.href = href;
-                    clearInterval(interval);
-                };
-            }, 1000);
-        })();
+		{if $msg=='权限不足'}
+			layui.use(['jquery'], function() {
+				let $ = layui.jquery;
+				var close = document.getElementById('close'),
+					href = document.getElementById('href');
+					href.onclick = function(){window.closeOpen();}
+					var interval = setInterval(function(){
+						var time = --close.innerHTML;
+						if(time <= 0) {
+							window.closeOpen();
+							clearInterval(interval);
+						};
+					}, 1000);
+				window.closeOpen = function() {
+					parent.layer.close(parent.layer.getFrameIndex(window.name))??$(".layui-this i ",parent.document).click();
+				}
+			})
+		{else}
+			var wait = document.getElementById('wait'),
+				href = document.getElementById('href').href;
+			var interval = setInterval(function(){
+				var time = --wait.innerHTML;
+				if(time <= 0) {
+					location.href = href;
+					clearInterval(interval);
+				};
+			}, 1000);
+		{/if}
     </script>
 	</body>
 </html>

@@ -7,6 +7,8 @@ use think\facade\Session;
 
 class AdminPermission
 {
+    use \app\common\traits\Base;
+
     /**
      * 处理请求
      *
@@ -22,38 +24,7 @@ class AdminPermission
         $url = $request->root(). '/'.$request->controller(true).'/'.$request->action(true); 
         $href = array_column(Session::get('admin.menu'), 'href');
         if (!in_array($url, $href)) {
-            if ($request->isAjax()) {
-                return json(['code'=>999,'msg'=>'权限不足']);
-            } else {
-                exit('
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-                    <title>哎呀！权限不足！</title>
-                    <style type="text/css">
-                        html,body,div,ul,ol,li,dl,dt,dd,h1,h2,h3,h4,h5,h6,p {
-                            margin: 0;
-                            padding: 0;
-                        }
-                        h2 {
-                            font-size: 30px;
-                            color: #3a3a3a;
-                            padding-bottom: 10px;
-                        }
-                        .message_tips {
-                            text-align: center;
-                            margin-top: 75px;
-                        }
-                        </style>
-                    </head>
-                    <body>
-                        <div class="message_tips">
-                            <h2>哎呀！权限不足！</h2>
-                        </div>
-                </body>
-                </html>');
-            }
+            return $request->isAjax()? $this->json('权限不足',999):$this->error('权限不足','');
          }
         return $next($request);
     }
