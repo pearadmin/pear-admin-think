@@ -45,6 +45,7 @@
     elem: '#testList'
     ,url: '{$Request.root}/index/upload'
     ,accept: 'file'
+    , data: {path: '{$name}'}
     ,multiple: true
     ,auto: false
     ,bindAction: '#testListAction'
