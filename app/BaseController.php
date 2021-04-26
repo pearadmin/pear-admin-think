@@ -67,7 +67,7 @@ abstract class BaseController
             'think' => $this->app->version(),
             'upload' => ini_get('upload_max_filesize'),
             'max' => ini_get('max_execution_time').'秒',
-            'ver' => 'V5.0.0',
+            'ver' => 'V5.0.1',
         ];
     }
 
