@@ -1,10 +1,11 @@
-
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-        <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
-	</head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
+    <script src="/static/component/layui/layui.js"></script>
+    <script src="/static/component/pear/pear.js"></script>
+</head>
 	<body class="pear-container">
 		<div class="layui-card">
 			<div class="layui-card-body">
@@ -52,8 +53,6 @@
 			<button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i></button>
 		    <button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i></button>
 		</script>
-        <script src="/static/component/layui/layui.js"></script>
-        <script src="/static/component/pear/pear.js"></script>
         <script>
         layui.use(['table', 'form', 'jquery','common','laydate'], function() {
             let table = layui.table;

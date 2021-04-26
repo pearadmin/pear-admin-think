@@ -3,10 +3,37 @@ declare (strict_types = 1);
 
 namespace app\common\service;
 
+use think\facade\Request;
 use app\common\model\AdminPhoto as M;
 
 class AdminPhoto
 {
+    // 添加
+    public static function goAdd()
+    {
+        if (Request::isPost()){
+            $data = Request::post();
+            //数据验证
+            if (!preg_match('/^[a-zA-z]+$/i',$data['name'])) return ['code' => 201, 'msg' => '目录格式不正确'];
+            @mkdir(public_path().'upload'.DS.$data['name']);
+        }
+    }
+
+    // 添加
+    public static function goDel($name)
+    {
+        if($name=='阿里云') return ['msg'=>'非本地目录无法删除','code'=>201];
+        //进行转义，禁止跨目录
+        $name = str_replace("\\","/",$name);
+        try{
+            $view = public_path().'upload'.DS.$name;
+            if (file_exists($view)) delete_dir($view);
+            M::where('path',$name)->delete();
+        }catch (\Exception $e){
+            return ['msg'=>'操作失败'.$e->getMessage(),'code'=>201];
+        }
+    }
+
     // 删除
     public static function goRemove($id)
     {
@@ -31,11 +58,12 @@ class AdminPhoto
     }
 
     // 添加
-    public static function add($info,$href,$type)
+    public static function add($info,$href,$path,$type)
     {
         M::create([
             'name' => $info->getOriginalName(),
             'href' => $href,
+            'path' => $path,
             'type' => $type,
             'ext' => $info->getOriginalExtension(),
             'mime' => $info->getOriginalMime(),

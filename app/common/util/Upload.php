@@ -7,7 +7,7 @@ class Upload
 {
 
     //通用上传
-    public static function putFile($file,$path = 'photo'){
+    public static function putFile($file,$path = 'default'){
         try {
             validate(['file'=>[
                 'fileSize' => 410241024,
@@ -23,11 +23,11 @@ class Upload
                 $res = Oss::alYunOSS($k, $k->extension(),$path);
                 if ($res["code"] == 201) return ['msg'=>'上传失败','code'=>201,'data'=>$res["msg"]];
                 $name = $res['src'];
-                AdminPhoto::add($k,$name,2);
+                AdminPhoto::add($k,$name,$path,2);
             }else{
-                $savename = '/'. \think\facade\Filesystem::disk('public')->putFile($path, $k);
+                $savename = '/'.'upload'. '/'. \think\facade\Filesystem::disk('public')->putFile($path, $k);
                 $name = str_replace("\\","/",$savename);
-                AdminPhoto::add($k,$name,1);
+                AdminPhoto::add($k,$name,$path,1);
             }
         }
         return ['msg'=>'上传成功','code'=>0,'data'=>['src'=>$name,'thumb'=>$name]];

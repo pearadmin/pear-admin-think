@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
+    <script src="/static/component/layui/layui.js"></script>
+    <script src="/static/component/pear/pear.js"></script>
 </head>
 <body>
 <form class="layui-form" action="">
@@ -24,8 +26,6 @@
         </div>
     </div>
 </form>
-<script src="/static/component/layui/layui.js"></script>
-<script src="/static/component/pear/pear.js"></script>
 <script>
     layui.use(['form', 'jquery', 'layedit', 'uploads'], function () {
         let form = layui.form;

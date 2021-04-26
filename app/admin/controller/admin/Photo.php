@@ -12,13 +12,22 @@ class Photo extends \app\admin\controller\Base
     protected $middleware = ['AdminCheck','AdminPermission'];
 
     // 列表
-    public function index(){return $this->getAuto($this->fetch(),M::getList());}
+    public function index(){return $this->getAuto($this->fetch(),M::getPath());}
+
+    // 创建文件夹
+    public function add(){return $this->getAuto($this->fetch(),S::goAdd());}
+    
+    // 删除文件夹
+    public function Del($name){return $this->getJson(S::goDel($name));}
+
+    // 列表
+    public function list($name){return $this->getJson(M::getList($name));}
 
     // 添加单图
-    public function addPhoto(){return $this->fetch();}
+    public function addPhoto($name){return $this->fetch('',['name'=>$name]);}
 
     // 添加多图
-    public function addPhotos(){return $this->fetch();}
+    public function addPhotos($name){return $this->fetch('',['name'=>$name]);}
 
     // 删除
     public function remove($id){return $this->getJson(S::goRemove($id));}

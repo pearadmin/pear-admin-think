@@ -43,6 +43,7 @@
   var uploadInst = upload.render({
     elem: '#logo'
     ,url: '{$Request.root}/index/upload'
+    , data: {path: '{$name}'}
 	,exts: 'jpg|png|gif|bmp|jpeg'
     ,before: function(obj){
       //预读本地文件示例，不支持ie8
@@ -58,8 +59,7 @@
         return layer.msg('上传失败');
       }else{
         setTimeout(function () {
-            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
-            window.parent.location.reload();
+           parent.layui.table.reload("dict-data-table");
         }, 1500);
       }
       $('#imgText').html(''); 
@@ -75,7 +75,7 @@
     ,progress: function(n, index, e){
       element.progress('img', n + '%'); 
       if(n == 100){
-        layer.msg('上传成功,即将关闭!',{icon:1})
+        layer.msg('上传成功',{icon:1})
       }else{
         layer.msg('上传失败', {icon: 2});
       }

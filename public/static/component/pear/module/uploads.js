@@ -24,10 +24,17 @@ layui.define(['jquery',], function(exports){
     }
 
 function _upload(elem, options) {
+    console.log(window.location.pathname.split("/")[1].indexOf(".php"));
+    var leftUrl = window.location.pathname.split("/")[1];
+    if(leftUrl.indexOf(".php")>0){
+        var leftUrl = '/'+ leftUrl;
+    }else{
+        var leftUrl = '';
+    }
     var form, name = 'file',
         accept = 'image/*',
         path = 'images',
-        url = '/' + window.location.pathname.split("/")[1] + '/index/upload';
+        url = leftUrl + '/index/upload';
         form = Math.random().toString(36).substr(2);
         var input = '<input accept="' + accept + '" name="' + name + '" type="file"/>';
         $('body').append('<form enctype="multipart/form-data" id="' + form + '" style="display: none;">' + input + '</form>');

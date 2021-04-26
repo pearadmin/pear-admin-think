@@ -333,7 +333,8 @@ class Crud
                     if (self::$data['null'] === 'NO') {
                         $lay_verify = ' lay-verify="uploadimg"';
                     }
-                    $form .= '<button class="pear-btn pear-btn-primary pear-btn-sm upload-image" type="button">
+                    $form .= '{:opt_photo("' .  self::$data['name'][$i]  . '")}
+                    <button class="pear-btn pear-btn-primary pear-btn-sm upload-image" type="button">
                         <i class="fa fa-image">
                         </i>
                         上传图片

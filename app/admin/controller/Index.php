@@ -4,7 +4,9 @@ declare (strict_types = 1);
 namespace app\admin\controller;
 
 use think\facade\Session;
+use think\facade\Request;
 use app\common\util\Upload as Up;
+use app\common\model\AdminPhoto as P;
 use app\common\service\AdminAdmin as S;
 
 class Index extends Base
@@ -27,5 +29,9 @@ class Index extends Base
     public function pass(){return $this->getAuto($this->fetch(),S::goPass());}
 
     // 通用上传
-    public function upload(){return $this->getJson(Up::putFile($this->request->file()));}
+    public function upload(){return $this->getJson(Up::putFile(Request::file(),Request::post('path')));}
+
+    // 图库选择
+    public function optPhoto(){return $this->getAuto($this->fetch('',P::getPath()),P::getAll());}
+
 }

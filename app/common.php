@@ -1,6 +1,41 @@
 <?php
 // 应用公共文件
-
+if (!function_exists('opt_photo')){
+    //图库选择
+    function opt_photo($val)
+    {
+       return '<button class="pear-btn pear-btn-primary pear-btn-sm" style="margin:4px 5px;vertical-align:top;" id="'.$val.'" type="button">图库选择</button>
+       <script>
+       layui.use(["jquery"],function() {
+        let $ = layui.jquery;
+        //弹出窗设置 自己设置弹出百分比
+        function screen() {
+            if (typeof width !== "number" || width === 0) {
+            width = $(window).width() * 0.8;
+            }
+            if (typeof height !== "number" || height === 0) {
+            height = $(window).height() - 20;
+            }
+            return [width + "px", height + "px"];
+        }
+        $("#'.$val.'").on("click", function () {
+            layer.open({
+                type: 2,
+                maxmin: true,
+                title: "图库选择",
+                shade: 0.1,
+                area: screen(),
+                content:"../index/optPhoto",
+                success:function (layero,index) {
+                    var iframe = window["layui-layer-iframe" + index];
+                    iframe.child("'.$val.'")
+                }
+            });
+        });
+        })
+        </script>';
+    }
+}
 if (!function_exists('rm')) {
     //清除缓存
     function rm()

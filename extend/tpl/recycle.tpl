@@ -1,10 +1,12 @@
 
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-        <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
-	</head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
+    <script src="/static/component/layui/layui.js"></script>
+    <script src="/static/component/pear/pear.js"></script>
+</head>
 	<body class="pear-container">
 		<div class="layui-card">
 			<div class="layui-card-body">
@@ -40,8 +42,6 @@
 		        彻底删除
 		    </button>
 		</script>
-        <script src="/static/component/layui/layui.js"></script>
-        <script src="/static/component/pear/pear.js"></script>
         <script>
         layui.use(['table', 'form', 'jquery','common','laydate'], function() {
             let table = layui.table;
