@@ -94,6 +94,7 @@ CREATE TABLE `{{$pk}}admin_photo` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `name` varchar(50) NOT NULL COMMENT '文件名称',
   `href` varchar(255) DEFAULT NULL COMMENT '文件路径',
+  `path` varchar(30) DEFAULT NULL COMMENT '路径',
   `mime` varchar(50) NOT NULL COMMENT 'mime类型',
   `size` varchar(30) NOT NULL COMMENT '大小',
   `type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1本地2阿里云',
