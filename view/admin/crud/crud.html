@@ -85,7 +85,7 @@
                             {$v.comment}
                         </td>
                         <td>
-                            {$v.notnull}
+                            {if $v.notnull=="1"}是{else}否{/if}
                         </td>
                         <td>
                             <input type="checkbox" name="list[]" title="列表" lay-skin="primary" {if $v.notnull=="true"}checked{/if}>
@@ -94,7 +94,7 @@
                             <input type="checkbox" name="search[]" title="搜索" lay-skin="primary">
                         </td>
                         <td>
-                            <input type="checkbox" name="form[]" title="表单" lay-skin="primary" {if $v.notnull=="true"}checked{/if}>
+                            <input type="checkbox" name="form[]" title="表单" lay-skin="primary" {if $v.notnull=="true" && $v.name!="id"}checked{/if}>
                         </td>
                         <td>
                             <select name="formType[]">
