@@ -122,6 +122,8 @@ class Crud
                 self::getNull($i);self::getList($i);self::getSearch($i);self::getForm($i);self::getNull($i);
                 if (self::$data['name'][$i] == 'delete_time'){
                     self::$data['model_del'] = ' protected $deleteTime = "delete_time";';
+                }else{
+                    self::$data['model_del'] = ' protected $deleteTime = false;';
                 }
             }
             //路径
