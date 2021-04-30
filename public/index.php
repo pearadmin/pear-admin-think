@@ -25,7 +25,11 @@ if(!is_file(__DIR__ . '/install.lock')){
     $response = $http->name('install')->run();
 }
 
-$response = $http->run();
+// 域名绑定应用使用统一入口
+//$response = $http->run();
+
+// 应用入口
+$response = $http->name('index')->run();
 
 $response->send();
 
