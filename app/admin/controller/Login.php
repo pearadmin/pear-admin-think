@@ -10,7 +10,7 @@ use app\common\service\AdminAdmin as S;
 class Login extends Base
 {
     //后台登录
-    public function index(){return $this->getAuto(S::isLogin()?redirect(Request::root().'/'):$this->fetch(),S::login(Request::param()));}
+    public function index(){return $this->getAuto(S::isLogin()?redirect(Request::root()??'/'):$this->fetch(),S::login(Request::param()));}
 
     // 验证码
     public function verify(){ob_clean(); return Captcha::create();}
