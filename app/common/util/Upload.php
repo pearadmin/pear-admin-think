@@ -7,7 +7,8 @@ class Upload
 {
 
     //通用上传
-    public static function putFile($file,$path = 'default'){
+    public static function putFile($file,$path){
+        if(!$path) $path = 'default';
         try {
             validate(['file'=>[
                 'fileSize' => 410241024,
