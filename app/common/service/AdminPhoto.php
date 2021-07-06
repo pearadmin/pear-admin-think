@@ -61,7 +61,7 @@ class AdminPhoto
     public static function add($info,$href,$path,$type)
     {
         M::create([
-            'name' => $info->getOriginalName(),
+            'name' => substr($info->getOriginalName(),0,50),
             'href' => $href,
             'path' => $path,
             'type' => $type,
