@@ -10,11 +10,25 @@ use app\common\service\AdminAdmin as S;
 class Login extends Base
 {
     //后台登录
-    public function index(){return $this->getAuto(S::isLogin()?redirect(Request::root()??'/'):$this->fetch(),S::login(Request::param()));}
+    public function index(){
+        //是否已经登录
+        if (S::isLogin()){
+            return redirect(Request::root()??'/');
+        }
+        if (Request::isAjax()){
+            $this->getJson(S::login(Request::param()));
+        }
+        return $this->fetch();
+    }
 
     // 验证码
-    public function verify(){ob_clean(); return Captcha::create();}
+    public function verify(){
+        ob_clean(); 
+        return Captcha::create();
+    }
 
     //退出登陆
-    public function logout(){return $this->getJson(S::logout());}
+    public function logout(){
+        return $this->getJson(S::logout());
+    }
 }

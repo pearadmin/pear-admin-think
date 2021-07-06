@@ -270,3 +270,26 @@ if (!function_exists('get_field')) {
         );
     }
   }
+
+  if (!function_exists('record_log')){
+    /**
+     * @记录日志
+     * @param [type] $param
+     * @param string $file
+     *
+     * @return void
+     */
+     function record_log($param,$file=''){
+        $path = root_path().'log/'.$file."/";
+        if (!is_dir($path)) @mkdir($path,0777,true);
+        if (is_array($param)){
+            $param = json_encode($param,JSON_FORCE_OBJECT|JSON_UNESCAPED_UNICODE);
+        }
+        @file_put_contents(
+            $path.date("Y_m_d",time()).".txt",
+            "执行日期："."\r\n".date('Y-m-d H:i:s', time()) . ' ' . "\n" . $param . "\r\n",
+            FILE_APPEND
+        );
+    }
+
+}

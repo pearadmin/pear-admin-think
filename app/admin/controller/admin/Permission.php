@@ -12,18 +12,40 @@ class Permission extends \app\admin\controller\Base
     protected $middleware = ['AdminCheck','AdminPermission'];
     
     // 列表
-    public function index(){return $this->getAuto($this->fetch(),M::getList());}
+    public function index(){
+        if (Request::isAjax()) {
+            return $this->getJson(M::getList());
+        }
+        return $this->fetch();
+    }
 
     // 添加
-    public function add(){return $this->getAuto($this->fetch('',['permissions' => get_tree(M::order('sort','asc')->select()->toArray())]),S::goAdd(Request::post()));}
+    public function add(){
+        if (Request::isAjax()) {
+            return $this->getJson(S::goAdd(Request::post()));
+        }
+        return $this->fetch('',[
+            'permissions' => get_tree(M::order('sort','asc')->select()->toArray())
+        ]);
+    }
 
     // 编辑
-    public function edit($id){return $this->getAuto($this->fetch('',M::getFind($id)),S::goEdit(Request::post(),$id));}
+    public function edit($id){
+        if (Request::isAjax()) {
+            return $this->getJson(S::goEdit(Request::post(),$id));
+            
+        }
+        return $this->fetch('',M::getFind($id));
+    }
 
     // 状态
-    public function status($id){return $this->getJson(S::goStatus(Request::post('status'),$id));}
+    public function status($id){
+        return $this->getJson(S::goStatus(Request::post('status'),$id));
+    }
 
     // 删除
-    public function remove($id){return $this->getJson(S::goRemove($id));}
+    public function remove($id){
+        return $this->getJson(S::goRemove($id));
+    }
 }
 

@@ -12,21 +12,49 @@ class Role extends \app\admin\controller\Base
     protected $middleware = ['AdminCheck','AdminPermission'];
 
     // 列表
-    public function index(){return $this->getAuto($this->fetch(),M::getList());}
+    public function index(){
+        if (Request::isAjax()) {
+            return $this->getJson(M::getList());
+        }
+        return $this->fetch();
+    }
 
     // 添加
-    public function add(){return $this->getAuto($this->fetch(),S::goAdd(Request::post()));}
+    public function add(){
+        if (Request::isAjax()) {
+            return $this->getJson(S::goAdd(Request::post()));
+        }
+        return $this->fetch();
+    }
 
     // 编辑
-    public function edit($id){return $this->getAuto($this->fetch('',['model' => M::find($id)]),S::goEdit(Request::post(),$id));}
+    public function edit($id){
+        if (Request::isAjax()) {
+            return $this->getJson(S::goEdit(Request::post(),$id));
+            
+        }
+        return $this->fetch('',['model' => M::find($id)]);
+    }
 
     // 删除
-    public function remove($id){return $this->getJson(S::goRemove($id));}
+    public function remove($id){
+        return $this->getJson(S::goRemove($id));
+    }
 
     // 用户分配直接权限
-    public function permission($id){return $this->getAuto($this->fetch('',M::getPermission($id)),S::goPermission(Request::post('permissions'),$id));}
+    public function permission($id){
+        if (Request::isAjax()) {
+            return $this->getJson(S::goPermission(Request::post('permissions'),$id));
+        }
+        return $this->fetch('',M::getPermission($id));
+    }
 
     // 回收站
-    public function recycle(){return $this->getAuto($this->fetch(),S::goRecycle());}
+    public function recycle(){
+        if (Request::isAjax()) {
+            return $this->getJson(S::goRecycle());
+        }
+        return $this->fetch();
+    }
     
 }

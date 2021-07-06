@@ -71,15 +71,6 @@ abstract class BaseController
         ];
     }
 
-    protected function getAuto($html = '',$json = [])
-    {
-        if('html' == strtolower($this->getResponseType())){
-            return $html;
-        }else{
-            return $this->json($json['msg']??'操作成功',$json['code']??200,$json['data']??[],$json['extend']??[]);
-        }
-    }
-
     protected function getJson($json = [])
     {
         if('json' == strtolower($this->getResponseType())){
