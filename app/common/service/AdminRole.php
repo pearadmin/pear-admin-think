@@ -97,7 +97,7 @@ class AdminRole
                 }
                 rm();
                 Db::commit();
-            }catch (DbException $exception){
+            }catch (DbException $e){
                 Db::rollback();
                 return ['msg'=>'操作失败'.$e->getMessage(),'code'=>201];
             }
