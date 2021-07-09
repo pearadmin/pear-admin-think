@@ -85,7 +85,13 @@ class Admin extends  \app\admin\controller\Base
 
     // 清空日志
     public function removeLog(){
-        return $this->getJson(Db::name('admin_admin_log')->delete(true));
+        $desc = Db::name('admin_admin_log')->order('id','desc')->find();
+        if($desc){
+            Db::name('admin_admin_log')->where('id','<',$desc['id'])->delete(true);
+        }else{
+            Db::name('admin_admin_log')->delete(true);
+        }
+        return $this->getJson();
     }
 
 }
