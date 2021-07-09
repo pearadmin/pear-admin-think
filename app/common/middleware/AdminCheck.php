@@ -12,6 +12,10 @@ class AdminCheck
      */
     public function handle($request, \Closure $next)
     {
-        return S::isLogin()?$next($request):redirect($request->root().'/login/index');
+        if(S::isLogin() == false){
+            return redirect($request->root().'/login/index');
+        }
+        (new \app\common\model\AdminAdminLog)->record();
+        return $next($request);
     }
 }
