@@ -18,7 +18,7 @@ class AdminAdminLog extends Model
     // 管理员日志记录
     public static function record()
     {
-        if(!$desc = Request::except(['s','_pjax']))return;
+        $desc = Request::except(['s','_pjax'])??'';
         if(isset($desc['page'])&&isset($desc['limit']))return;
         foreach ($desc as $k => $v) {
             if(stripos($k, 'fresh') !== false) return;
