@@ -7,6 +7,11 @@ class Mail
 {
     /**
      * 发送邮箱
+     * 
+     * 使用方式
+     * use app\common\util\Mail;
+     * Mail::go('123@qq.com','这是来自一封信','你好！')
+     * 
      * @param array $data
      * @param string $addr 地址
      * @param string $title 标题

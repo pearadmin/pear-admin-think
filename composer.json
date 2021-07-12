@@ -28,9 +28,9 @@
         "topthink/think-captcha": "^3.0",
         "phpmailer/phpmailer": "^6.1",
         "aliyuncs/oss-sdk-php": "^2.3",
-        "endroid/qrcode": "^3.7",
-        "topthink/think-image": "^1.0",
-        "topthink/think-queue": "^3.0"
+        "topthink/think-queue": "^3.0",
+        "endroid/qr-code": "^4.2",
+        "topthink/think-image": "^1.0"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",

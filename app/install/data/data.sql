@@ -60,13 +60,37 @@ CREATE TABLE `{{$pk}}admin_permission` (
 INSERT INTO `{{$pk}}admin_permission` (`id`, `pid`, `title`, `href`, `icon`, `sort`, `type`, `status`) VALUES
 (1, 0, '后台权限', '', 'layui-icon layui-icon-username', 2, 0, 1),
 (2, 1, '管理员', '/admin.admin/index', '', 1, 1, 1),
-(3, 1, '角色管理', '/admin.role/index', '', 99, 1, 1),
-(4, 1, '菜单权限', '/admin.permission/index', '', 99, 1, 1),
-(5, 0, '系统管理', '', 'layui-icon layui-icon-set', 3, 0, 1),
-(6, 5, '后台日志', '/admin.admin/log', '', 2, 1, 1),
-(7, 5, '系统设置', '/config/index', '', 1, 1, 1),
-(8, 5, '图片管理', '/admin.photo/index', '', 2, 1, 1);
-
+(3, 2, '新增管理员', '/admin.admin/add', '', 1, 1, 1),
+(4, 2, '编辑管理员', '/admin.admin/edit', '', 1, 1, 1),
+(5, 2, '修改管理员状态', '/admin.admin/status', '', 1, 1, 1),
+(6, 2, '删除管理员', '/admin.admin/remove', '', 1, 1, 1),
+(7, 2, '批量删除管理员', '/admin.admin/batchRemove', '', 1, 1, 1),
+(8, 2, '管理员分配角色', '/admin.admin/role', '', 1, 1, 1),
+(9, 2, '管理员分配直接权限', '/admin.admin/permission', '', 1, 1, 1),
+(10, 2, '管理员回收站', '/admin.admin/recycle', '', 1, 1, 1),
+(11, 1, '角色管理', '/admin.role/index', '', 99, 1, 1),
+(12, 11, '新增角色', '/admin.role/add', '', 99, 1, 1),
+(13, 11, '编辑角色', '/admin.role/edit', '', 99, 1, 1),
+(14, 11, '删除角色', '/admin.role/remove', '', 99, 1, 1),
+(15, 11, '角色分配权限', '/admin.role/permission', '', 99, 1, 1),
+(16, 11, '角色回收站', '/admin.role/recycle', '', 99, 1, 1),
+(17, 1, '菜单权限', '/admin.permission/index', '', 99, 1, 1),
+(18, 17, '新增菜单', '/admin.permission/add', '', 99, 1, 1),
+(19, 17, '编辑菜单', '/admin.permission/edit', '', 99, 1, 1),
+(20, 17, '修改菜单状态', '/admin.permission/status', '', 99, 1, 1),
+(21, 17, '删除菜单', '/admin.permission/remove', '', 99, 1, 1),
+(22, 0, '系统管理', '', 'layui-icon layui-icon-set', 3, 0, 1),
+(23, 22, '后台日志', '/admin.admin/log', '', 2, 1, 1),
+(24, 23, '清空管理员日志', '/admin.admin/removeLog', '', 1, 1, 1),
+(25, 22, '系统设置', '/config/index', '', 1, 1, 1),
+(26, 22, '图片管理', '/admin.photo/index', '', 2, 1, 1);
+(27, 26, '新增图片文件夹', '/admin.photo/add', '', 2, 1, 1);
+(28, 26, '删除图片文件夹', '/admin.photo/del', '', 2, 1, 1);
+(29, 26, '图片列表', '/admin.photo/list', '', 2, 1, 1);
+(30, 26, '添加单图', '/admin.photo/addPhoto', '', 2, 1, 1);
+(31, 26, '添加多图', '/admin.photo/addPhotos', '', 2, 1, 1);
+(32, 26, '删除图片', '/admin.photo/remove', '', 2, 1, 1);
+(33, 26, '批量删除图片', '/admin.photo/batchRemove', '', 2, 1, 1);
 DROP TABLE IF EXISTS `{{$pk}}admin_role`;
 CREATE TABLE `{{$pk}}admin_role` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
