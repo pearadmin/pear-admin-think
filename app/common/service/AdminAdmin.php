@@ -211,7 +211,7 @@ class AdminAdmin
         //缓存登录信息
         $info = [
             'id' => $admin->id,
-            'tokne' => $admin->token,
+            'token' => $admin->token,
             'menu' => M::permissions($admin->id,Request::root())
         ];
         Session::set('admin', $info);
