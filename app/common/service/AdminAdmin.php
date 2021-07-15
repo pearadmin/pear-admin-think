@@ -211,7 +211,7 @@ class AdminAdmin
         //缓存登录信息
         $info = [
             'id' => $admin->id,
-            'tokne' => $admin->token,
+            'token' => $admin->token,
             'menu' => M::permissions($admin->id,Request::root())
         ];
         Session::set('admin', $info);
@@ -230,7 +230,7 @@ class AdminAdmin
             if(!$admin) return false;
             return Session::set('admin',[
                 'id' => $admin->id,
-                'tokne' => $admin->token,
+                'token' => $admin->token,
                 'menu' => M::permissions($admin->id,Request::root())
             ]); 
         }
