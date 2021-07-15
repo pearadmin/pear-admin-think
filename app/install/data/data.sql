@@ -83,13 +83,13 @@ INSERT INTO `{{$pk}}admin_permission` (`id`, `pid`, `title`, `href`, `icon`, `so
 (23, 22, '后台日志', '/admin.admin/log', '', 2, 1, 1),
 (24, 23, '清空管理员日志', '/admin.admin/removeLog', '', 1, 1, 1),
 (25, 22, '系统设置', '/config/index', '', 1, 1, 1),
-(26, 22, '图片管理', '/admin.photo/index', '', 2, 1, 1);
-(27, 26, '新增图片文件夹', '/admin.photo/add', '', 2, 1, 1);
-(28, 26, '删除图片文件夹', '/admin.photo/del', '', 2, 1, 1);
-(29, 26, '图片列表', '/admin.photo/list', '', 2, 1, 1);
-(30, 26, '添加单图', '/admin.photo/addPhoto', '', 2, 1, 1);
-(31, 26, '添加多图', '/admin.photo/addPhotos', '', 2, 1, 1);
-(32, 26, '删除图片', '/admin.photo/remove', '', 2, 1, 1);
+(26, 22, '图片管理', '/admin.photo/index', '', 2, 1, 1),
+(27, 26, '新增图片文件夹', '/admin.photo/add', '', 2, 1, 1),
+(28, 26, '删除图片文件夹', '/admin.photo/del', '', 2, 1, 1),
+(29, 26, '图片列表', '/admin.photo/list', '', 2, 1, 1),
+(30, 26, '添加单图', '/admin.photo/addPhoto', '', 2, 1, 1),
+(31, 26, '添加多图', '/admin.photo/addPhotos', '', 2, 1, 1),
+(32, 26, '删除图片', '/admin.photo/remove', '', 2, 1, 1),
 (33, 26, '批量删除图片', '/admin.photo/batchRemove', '', 2, 1, 1);
 DROP TABLE IF EXISTS `{{$pk}}admin_role`;
 CREATE TABLE `{{$pk}}admin_role` (
