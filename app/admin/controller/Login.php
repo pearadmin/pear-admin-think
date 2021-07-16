@@ -13,7 +13,7 @@ class Login extends Base
     public function index(){
         //是否已经登录
         if (S::isLogin()){
-            return redirect(Request::root().'/');
+            return redirect(Request::root().'/index');
         }
         if (Request::isAjax()){
             $this->getJson(S::login(Request::param()));
