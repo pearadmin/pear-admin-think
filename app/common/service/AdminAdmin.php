@@ -118,8 +118,6 @@ class AdminAdmin
                 Db::rollback();
                 return ['msg'=>'操作失败'.$e->getMessage(),'code'=>201];
             }
-        }else{
-            Db::name('admin_admin_role')->where('admin_id',$id)->delete();
         }
     }
 
