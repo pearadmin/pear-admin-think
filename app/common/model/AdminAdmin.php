@@ -5,7 +5,7 @@ namespace app\common\model;
 
 use think\Model;
 use think\model\concern\SoftDelete;
-
+use think\facade\Session;
 class AdminAdmin extends Model
 {
     use SoftDelete;
@@ -18,7 +18,7 @@ class AdminAdmin extends Model
         if ($search = input('get.username')) {
             $where[] = ['username', 'like', "%" . $search . "%"];
         }
-        $list = self::order('id','desc')->where('id','>','1')->withoutField('password,token,delete_time')->where($where)->paginate($limit);
+        $list = self::order('id','desc')->where('id','<>',Session::get('admin.id'))->where('id','>','1')->withoutField('password,token,delete_time')->where($where)->paginate($limit);
         return ['code'=>0,'data'=>$list->items(),'extend'=>['count' => $list->total(), 'limit' => $limit]];
     }
 
