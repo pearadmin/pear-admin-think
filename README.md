@@ -51,7 +51,7 @@
 
 #### 安装配置
 * git clone https://gitee.com/pear-admin/Pear-Admin-Think
-* 更新包composer update(可以忽略)
+* 安装包依赖 composer install
 * 将网站入口部署至public目录下面
 * 修改thinkphp伪静态配置。
 * 运行网站地址, 会自动进入安装界面, 请根据提示进行设置, 然后点击安装。
