@@ -73,15 +73,7 @@
 	display: none;
 }
 
-.pear-nav-tree .layui-nav-item a .layui-badge-dot {
-	float: right;
-	right: 13px;
-}
 
-.pear-nav-tree .layui-nav-item a .layui-badge {
-	float: right;
-	right: 10px;
-}
 
 /** 实 现 菜 单 隐 藏 */
 .pear-nav-mini {
@@ -116,11 +108,9 @@
 .pear-nav-control.pc .layui-this * {
 	background-color: whitesmoke;
 }
-
 .pear-nav-control.pc *{
 	color: darkslategray!important;
 }
-
 .pear-nav-control.pc .layui-nav-bar{
 	display: none!important;
 }
@@ -151,7 +141,7 @@
 	display: none;
 }
 .pear-nav-tree .layui-nav-child dd a span {
-	margin-left: 26px !important;
+	margin-left: 30px !important;
 }
 .pear-nav-tree .layui-nav-child dd a i {
 	display: none;

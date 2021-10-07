@@ -24,16 +24,17 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 		return new pearFrame(option);
     } 
 	
-	pearFrame.prototype.changePage = function(url,loading){
+	pearFrame.prototype.changePage = function(url,title,loading){
 		if(loading){
 			var loading = $("#"+this.option.elem).find(".pear-frame-loading");	
 			loading.css({display:'block'});
 		}
 		$("#"+this.option.elem+" iframe").attr("src",url);
+	    $("#"+this.option.elem+" .title").html(title);
 	     if(loading){
 	     	var loading = $("#"+this.option.elem).find(".pear-frame-loading");
 			setTimeout(function(){
-				loading.fadeOut(500);
+				loading.css({display:'none'});
 			},800)	
 	     }
 	}
@@ -49,7 +50,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	     	var loading = $("#"+elem).find(".pear-frame-loading");
 			setTimeout(function(){
 				loading.css({display:'none'});
-			},400)	
+			},800)	
 	     }
 	}
 	
@@ -59,7 +60,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			loading.css({display:'block'});
 			if(time!=0){
 				setTimeout(function(){
-					loading.fadeOut(500);
+					loading.css({display:'none'});
 				},time)
 			}
 		}
@@ -67,14 +68,14 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	}
 	
 	function createFrameHTML(option){
+		 var header = "<div class='pear-frame-title'><div class='dot'></div><div class='title'>"+option.title+"</div></div>"
 		 var iframe = "<iframe class='pear-frame-content' style='width:100%;height:100%;'  scrolling='auto' frameborder='0' src='"+option.url+"' ></iframe>";
 	     var loading = '<div class="pear-frame-loading">'+
 			       '<div class="ball-loader">'+
 				      '<span></span><span></span><span></span><span></span>'+
 			       '</div>'+
 		        '</div></div>';
-	     $("#"+option.elem).html("<div class='pear-frame'>"+ iframe + loading +"</div>");	
+	     $("#"+option.elem).html("<div class='pear-frame'>"+header+iframe+loading+"</div>");	
 	}
-	
 	exports(MOD_NAME,new pearFrame());
 })
