@@ -97,10 +97,19 @@ class AdminAdmin extends Model
                 $permissions[0] = [
                     "id" => -1,
                     "pid" => 0,
-                    "title" => "CRUD",
+                    "title" => "自动生成",
                     "icon" => "layui-icon layui-icon-util",
-                    "href" => $root."/crud/index",
+                    "type" => 0,
+		            "href" => "",
+                ];
+                $permissions[-1] = [
+                    "id" => -2,
+                    "pid" => -1,
+                    "title" => "CRUD管理",
+                    "icon" => "layui-icon layui-icon-console",
                     "type" => 1,
+                    "openType" => "_iframe",
+                    'href'=> $root."/crud/index",
                 ];
             }
         }else{

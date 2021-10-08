@@ -5,7 +5,7 @@ window.rootPath = (function(src) {
 
 layui.config({
 	base: rootPath + "module/",
-	version: "3.8.9"
+	version: "3.9.0"
 }).extend({
 	admin: "admin", 	// 框架布局组件
 	menu: "menu",		// 数据菜单组件
@@ -20,11 +20,10 @@ layui.config({
 	step:"step",		// 分布表单组件
 	tag:"tag",			// 多标签页组件
 	popup:"popup",      // 弹层封装
-	iconPicker:"iconPicker", // 图表选择
 	treetable:"treetable",   // 树状表格
 	dtree:"dtree",			// 树结构
 	tinymce:"tinymce/tinymce", // 编辑器
-	area:"area",			// 省市级联
+	area:"area",			// 省市级联  使用方法:https://gitee.com/fesiong/layarea
 	count:"count",			// 数字滚动组件
 	topBar: "topBar",		// 置顶组件
 	button: "button",		// 加载按钮
@@ -38,6 +37,7 @@ layui.config({
 	http: "http",			// ajax请求组件
 	theme: "theme",			// 主题转换
 	message: "message",     // 通知组件
+	toast: "toast",          // 消息通知
 	uploads: "uploads"		// 上传组件
 }).use(['layer', 'theme'], function () {
 	layui.theme.changeTheme(window, false);
