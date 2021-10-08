@@ -69,9 +69,9 @@
 
 |  |  |
 |---------------------|---------------------|
-| ![](readme/1.jpg)  |![](readme/2.jpg)  |
-| ![](readme/3.jpg)|  ![](readme/4.jpg)   |
-| ![](readme/5.jpg)|  ![](readme/6.jpg)  |
+| ![](readme/1.png)  |![](readme/2.png)  |
+| ![](readme/3.png)|  ![](readme/4.png)   |
+| ![](readme/5.png)|  ![](readme/6.png)  |
 
 #### 项目声明
 >仅供技术研究使用，请勿用于非法用途，否则产生的后果作者概不负责。
