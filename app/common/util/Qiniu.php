@@ -47,9 +47,6 @@ class Qiniu
         $bucket = $data['qiniu-Bucket'];
         //初始化Auth状态
         $auth = new Auth($accessKey, $secretKey);
-
-        $key = "qiniu.mp4_copy";
-        $auth = new Auth($accessKey, $secretKey);
         $config = new \Qiniu\Config();
         $bucketManager = new \Qiniu\Storage\BucketManager($auth, $config);
         $err = $bucketManager->delete($bucket, $path);
