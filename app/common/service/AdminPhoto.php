@@ -5,7 +5,8 @@ namespace app\common\service;
 
 use think\facade\Request;
 use app\common\model\AdminPhoto as M;
-
+use app\common\util\Qiniu as QiniuService;
+use app\common\util\Oss as OssService;
 class AdminPhoto
 {
     // 添加
@@ -77,6 +78,8 @@ class AdminPhoto
         $photo =  M::find($id);
         if($photo['type']=='阿里云'){
             OssService::alYunDel($photo['href']);
+        }elseif($photo['type']=='七牛云'){
+            QiniuService::QiniuDel($photo['href']);
         }else{
             //删除本地文件
             $path = '../public'.$photo['href'];

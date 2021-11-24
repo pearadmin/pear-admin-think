@@ -121,7 +121,7 @@ CREATE TABLE `{{$pk}}admin_photo` (
   `path` varchar(30) DEFAULT NULL COMMENT '路径',
   `mime` varchar(50) NOT NULL COMMENT 'mime类型',
   `size` varchar(30) NOT NULL COMMENT '大小',
-  `type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1本地2阿里云',
+  `type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1本地2阿里云3七牛云',
   `ext` varchar(10) DEFAULT NULL COMMENT '文件后缀',
   `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
    PRIMARY KEY (`id`)

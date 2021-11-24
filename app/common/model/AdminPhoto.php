@@ -42,7 +42,7 @@ class AdminPhoto extends Model
 
     public function getTypeAttr($value)
     {
-        $type = ['1' => '本地', '2' => '阿里云'];
+        $type = ['1' => '本地', '2' => '阿里云','3'=>'七牛云'];
         return $type[$value];
     }
 }
