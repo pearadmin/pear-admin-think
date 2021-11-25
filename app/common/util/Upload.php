@@ -41,7 +41,7 @@ class Upload
                 }
 
                 $name = $res['src'];
-                AdminPhoto::add($k, $name, $path, 2);
+                AdminPhoto::add($k, $name, $path, 3);
             } else {
                 $savename = '/' . 'upload' . '/' . \think\facade\Filesystem::disk('public')->putFile($path, $k);
                 $name = str_replace("\\", "/", $savename);
